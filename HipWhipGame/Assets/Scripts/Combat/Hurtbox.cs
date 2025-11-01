@@ -19,5 +19,13 @@ namespace HipWhipGame
             col.isTrigger = true;
             gameObject.layer = LayerMask.NameToLayer("Hurtbox");
         }
+
+        void OnDrawGizmos()
+        {
+            Gizmos.color = Color.green;
+            if (GetComponent<Collider>())
+                Gizmos.DrawWireCube(transform.position, GetComponent<Collider>().bounds.size);
+        }
+
     }
 }

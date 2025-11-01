@@ -97,7 +97,7 @@ namespace HipWhipGame {
             if (_fsm.State == FighterState.Idle && animator && animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") == false
                 && animator.GetCurrentAnimatorStateInfo(0).IsName("Walk") == false)
             {
-                Debug.Log("Switching to Idle animation");
+                //Debug.Log("Switching to Idle animation");
                 animator.Play("Idle", 0, 0);
             }
         }
@@ -133,5 +133,18 @@ namespace HipWhipGame {
         {
             _velocity += worldKnock * (scale / Mathf.Max(0.01f, stats.weight));
         }
+
+        public void TakeDamage(float dmg)
+        {
+            Debug.Log($"Took {dmg} damage!");
+            // TODO: apply hitstun, reduce health, etc.
+        }
+
+        public void OnHitReaction(MoveData move)
+        {
+            _fsm.SetState(FighterState.Hitstun);
+            animator.Play("HitReact", 0, 0f);
+        }
+
     }
 }

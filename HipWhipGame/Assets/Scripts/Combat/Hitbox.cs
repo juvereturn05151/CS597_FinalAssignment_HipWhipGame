@@ -53,5 +53,12 @@ namespace HipWhipGame
             // Resolve hit
             HitResolver.Resolve(Owner, hurt.owner, Move, transform);
         }
+
+        void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            if (GetComponent<Collider>())
+                Gizmos.DrawWireCube(transform.position, GetComponent<Collider>().bounds.size);
+        }
     }
 }

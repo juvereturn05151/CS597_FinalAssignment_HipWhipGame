@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveName: ButtAttack
   animation: {fileID: 7400000, guid: 3e872b87f99018948bb1f87e8d3689db, type: 2}
-  startup: 45
-  active: 15
+  startup: 38
+  active: 22
   recovery: 83
   damage: 10
   hitstunFrames: 15
@@ -25,10 +25,10 @@ MonoBehaviour:
   canCancelOnHit: 0
   canCancelOnBlock: 0
   cancelInto: []
-  hitboxPrefab: {fileID: 0}
-  hitboxLocalPos: {x: 0, y: 0, z: 0}
-  hitboxLocalScale: {x: 1, y: 1, z: 1}
-  hitboxLifetimeFrames: 3
+  hitboxPrefab: {fileID: 3618810959523525117, guid: 4bdbf13d51dfeff44b41a7396839cbb7, type: 3}
+  hitboxLocalPos: {x: 0, y: 0.5, z: 0.25}
+  hitboxLocalScale: {x: 0.5, y: 0.45, z: 0.5}
+  hitboxLifetimeFrames: 22
   sfx: {fileID: 0}
   vfxPrefab: {fileID: 0}
   overrideRootMotion: 1

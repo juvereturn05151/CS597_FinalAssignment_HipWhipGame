@@ -33,58 +33,57 @@ namespace HipWhipGame
 
         IEnumerator DoMove(MoveData move)
         {
-            Debug.Log($"Executing move: {move.moveName}");
-
             int totalFrames = move.startup + move.active + move.recovery;
-            WaitForSeconds waitFrame = new WaitForSeconds(1f / 60f);
+            const float frameDuration = 1f / 60f;
+            WaitForSeconds waitFrame = new WaitForSeconds(frameDuration);
 
             // Disable root motion if we’re driving motion manually
             animator.applyRootMotion = !move.overrideRootMotion;
 
             _fsm.SetState(FighterState.Attacking, totalFrames / 60f);
-
-            // Play animation at normalized time 0
             animator.Play(move.animation.name, 0, 0f);
 
             GameObject hb = null;
 
-            // 
-            // MAIN FRAME LOOP (fixed 60 Hz logic)
-            // 
+            //
+            // MAIN FRAME LOOP (deterministic 60 Hz logic)
+            //
             for (int currentFrame = 0; currentFrame < totalFrames; currentFrame++)
             {
-                float frameTimer = 0f;
-                float frameDuration = 1f / 60f;
+                bool movedThisFrame = false;
 
-                //  Active-phase displacement only 
+                // --- Movement During Active Frames ---
                 if (move.overrideRootMotion && move.motionSegments != null)
                 {
                     foreach (var seg in move.motionSegments)
                     {
                         if (currentFrame >= seg.frameStart && currentFrame <= seg.frameEnd)
                         {
-                            // compute perframe target delta
+                            movedThisFrame = true;
                             Vector3 delta =
                                 transform.forward * seg.forwardSpeed +
                                 Vector3.up * seg.verticalSpeed;
 
-                            // smooth interpolation inside this frame
-                            // (renders smoothly even if camera updates per frame)
-                            while (frameTimer < frameDuration)
+                            // smooth interpolation for this single frame
+                            float elapsed = 0f;
+                            while (elapsed < frameDuration)
                             {
                                 transform.position += delta * (Time.deltaTime * 60f);
-                                frameTimer += Time.deltaTime;
-                                yield return null; // render frames between logic ticks
+                                elapsed += Time.deltaTime;
+                                yield return null;
                             }
-
-                            goto SkipFrameWait; // already yielded this frame
+                            break; // once we interpolated, no more segments this frame
                         }
                     }
                 }
 
-                //  Spawn hitbox at start of active 
+                Debug.Log($"Move {move.moveName} Frame {currentFrame + 1}/{totalFrames}");
+
+                // --- Hitbox Spawn ---
                 if (currentFrame == move.startup)
                 {
+                    Debug.Log($"Move {move.moveName} entering active frames.");
+
                     if (move.hitboxPrefab)
                     {
                         hb = Instantiate(move.hitboxPrefab, transform);
@@ -105,18 +104,18 @@ namespace HipWhipGame
                     }
                 }
 
-                //  Despawn hitbox at end of active
+                // --- Hitbox Cleanup ---
                 if (currentFrame == move.startup + move.active && hb)
+                {
                     Destroy(hb);
+                }
 
-                //  Standard wait for non-moving frames
-                yield return waitFrame;
-
-            SkipFrameWait:
-                ; // empty label target
+                // --- Yield once per logic step (if not already yielded during interpolation) ---
+                if (!movedThisFrame)
+                    yield return waitFrame;
             }
 
-            // Cleanup 
+            // Cleanup at end
             if (hb) Destroy(hb);
 
             if (_fsm.State == FighterState.Attacking)

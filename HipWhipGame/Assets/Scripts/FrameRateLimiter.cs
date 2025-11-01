@@ -19,7 +19,7 @@ namespace HipWhipGame
             // Lock to 60 FPS
             Application.targetFrameRate = 60;
 
-            Debug.Log($"Frame rate locked to {Application.targetFrameRate} FPS");
+            //Debug.Log($"Frame rate locked to {Application.targetFrameRate} FPS");
         }
     }
 }
