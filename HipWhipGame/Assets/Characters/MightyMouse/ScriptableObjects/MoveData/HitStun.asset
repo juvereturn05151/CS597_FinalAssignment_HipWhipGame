@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1a7c91fdb175c746a3f88842b302be6, type: 3}
+  m_Name: HitStun
+  m_EditorClassIdentifier: 
+  moveName: HitStun
+  animation: {fileID: 7400000, guid: 4fbdfd8c49b09a7468c2f5d214835d4d, type: 2}
+  startup: 5
+  active: 3
+  recovery: 12
+  damage: 10
+  hitstunFrames: 15
+  knockback: {x: 2, y: 0.5, z: 0}
+  guardType: 0
+  pushbackOnHit: 1.5
+  canCancelOnHit: 0
+  canCancelOnBlock: 0
+  cancelInto: []
+  hitboxPrefab: {fileID: 0}
+  hitboxLocalPos: {x: 0, y: 0, z: 0}
+  hitboxLocalScale: {x: 1, y: 1, z: 1}
+  hitboxLifetimeFrames: 3
+  sfx: {fileID: 0}
+  vfxPrefab: {fileID: 0}
+  overrideRootMotion: 1
+  motionSegments: []

@@ -183,6 +183,7 @@ namespace HipWhipGame
         public void ApplyHitstun(float frames)
         {
             _fsm.EnterHitstun(frames / 60f * stats.hitstunScale);
+            OnHitReaction();
         }
 
         public void ApplyKnockback(Vector3 worldKnock, float scale = 1f)
@@ -196,11 +197,11 @@ namespace HipWhipGame
             Debug.Log($"{name} took {dmg} damage!");
         }
 
-        public void OnHitReaction(MoveData move)
+        public void OnHitReaction()
         {
             _fsm.SetState(FighterState.Hitstun);
             if (animator)
-                animator.Play("HitReact", 0, 0f);
+                animator.Play("HitStun", 0, 0f);
         }
     }
 }

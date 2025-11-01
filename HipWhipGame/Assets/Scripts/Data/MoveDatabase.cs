@@ -12,6 +12,7 @@ public class MoveDatabase : ScriptableObject
 {
     public MoveData idle;    // optional, for reference
     public MoveData buttAttack;
+    public MoveData hitStun;
     //public MoveData light;
     //public MoveData heavy;
     //public MoveData special;
