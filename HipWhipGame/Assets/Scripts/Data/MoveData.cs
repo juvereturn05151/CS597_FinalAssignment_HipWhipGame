@@ -43,6 +43,11 @@ namespace HipWhipGame
         public AudioClip sfx;
         public GameObject vfxPrefab;
 
+        [Header("Movement During Animation")]
+        public AnimationCurve forwardMovement; // distance per normalized time
+        public AnimationCurve verticalMovement; // optional (for hops)
+        public bool overrideRootMotion = true;
+
         public float TotalAnimTimeSec => animation ? animation.length : (startup + active + recovery) / 60f;
     }
 }

@@ -11,8 +11,9 @@ using UnityEngine;
 public class MoveDatabase : ScriptableObject
 {
     public MoveData idle;    // optional, for reference
-    public MoveData light;
-    public MoveData heavy;
-    public MoveData special;
-    public MoveData jumpAttack;
+    public MoveData buttAttack;
+    //public MoveData light;
+    //public MoveData heavy;
+    //public MoveData special;
+    //public MoveData jumpAttack;
 }

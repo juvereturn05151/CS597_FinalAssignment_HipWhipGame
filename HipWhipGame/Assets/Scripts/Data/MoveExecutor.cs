@@ -34,6 +34,8 @@ namespace HipWhipGame
 
         IEnumerator DoMove(MoveData move)
         {
+            print($"Executing move: {move.name}");
+
             _fsm.SetState(FighterState.Attacking, (move.startup + move.active + move.recovery) / 60f);
 
             // play anim (no animator links)

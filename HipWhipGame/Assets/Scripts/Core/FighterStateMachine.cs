@@ -27,8 +27,10 @@ namespace HipWhipGame
             if (_stateTimer > 0f)
             {
                 _stateTimer -= dt;
-                if (_stateTimer <= 0f && (State == FighterState.Attacking || State == FighterState.Hitstun))
+                if (_stateTimer <= 0f && (State == FighterState.Attacking || State == FighterState.Hitstun)) 
+                {
                     State = FighterState.Idle;
+                } 
             }
         }
 

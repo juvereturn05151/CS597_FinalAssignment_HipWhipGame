@@ -36,10 +36,14 @@ namespace HipWhipGame {
         void Update()
         {
             // --- Input (replace with Input System later) ---
-            if (Input.GetKeyDown(KeyCode.J)) _buffer.Push("Light");
-            if (Input.GetKeyDown(KeyCode.K)) _buffer.Push("Heavy");
-            if (Input.GetKeyDown(KeyCode.L)) _buffer.Push("Special");
-            if (Input.GetKeyDown(KeyCode.Space)) _buffer.Push("Jump");
+            //if (Input.GetKeyDown(KeyCode.J)) _buffer.Push("Light");
+            //if (Input.GetKeyDown(KeyCode.K)) _buffer.Push("Heavy");
+            //if (Input.GetKeyDown(KeyCode.L)) _buffer.Push("Special");
+            if (Input.GetKeyDown(KeyCode.Space)) 
+            {
+                
+                _buffer.Push("ButtAttack");
+            } 
 
             // --- State tick ---
             _fsm.Tick(Time.deltaTime);
@@ -94,19 +98,20 @@ namespace HipWhipGame {
         {
             if (!_fsm.CanStartMove()) return;
 
-            if (_buffer.Consume("Light") && moves.light)
+            //if (_buffer.Consume("Light") && moves.light)
+            //{
+            //    GetComponent<MoveExecutor>().PlayMove(moves.light);
+            //    return;
+            //}
+            //if (_buffer.Consume("Heavy") && moves.heavy)
+            //{
+            //    GetComponent<MoveExecutor>().PlayMove(moves.heavy);
+            //    return;
+            //}
+            if (_buffer.Consume("ButtAttack") && moves.buttAttack)
             {
-                GetComponent<MoveExecutor>().PlayMove(moves.light);
-                return;
-            }
-            if (_buffer.Consume("Heavy") && moves.heavy)
-            {
-                GetComponent<MoveExecutor>().PlayMove(moves.heavy);
-                return;
-            }
-            if (_buffer.Consume("Special") && moves.special)
-            {
-                GetComponent<MoveExecutor>().PlayMove(moves.special);
+                //Debug.Log("ButtAttack input buffered");
+                GetComponent<MoveExecutor>().PlayMove(moves.buttAttack);
                 return;
             }
         }
