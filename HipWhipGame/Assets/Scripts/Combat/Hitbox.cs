@@ -52,6 +52,8 @@ namespace HipWhipGame
 
             // Resolve hit
             HitResolver.Resolve(Owner, hurt.owner, Move, transform);
+
+            Debug.Log($"{Owner.name} hit {hurt.owner.name} with {Move.moveName}");
         }
 
         void OnDrawGizmos()

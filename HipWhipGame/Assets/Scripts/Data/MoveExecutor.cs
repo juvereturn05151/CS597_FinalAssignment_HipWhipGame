@@ -77,8 +77,6 @@ namespace HipWhipGame
                     }
                 }
 
-                Debug.Log($"Move {move.moveName} Frame {currentFrame + 1}/{totalFrames}");
-
                 // --- Hitbox Spawn ---
                 if (currentFrame == move.startup)
                 {
