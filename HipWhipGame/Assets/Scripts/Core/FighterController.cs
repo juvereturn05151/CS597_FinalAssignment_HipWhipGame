@@ -83,7 +83,7 @@ namespace HipWhipGame {
             float maxSpeed = Mathf.Max(0.01f, stats.walkSpeed);
             animator.SetFloat("X", localVel.x / maxSpeed, 0.1f, Time.deltaTime);
             animator.SetFloat("Y", localVel.z / maxSpeed, 0.1f, Time.deltaTime);
-            animator.SetBool("Move", localVel.magnitude != 0);
+            animator.SetBool("Move", h != 0 || v != 0);
 
             // Face movement direction (optional)
             Vector3 flatVel = new Vector3(_velocity.x, 0, _velocity.z);
@@ -94,7 +94,8 @@ namespace HipWhipGame {
             _buffer.Prune();
 
             // Idle animation fallback
-            if (_fsm.State == FighterState.Idle && animator && animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") == false)
+            if (_fsm.State == FighterState.Idle && animator && animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") == false
+                && animator.GetCurrentAnimatorStateInfo(0).IsName("Walk") == false)
             {
                 Debug.Log("Switching to Idle animation");
                 animator.Play("Idle", 0, 0);

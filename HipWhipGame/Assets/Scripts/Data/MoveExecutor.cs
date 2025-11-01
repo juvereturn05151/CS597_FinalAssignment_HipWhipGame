@@ -7,7 +7,6 @@ Copyright:    (c) 2025 DigiPen Institute of Technology. All rights reserved.
 using System.Collections;
 using UnityEngine;
 using static HipWhipGame.Enums;
-using static UnityEngine.Rendering.DebugUI;
 
 namespace HipWhipGame
 {
@@ -37,39 +36,53 @@ namespace HipWhipGame
             Debug.Log($"Executing move: {move.moveName}");
 
             int totalFrames = move.startup + move.active + move.recovery;
-
-            // ensure deterministic frame timing (60 FPS)
             WaitForSeconds waitFrame = new WaitForSeconds(1f / 60f);
 
-            // disable root motion if using custom movement
+            // Disable root motion if we’re driving motion manually
             animator.applyRootMotion = !move.overrideRootMotion;
 
             _fsm.SetState(FighterState.Attacking, totalFrames / 60f);
 
-            // play animation directly (no animator links)
+            // Play animation at normalized time 0
             animator.Play(move.animation.name, 0, 0f);
 
             GameObject hb = null;
 
-            // MAIN FRAME LOOP
+            // 
+            // MAIN FRAME LOOP (fixed 60 Hz logic)
+            // 
             for (int currentFrame = 0; currentFrame < totalFrames; currentFrame++)
             {
-                // FRAME-RANGE MOVEMENT  (data-driven)
+                float frameTimer = 0f;
+                float frameDuration = 1f / 60f;
+
+                //  Active-phase displacement only 
                 if (move.overrideRootMotion && move.motionSegments != null)
                 {
                     foreach (var seg in move.motionSegments)
                     {
                         if (currentFrame >= seg.frameStart && currentFrame <= seg.frameEnd)
                         {
+                            // compute perframe target delta
                             Vector3 delta =
                                 transform.forward * seg.forwardSpeed +
                                 Vector3.up * seg.verticalSpeed;
-                            transform.position += delta;
+
+                            // smooth interpolation inside this frame
+                            // (renders smoothly even if camera updates per frame)
+                            while (frameTimer < frameDuration)
+                            {
+                                transform.position += delta * (Time.deltaTime * 60f);
+                                frameTimer += Time.deltaTime;
+                                yield return null; // render frames between logic ticks
+                            }
+
+                            goto SkipFrameWait; // already yielded this frame
                         }
                     }
                 }
 
-                // HITBOX SPAWN (start of active)
+                //  Spawn hitbox at start of active 
                 if (currentFrame == move.startup)
                 {
                     if (move.hitboxPrefab)
@@ -92,20 +105,23 @@ namespace HipWhipGame
                     }
                 }
 
-                // HITBOX DESPAWN (end of active)
+                //  Despawn hitbox at end of active
                 if (currentFrame == move.startup + move.active && hb)
                     Destroy(hb);
 
+                //  Standard wait for non-moving frames
                 yield return waitFrame;
+
+            SkipFrameWait:
+                ; // empty label target
             }
 
-            // ensure cleanup
+            // Cleanup 
             if (hb) Destroy(hb);
 
             if (_fsm.State == FighterState.Attacking)
                 _fsm.SetState(FighterState.Idle);
         }
-
 
         IEnumerator WaitFrames(int frames)
         {
@@ -117,5 +133,4 @@ namespace HipWhipGame
             }
         }
     }
-
 }
