@@ -4,6 +4,7 @@ Author(s):    Ju-ve Chankasemporn
 Copyright:    (c) 2025 DigiPen Institute of Technology. All rights reserved.
 */
 
+using System.Collections.Generic;
 using UnityEngine;
 using static HipWhipGame.Enums;
 
@@ -43,10 +44,9 @@ namespace HipWhipGame
         public AudioClip sfx;
         public GameObject vfxPrefab;
 
-        [Header("Movement During Animation")]
-        public AnimationCurve forwardMovement; // distance per normalized time
-        public AnimationCurve verticalMovement; // optional (for hops)
+        [Header("Movement During Animation (Frame-Range Based)")]
         public bool overrideRootMotion = true;
+        public List<FrameMotion> motionSegments = new List<FrameMotion>();
 
         public float TotalAnimTimeSec => animation ? animation.length : (startup + active + recovery) / 60f;
     }

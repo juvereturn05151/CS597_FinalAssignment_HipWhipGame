@@ -34,46 +34,78 @@ namespace HipWhipGame
 
         IEnumerator DoMove(MoveData move)
         {
-            print($"Executing move: {move.name}");
+            Debug.Log($"Executing move: {move.moveName}");
 
-            _fsm.SetState(FighterState.Attacking, (move.startup + move.active + move.recovery) / 60f);
+            int totalFrames = move.startup + move.active + move.recovery;
 
-            // play anim (no animator links)
+            // ensure deterministic frame timing (60 FPS)
+            WaitForSeconds waitFrame = new WaitForSeconds(1f / 60f);
+
+            // disable root motion if using custom movement
+            animator.applyRootMotion = !move.overrideRootMotion;
+
+            _fsm.SetState(FighterState.Attacking, totalFrames / 60f);
+
+            // play animation directly (no animator links)
             animator.Play(move.animation.name, 0, 0f);
 
-            // Startup
-            yield return WaitFrames(move.startup);
-
-            // Active — spawn hitbox
             GameObject hb = null;
-            if (move.hitboxPrefab)
-            {
-                hb = Instantiate(move.hitboxPrefab, transform);
-                hb.transform.localPosition = move.hitboxLocalPos;
-                hb.transform.localScale = move.hitboxLocalScale;
 
-                var hitbox = hb.GetComponent<Hitbox>();
-                if (hitbox)
+            // MAIN FRAME LOOP
+            for (int currentFrame = 0; currentFrame < totalFrames; currentFrame++)
+            {
+                // FRAME-RANGE MOVEMENT  (data-driven)
+                if (move.overrideRootMotion && move.motionSegments != null)
                 {
-                    hitbox.Init(owner: _fc, move);
-                    hitbox.Activate();
-                    hitbox.SetLifetimeFrames((int)Mathf.Max(1, move.hitboxLifetimeFrames > 0 ? move.hitboxLifetimeFrames : move.active));
+                    foreach (var seg in move.motionSegments)
+                    {
+                        if (currentFrame >= seg.frameStart && currentFrame <= seg.frameEnd)
+                        {
+                            Vector3 delta =
+                                transform.forward * seg.forwardSpeed +
+                                Vector3.up * seg.verticalSpeed;
+                            transform.position += delta;
+                        }
+                    }
                 }
+
+                // HITBOX SPAWN (start of active)
+                if (currentFrame == move.startup)
+                {
+                    if (move.hitboxPrefab)
+                    {
+                        hb = Instantiate(move.hitboxPrefab, transform);
+                        hb.transform.localPosition = move.hitboxLocalPos;
+                        hb.transform.localScale = move.hitboxLocalScale;
+
+                        var hitbox = hb.GetComponent<Hitbox>();
+                        if (hitbox)
+                        {
+                            hitbox.Init(owner: _fc, move);
+                            hitbox.Activate();
+                            hitbox.SetLifetimeFrames(
+                                (int)Mathf.Max(1,
+                                    move.hitboxLifetimeFrames > 0
+                                        ? move.hitboxLifetimeFrames
+                                        : move.active));
+                        }
+                    }
+                }
+
+                // HITBOX DESPAWN (end of active)
+                if (currentFrame == move.startup + move.active && hb)
+                    Destroy(hb);
+
+                yield return waitFrame;
             }
 
-            // Active wait
-            yield return WaitFrames(move.active);
-
-            // Despawn hitbox if still present
+            // ensure cleanup
             if (hb) Destroy(hb);
 
-            // Recovery
-            yield return WaitFrames(move.recovery);
-
-            // Back to idle if not interrupted
             if (_fsm.State == FighterState.Attacking)
                 _fsm.SetState(FighterState.Idle);
         }
+
 
         IEnumerator WaitFrames(int frames)
         {

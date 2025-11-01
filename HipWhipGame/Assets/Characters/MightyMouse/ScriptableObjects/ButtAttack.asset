@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: ButtAttack
   m_EditorClassIdentifier: 
   moveName: ButtAttack
-  animation: {fileID: 7400000, guid: c30308ac8a0cd404893933935f47f7f5, type: 2}
-  startup: 5
-  active: 3
-  recovery: 12
+  animation: {fileID: 7400000, guid: 3e872b87f99018948bb1f87e8d3689db, type: 2}
+  startup: 45
+  active: 15
+  recovery: 83
   damage: 10
   hitstunFrames: 15
   knockback: {x: 2, y: 0.5, z: 0}
@@ -31,34 +31,21 @@ MonoBehaviour:
   hitboxLifetimeFrames: 3
   sfx: {fileID: 0}
   vfxPrefab: {fileID: 0}
-  forwardMovement:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0.015099974
-      value: 0.8912371
-      inSlope: 0.055520978
-      outSlope: 0.055520978
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1.0066528
-      value: 0.94628906
-      inSlope: 0.055520978
-      outSlope: 0.055520978
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  verticalMovement:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
   overrideRootMotion: 1
+  motionSegments:
+  - frameStart: 45
+    frameEnd: 45
+    forwardSpeed: 0.15
+    verticalSpeed: 0.2
+  - frameStart: 46
+    frameEnd: 46
+    forwardSpeed: 0.35
+    verticalSpeed: 0.25
+  - frameStart: 47
+    frameEnd: 47
+    forwardSpeed: 0.5
+    verticalSpeed: 0.2
+  - frameStart: 48
+    frameEnd: 48
+    forwardSpeed: 0.3
+    verticalSpeed: 0.1

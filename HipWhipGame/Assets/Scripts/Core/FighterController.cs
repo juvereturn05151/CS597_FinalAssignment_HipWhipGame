@@ -79,6 +79,12 @@ namespace HipWhipGame {
             _velocity.y -= stats.gravity * Time.deltaTime;
             _cc.Move(_velocity * Time.deltaTime);
 
+            Vector3 localVel = transform.InverseTransformDirection(new Vector3(_velocity.x, 0, _velocity.z));
+            float maxSpeed = Mathf.Max(0.01f, stats.walkSpeed);
+            animator.SetFloat("X", localVel.x / maxSpeed, 0.1f, Time.deltaTime);
+            animator.SetFloat("Y", localVel.z / maxSpeed, 0.1f, Time.deltaTime);
+            animator.SetBool("Move", localVel.magnitude != 0);
+
             // Face movement direction (optional)
             Vector3 flatVel = new Vector3(_velocity.x, 0, _velocity.z);
             if (flatVel.sqrMagnitude > 0.001f) transform.forward = flatVel.normalized;
@@ -90,6 +96,7 @@ namespace HipWhipGame {
             // Idle animation fallback
             if (_fsm.State == FighterState.Idle && animator && animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") == false)
             {
+                Debug.Log("Switching to Idle animation");
                 animator.Play("Idle", 0, 0);
             }
         }
@@ -110,7 +117,6 @@ namespace HipWhipGame {
             //}
             if (_buffer.Consume("ButtAttack") && moves.buttAttack)
             {
-                //Debug.Log("ButtAttack input buffered");
                 GetComponent<MoveExecutor>().PlayMove(moves.buttAttack);
                 return;
             }
