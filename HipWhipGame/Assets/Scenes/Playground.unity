@@ -526,6 +526,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1275173991 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8614550981892037365, guid: 8b31d27e65f9e7344bf5920f27717dc8, type: 3}
+  m_PrefabInstance: {fileID: 451741858}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1276248773
 GameObject:
   m_ObjectHideFlags: 0
@@ -646,6 +651,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MightyMouse
       objectReference: {fileID: 0}
+    - target: {fileID: 8388918208163729763, guid: a87b40d48778fe949b203376846abed4, type: 3}
+      propertyPath: lookAtTarget
+      value: 
+      objectReference: {fileID: 1275173991}
     - target: {fileID: 8614550981892037365, guid: a87b40d48778fe949b203376846abed4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

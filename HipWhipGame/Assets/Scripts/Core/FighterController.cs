@@ -74,8 +74,13 @@ namespace HipWhipGame
             // --- Base movement ---
             if (_fsm.State == FighterState.Idle || _fsm.State == FighterState.Jump)
             {
+                // Move relative to facing direction (look-at target)
                 Vector3 input = new Vector3(h, 0, v).normalized;
-                Vector3 move = input * stats.walkSpeed;
+
+                // Convert input to world direction based on facing
+                Vector3 moveDir = (transform.forward * input.z) + (transform.right * input.x);
+                Vector3 move = moveDir * stats.walkSpeed;
+
                 _velocity.x = move.x;
                 _velocity.z = move.z;
 
@@ -115,9 +120,23 @@ namespace HipWhipGame
             animator.SetBool("Move", h != 0 || v != 0);
 
             // --- Face movement direction (optional) ---
-            Vector3 flatVel = new Vector3(_velocity.x + _externalForce.x, 0, _velocity.z + _externalForce.z);
-            if (flatVel.sqrMagnitude > 0.001f)
-                transform.forward = flatVel.normalized;
+            if (lookAtTarget)
+            {
+                Vector3 dir = lookAtTarget.position - transform.position;
+                dir.y = 0f; // keep rotation flat
+                if (dir.sqrMagnitude > 0.001f)
+                {
+                    Quaternion targetRot = Quaternion.LookRotation(dir);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, 10f * Time.deltaTime);
+                }
+            }
+            else
+            {
+                // fallback to velocity facing if no target assigned
+                Vector3 flatVel = new Vector3(_velocity.x + _externalForce.x, 0, _velocity.z + _externalForce.z);
+                if (flatVel.sqrMagnitude > 0.001f)
+                    transform.forward = flatVel.normalized;
+            }
 
             // --- Attacks (data-driven) ---
             TryStartMove();
