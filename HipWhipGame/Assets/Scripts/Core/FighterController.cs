@@ -14,12 +14,15 @@ namespace HipWhipGame
     [RequireComponent(typeof(InputBuffer))]
     public class FighterController : MonoBehaviour
     {
+        public int playerIndex;
+
         public enum ControlType { Player, Dummy, AI }
 
         [Header("Control Settings")]
         public ControlType controlType = ControlType.Player;
         [Tooltip("If dummy, optionally face this target every frame.")]
         public Transform lookAtTarget;
+        public Camera cam;
 
         [Header("Core Data")]
         public FighterStats stats;
@@ -29,6 +32,8 @@ namespace HipWhipGame
         CharacterController _cc;
         FighterStateMachine _fsm;
         InputBuffer _buffer;
+
+        Vector2 movementInput;
 
         Vector3 _velocity;        // player-controlled movement + gravity
         Vector3 _externalForce;   // knockback, pushback, etc.
@@ -54,7 +59,7 @@ namespace HipWhipGame
             // --- Input (temporary / legacy system) ---
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                _buffer.Push("ButtAttack");
+                
             }
 
             // --- State tick ---
@@ -67,8 +72,8 @@ namespace HipWhipGame
             float h = 0f, v = 0f;
             if (controlType == ControlType.Player)
             {
-                h = Input.GetAxisRaw("Horizontal");
-                v = Input.GetAxisRaw("Vertical");
+                h = movementInput.x;
+                v = movementInput.y;
             }
 
             // --- Base movement ---
@@ -149,6 +154,16 @@ namespace HipWhipGame
             {
                 animator.Play("Idle", 0, 0);
             }
+        }
+
+        public void OnMove(Vector2 moveVector)
+        {
+            movementInput = moveVector;
+        }
+
+        public void PerformButtAttack() 
+        {
+            _buffer.Push("ButtAttack");
         }
 
         // 
