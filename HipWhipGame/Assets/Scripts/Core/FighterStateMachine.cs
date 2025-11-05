@@ -13,6 +13,7 @@ namespace HipWhipGame
     {
         public FighterState State { get; private set; } = FighterState.Idle;
         float _stateTimer;
+        float _hitstunTimer;
 
         public void SetState(FighterState newState, float lockTime = 0f)
         {
@@ -20,23 +21,36 @@ namespace HipWhipGame
             _stateTimer = lockTime;
         }
 
-        public bool CanStartMove() => State == FighterState.Idle || State == FighterState.Jump;
+        public bool CanStartMove() => State == FighterState.Idle;
 
         public void Tick(float dt)
         {
-            if (_stateTimer > 0f)
+            switch (State)
             {
-                _stateTimer -= dt;
-                if (_stateTimer <= 0f && (State == FighterState.Attacking || State == FighterState.Hitstun)) 
-                {
-                    State = FighterState.Idle;
-                } 
+                case FighterState.Hitstun:
+                    _hitstunTimer -= dt;
+                    if (_hitstunTimer <= 0f)
+                        SetState(FighterState.Idle);
+                    break;
+                case FighterState.Attacking:
+                    if (_stateTimer > 0f)
+                    {
+                        _stateTimer -= dt;
+                        if (_stateTimer <= 0f)
+                        {
+                            State = FighterState.Idle;
+                        }
+                    }
+                    break;
             }
+
+
         }
 
         public void EnterHitstun(float duration)
         {
             SetState(FighterState.Hitstun, duration);
+            _hitstunTimer = duration;
         }
     }
 

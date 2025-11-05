@@ -24,7 +24,8 @@ namespace HipWhipGame
 
         [Header("Hit Properties")]
         public int damage = 10;
-        public float hitstunFrames = 15f;
+        public int hitstunFrames = 15;
+        public int blockstunFrames;
         public Vector3 knockback = new Vector3(2f, 0.5f, 0f); // world-space or local-forward scaled
         public GuardType guardType = GuardType.Block;
         public float pushbackOnHit = 1.5f;
@@ -47,6 +48,9 @@ namespace HipWhipGame
         [Header("Movement During Animation (Frame-Range Based)")]
         public bool overrideRootMotion = true;
         public List<FrameMotion> motionSegments = new List<FrameMotion>();
+
+        [HideInInspector] public float plusOnHit;
+        [HideInInspector] public float plusOnBlock;
 
         public float TotalAnimTimeSec => animation ? animation.length : (startup + active + recovery) / 60f;
     }

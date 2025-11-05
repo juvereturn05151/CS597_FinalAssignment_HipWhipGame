@@ -32,6 +32,9 @@ namespace HipWhipGame
                 attacker.ApplyKnockback(recoilDir, 1f);
             }
 
+            float advantage = move.hitstunFrames - move.recovery;
+            Debug.Log($"{move.moveName}: {attacker.name} is {(advantage >= 0 ? "+" : "")}{advantage} on hit.");
+
             // FX/SFX
             if (move.vfxPrefab)
                 Object.Instantiate(move.vfxPrefab, hitboxTransform.position, Quaternion.identity);
