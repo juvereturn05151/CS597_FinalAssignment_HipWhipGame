@@ -18,7 +18,7 @@ MonoBehaviour:
   active: 30
   recovery: 17
   damage: 10
-  hitstunFrames: 35
+  hitstunFrames: 27
   blockstunFrames: 0
   knockback: {x: 0, y: 0, z: 5}
   guardType: 0
@@ -27,8 +27,8 @@ MonoBehaviour:
   canCancelOnBlock: 0
   cancelInto: []
   hitboxPrefab: {fileID: 3618810959523525117, guid: 4bdbf13d51dfeff44b41a7396839cbb7, type: 3}
-  hitboxLocalPos: {x: 0, y: 0.5, z: 0.72}
-  hitboxLocalScale: {x: 0.5, y: 0.45, z: 0.5}
+  hitboxLocalPos: {x: 0, y: 0.5, z: 0.35}
+  hitboxLocalScale: {x: 1.5, y: 0.5, z: 1.5}
   hitboxLifetimeFrames: 30
   sfx: {fileID: 0}
   vfxPrefab: {fileID: 0}
