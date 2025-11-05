@@ -36,20 +36,20 @@ MonoBehaviour:
   - frameStart: 10
     frameEnd: 12
     forwardSpeed: 0.05
-    verticalSpeed: 0.04
+    verticalSpeed: 0
   - frameStart: 13
     frameEnd: 13
     forwardSpeed: 0.2
-    verticalSpeed: 0.1
+    verticalSpeed: -0.02
   - frameStart: 14
     frameEnd: 15
     forwardSpeed: 0.08
-    verticalSpeed: 0.03
+    verticalSpeed: -0.03
   - frameStart: 16
     frameEnd: 18
     forwardSpeed: 0.02
-    verticalSpeed: -0.03
+    verticalSpeed: -0.01
   - frameStart: 19
     frameEnd: 24
     forwardSpeed: 0
-    verticalSpeed: -0.05
+    verticalSpeed: 0

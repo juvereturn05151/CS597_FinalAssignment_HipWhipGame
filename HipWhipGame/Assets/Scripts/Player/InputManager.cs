@@ -25,19 +25,19 @@ public class InputManager : MonoBehaviour
 
     public void OnButtonEast(InputAction.CallbackContext context)
     {
-        //if (sumo == null)
-        //{
-        //    return;
-        //}
+        if (fighterController == null)
+        {
+            return;
+        }
 
-        //if (context.performed)
-        //{
-        //    sumo.TrySumoHeadbutt();
-        //}
-        //else if (context.canceled)
-        //{
-        //    //Debug.Log("Button South Released!");
-        //}
+        if (context.started)
+        {
+            fighterController.PerformButtLowAttack();
+        }
+        else if (context.canceled)
+        {
+
+        }
     }
 
     public void OnButtonWest(InputAction.CallbackContext context)

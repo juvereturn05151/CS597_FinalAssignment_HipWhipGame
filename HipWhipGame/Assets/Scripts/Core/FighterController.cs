@@ -171,6 +171,10 @@ namespace HipWhipGame
             _buffer.Push("ButtAttackMidPoke");
         }
 
+        public void PerformButtLowAttack()
+        {
+            _buffer.Push("ButtLowAttack");
+        }
         
 
         // 
@@ -228,6 +232,13 @@ namespace HipWhipGame
                 GetComponent<MoveExecutor>().PlayMove(moves.buttAttackMidPoke);
                 return;
             }
+
+            if (_buffer.Consume("ButtLowAttack") && moves.buttLowAttack)
+            {
+                GetComponent<MoveExecutor>().PlayMove(moves.buttLowAttack);
+                return;
+            }
+            
         }
 
         // 
