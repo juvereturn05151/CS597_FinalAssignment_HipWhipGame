@@ -21,22 +21,23 @@ namespace HipWhipGame
             // Hitstun
             defender.ApplyHitstun(move.hitstunFrames);
 
-            // Knockback direction: use attacker forward
-            Vector3 dir = attacker.transform.forward.normalized;
-            Vector3 worldKnock = new Vector3(move.knockback.x * dir.x,
-                                             move.knockback.y,
-                                             move.knockback.z * dir.z);
+            // Correct knockback calculation
+            Vector3 worldKnock = attacker.transform.TransformDirection(move.knockback);
             defender.ApplyKnockback(worldKnock, 1f);
 
-            // Pushback on attacker (recoil forward/back)
+            // Pushback on attacker (recoil)
             if (move.pushbackOnHit > 0f)
             {
-                attacker.ApplyKnockback(-dir * move.pushbackOnHit, 1f);
+                Vector3 recoilDir = -attacker.transform.forward * move.pushbackOnHit;
+                attacker.ApplyKnockback(recoilDir, 1f);
             }
 
-            // Optional FX/SFX
-            if (move.vfxPrefab) Object.Instantiate(move.vfxPrefab, hitboxTransform.position, Quaternion.identity);
-            if (move.sfx) AudioSource.PlayClipAtPoint(move.sfx, hitboxTransform.position);
+            // FX/SFX
+            if (move.vfxPrefab)
+                Object.Instantiate(move.vfxPrefab, hitboxTransform.position, Quaternion.identity);
+
+            if (move.sfx)
+                AudioSource.PlayClipAtPoint(move.sfx, hitboxTransform.position);
         }
     }
 }
