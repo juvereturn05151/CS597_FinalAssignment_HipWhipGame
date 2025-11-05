@@ -156,9 +156,14 @@ namespace HipWhipGame
             movementInput = moveVector;
         }
 
-        public void PerformButtAttack() 
+        public void PerformPunchFast()
         {
-            _buffer.Push("ButtAttack");
+            _buffer.Push("PunchFast");
+        }
+
+        public void PerformButtAttackHopKick() 
+        {
+            _buffer.Push("buttAttackHopKick");
         }
 
         // 
@@ -199,9 +204,15 @@ namespace HipWhipGame
         {
             if (!_fsm.CanStartMove()) return;
 
-            if (_buffer.Consume("ButtAttack") && moves.buttAttack)
+            if (_buffer.Consume("buttAttackHopKick") && moves.buttAttackHopKick)
             {
-                GetComponent<MoveExecutor>().PlayMove(moves.buttAttack);
+                GetComponent<MoveExecutor>().PlayMove(moves.buttAttackHopKick);
+                return;
+            }
+
+            if (_buffer.Consume("PunchFast") && moves.punchFast)
+            {
+                GetComponent<MoveExecutor>().PlayMove(moves.punchFast);
                 return;
             }
         }

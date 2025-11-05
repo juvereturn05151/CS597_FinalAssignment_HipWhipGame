@@ -13,4 +13,9 @@ MonoBehaviour:
   m_Name: MightMouse
   m_EditorClassIdentifier: 
   idle: {fileID: 11400000, guid: 6ccfe0a43c804d24b968e3c4915e184d, type: 2}
-  buttAttack: {fileID: 11400000, guid: f29d6fd41ad019349a6c0fd61d1529e0, type: 2}
+  hitStun: {fileID: 11400000, guid: 958988cde2dbc664394e2bb81b182229, type: 2}
+  punchFast: {fileID: 11400000, guid: 0f619b3241cf21a4892c7083a698263f, type: 2}
+  buttAttackHopKick: {fileID: 11400000, guid: f29d6fd41ad019349a6c0fd61d1529e0, type: 2}
+  buttAttackMidPoke: {fileID: 0}
+  buttTornado: {fileID: 0}
+  buttLowAttack: {fileID: 0}

@@ -11,10 +11,13 @@ using UnityEngine;
 public class MoveDatabase : ScriptableObject
 {
     public MoveData idle;    // optional, for reference
-    public MoveData buttAttack;
     public MoveData hitStun;
-    //public MoveData light;
-    //public MoveData heavy;
+    public MoveData punchFast;
+    public MoveData buttAttackHopKick;
+    public MoveData buttAttackMidPoke;
+    public MoveData buttTornado;
+    public MoveData buttLowAttack;
+
     //public MoveData special;
     //public MoveData jumpAttack;
 }

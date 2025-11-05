@@ -42,18 +42,18 @@ public class InputManager : MonoBehaviour
 
     public void OnButtonWest(InputAction.CallbackContext context)
     {
-        //if (sumo == null)
-        //{
-        //    return;
-        //}
+        if (fighterController == null)
+        {
+            return;
+        }
 
         if (context.performed)
         {
-
+            fighterController.PerformPunchFast();
         }
         else if (context.canceled)
         {
-            //Debug.Log("Button South Released!");
+            
         }
     }
 
@@ -83,7 +83,7 @@ public class InputManager : MonoBehaviour
 
         if (context.performed)
         {
-            fighterController.PerformButtAttack();
+            fighterController.PerformButtAttackHopKick();
         }
         else if (context.canceled)
         {
