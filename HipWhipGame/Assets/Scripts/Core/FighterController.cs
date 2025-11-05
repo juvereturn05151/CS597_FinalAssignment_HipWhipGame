@@ -23,6 +23,7 @@ namespace HipWhipGame
         [Tooltip("If dummy, optionally face this target every frame.")]
         public Transform lookAtTarget;
         public Camera cam;
+        public Pushbox pushbox;
 
         [Header("Core Data")]
         public FighterStats stats;
