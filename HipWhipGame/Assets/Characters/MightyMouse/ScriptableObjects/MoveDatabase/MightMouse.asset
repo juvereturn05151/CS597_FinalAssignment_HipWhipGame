@@ -16,6 +16,6 @@ MonoBehaviour:
   hitStun: {fileID: 11400000, guid: 958988cde2dbc664394e2bb81b182229, type: 2}
   punchFast: {fileID: 11400000, guid: 0f619b3241cf21a4892c7083a698263f, type: 2}
   buttAttackHopKick: {fileID: 11400000, guid: f29d6fd41ad019349a6c0fd61d1529e0, type: 2}
-  buttAttackMidPoke: {fileID: 0}
+  buttAttackMidPoke: {fileID: 11400000, guid: b6e91ab3e4002bf489af2e550b51f555, type: 2}
   buttTornado: {fileID: 0}
   buttLowAttack: {fileID: 0}

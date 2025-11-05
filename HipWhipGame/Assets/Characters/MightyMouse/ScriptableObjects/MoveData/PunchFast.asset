@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveName: PunchFast
   animation: {fileID: 7400000, guid: c8a3e70c2801e8047927cc9d5382368b, type: 2}
-  startup: 12
+  startup: 10
   active: 20
   recovery: 31
   damage: 10

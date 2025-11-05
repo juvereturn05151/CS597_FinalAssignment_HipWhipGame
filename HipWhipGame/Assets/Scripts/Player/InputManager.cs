@@ -59,19 +59,19 @@ public class InputManager : MonoBehaviour
 
     public void OnButtonNorth(InputAction.CallbackContext context)
     {
-        //if (sumo == null)
-        //{
-        //    return;
-        //}
+        if (fighterController == null)
+        {
+            return;
+        }
 
-        //if (context.started)
-        //{
-        //    sumo.OnGrow(true);
-        //}
-        //else if (context.canceled)
-        //{
-        //    sumo.OnGrow(false);
-        //}
+        if (context.started)
+        {
+            fighterController.PerformButtAttackMidPoke();
+        }
+        else if (context.canceled)
+        {
+            
+        }
     }
 
     public void OnButtonSouth(InputAction.CallbackContext context)

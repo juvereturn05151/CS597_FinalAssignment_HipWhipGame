@@ -163,8 +163,15 @@ namespace HipWhipGame
 
         public void PerformButtAttackHopKick() 
         {
-            _buffer.Push("buttAttackHopKick");
+            _buffer.Push("ButtAttackHopKick");
         }
+
+        public void PerformButtAttackMidPoke()
+        {
+            _buffer.Push("ButtAttackMidPoke");
+        }
+
+        
 
         // 
         // DUMMY LOGIC
@@ -204,7 +211,7 @@ namespace HipWhipGame
         {
             if (!_fsm.CanStartMove()) return;
 
-            if (_buffer.Consume("buttAttackHopKick") && moves.buttAttackHopKick)
+            if (_buffer.Consume("ButtAttackHopKick") && moves.buttAttackHopKick)
             {
                 GetComponent<MoveExecutor>().PlayMove(moves.buttAttackHopKick);
                 return;
@@ -213,6 +220,12 @@ namespace HipWhipGame
             if (_buffer.Consume("PunchFast") && moves.punchFast)
             {
                 GetComponent<MoveExecutor>().PlayMove(moves.punchFast);
+                return;
+            }
+
+            if (_buffer.Consume("ButtAttackMidPoke") && moves.buttAttackMidPoke) 
+            {
+                GetComponent<MoveExecutor>().PlayMove(moves.buttAttackMidPoke);
                 return;
             }
         }
