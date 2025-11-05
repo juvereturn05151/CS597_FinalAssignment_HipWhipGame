@@ -56,12 +56,6 @@ namespace HipWhipGame
                 return;
             }
 
-            // --- Input (temporary / legacy system) ---
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                
-            }
-
             // --- State tick ---
             _fsm.Tick(Time.deltaTime);
 
