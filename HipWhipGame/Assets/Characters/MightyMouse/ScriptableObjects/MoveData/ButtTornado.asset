@@ -18,7 +18,8 @@ MonoBehaviour:
   active: 30
   recovery: 17
   damage: 10
-  hitstunFrames: 15
+  hitstunFrames: 35
+  blockstunFrames: 0
   knockback: {x: 0, y: 0, z: 5}
   guardType: 0
   pushbackOnHit: 1
@@ -33,3 +34,5 @@ MonoBehaviour:
   vfxPrefab: {fileID: 0}
   overrideRootMotion: 1
   motionSegments: []
+  plusOnHit: 0
+  plusOnBlock: 0

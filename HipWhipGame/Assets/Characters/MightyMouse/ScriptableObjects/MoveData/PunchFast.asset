@@ -15,11 +15,12 @@ MonoBehaviour:
   moveName: PunchFast
   animation: {fileID: 7400000, guid: c8a3e70c2801e8047927cc9d5382368b, type: 2}
   startup: 10
-  active: 20
-  recovery: 31
+  active: 5
+  recovery: 20
   damage: 10
-  hitstunFrames: 15
-  knockback: {x: 0, y: 0, z: 5}
+  hitstunFrames: 27
+  blockstunFrames: 0
+  knockback: {x: 0, y: 0, z: 3}
   guardType: 0
   pushbackOnHit: 1
   canCancelOnHit: 0
@@ -28,8 +29,10 @@ MonoBehaviour:
   hitboxPrefab: {fileID: 3618810959523525117, guid: 4bdbf13d51dfeff44b41a7396839cbb7, type: 3}
   hitboxLocalPos: {x: 0, y: 0.5, z: 0.72}
   hitboxLocalScale: {x: 0.5, y: 0.45, z: 0.5}
-  hitboxLifetimeFrames: 22
+  hitboxLifetimeFrames: 5
   sfx: {fileID: 0}
   vfxPrefab: {fileID: 0}
   overrideRootMotion: 1
   motionSegments: []
+  plusOnHit: 0
+  plusOnBlock: 0

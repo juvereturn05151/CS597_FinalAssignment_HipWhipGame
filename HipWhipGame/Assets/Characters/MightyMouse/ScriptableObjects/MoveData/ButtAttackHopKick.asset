@@ -18,7 +18,8 @@ MonoBehaviour:
   active: 22
   recovery: 83
   damage: 10
-  hitstunFrames: 15
+  hitstunFrames: 90
+  blockstunFrames: 0
   knockback: {x: 0, y: 0, z: 40}
   guardType: 0
   pushbackOnHit: 1
@@ -49,3 +50,5 @@ MonoBehaviour:
     frameEnd: 25
     forwardSpeed: 0.3
     verticalSpeed: 0.1
+  plusOnHit: 0
+  plusOnBlock: 0

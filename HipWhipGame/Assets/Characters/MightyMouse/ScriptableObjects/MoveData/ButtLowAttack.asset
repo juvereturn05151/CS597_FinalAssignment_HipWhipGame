@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: ButtLowAttack
   m_EditorClassIdentifier: 
   moveName: ButtLowAttack
-  animation: {fileID: 7400000, guid: 5fe65b213ab143f41bdd710354f343f4, type: 2}
+  animation: {fileID: 7400000, guid: d31991a741e4a8b4d9a5b1c2ac043679, type: 2}
   startup: 17
-  active: 17
-  recovery: 57
+  active: 10
+  recovery: 29
   damage: 10
-  hitstunFrames: 15
+  hitstunFrames: 31
+  blockstunFrames: 0
   knockback: {x: 0, y: 0, z: 5}
   guardType: 0
   pushbackOnHit: 1
@@ -26,10 +27,12 @@ MonoBehaviour:
   canCancelOnBlock: 0
   cancelInto: []
   hitboxPrefab: {fileID: 3618810959523525117, guid: 4bdbf13d51dfeff44b41a7396839cbb7, type: 3}
-  hitboxLocalPos: {x: 0, y: 0.5, z: 0.72}
-  hitboxLocalScale: {x: 0.5, y: 0.45, z: 0.5}
-  hitboxLifetimeFrames: 17
+  hitboxLocalPos: {x: 0, y: 0, z: 0.4}
+  hitboxLocalScale: {x: 1, y: 0.45, z: 0.5}
+  hitboxLifetimeFrames: 10
   sfx: {fileID: 0}
   vfxPrefab: {fileID: 0}
   overrideRootMotion: 1
   motionSegments: []
+  plusOnHit: 0
+  plusOnBlock: 0
