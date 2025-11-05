@@ -17,5 +17,5 @@ MonoBehaviour:
   punchFast: {fileID: 11400000, guid: 0f619b3241cf21a4892c7083a698263f, type: 2}
   buttAttackHopKick: {fileID: 11400000, guid: f29d6fd41ad019349a6c0fd61d1529e0, type: 2}
   buttAttackMidPoke: {fileID: 11400000, guid: b6e91ab3e4002bf489af2e550b51f555, type: 2}
-  buttTornado: {fileID: 0}
+  buttTornado: {fileID: 11400000, guid: dcf97f4dc30e1104ca1f48c2f4cd8d8c, type: 2}
   buttLowAttack: {fileID: 11400000, guid: 30d94c662f1351344aedfa7d92dd76b5, type: 2}
