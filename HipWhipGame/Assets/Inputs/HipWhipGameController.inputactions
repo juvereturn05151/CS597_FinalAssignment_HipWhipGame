@@ -1,4 +1,5 @@
 {
+    "version": 1,
     "name": "HipWhipGameController",
     "maps": [
         {
@@ -54,6 +55,15 @@
                     "name": "ButtonEast",
                     "type": "Button",
                     "id": "b8c6ca78-4183-47f6-b20d-82dfeac69f98",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RightShoulder",
+                    "type": "Button",
+                    "id": "3279c734-d89b-4b04-85cd-817b792864ad",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -280,6 +290,28 @@
                     "action": "LeftStick",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "e2ca58fa-d825-4cca-aa5d-0573b86083e6",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gameplay;Gamepad",
+                    "action": "RightShoulder",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d5eb85cf-689f-4d52-bfee-08aba051bb77",
+                    "path": "<Keyboard>/z",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gameplay;Keyboard&Mouse",
+                    "action": "RightShoulder",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

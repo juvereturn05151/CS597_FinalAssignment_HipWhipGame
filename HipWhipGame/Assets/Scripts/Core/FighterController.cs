@@ -175,7 +175,11 @@ namespace HipWhipGame
         {
             _buffer.Push("ButtLowAttack");
         }
-        
+
+        public void PerformButtTornado()
+        {
+            _buffer.Push("ButtTornado");
+        }
 
         // 
         // DUMMY LOGIC
@@ -238,7 +242,15 @@ namespace HipWhipGame
                 GetComponent<MoveExecutor>().PlayMove(moves.buttLowAttack);
                 return;
             }
+
+            if (_buffer.Consume("ButtTornado") && moves.buttTornado)
+            {
+                GetComponent<MoveExecutor>().PlayMove(moves.buttTornado);
+                return;
+            }
             
+
+
         }
 
         // 

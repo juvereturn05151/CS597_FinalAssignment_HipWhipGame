@@ -91,6 +91,23 @@ public class InputManager : MonoBehaviour
         }
     }
 
+    public void OnRightShoulder(InputAction.CallbackContext context)
+    {
+        if (fighterController == null)
+        {
+            return;
+        }
+
+        if (context.performed)
+        {
+            fighterController.PerformButtTornado();
+        }
+        else if (context.canceled)
+        {
+
+        }
+    }
+
     public void OnShakeController()
     {
         //if (sumo == null)

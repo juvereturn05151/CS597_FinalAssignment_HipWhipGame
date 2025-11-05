@@ -154,6 +154,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: b8c6ca78-4183-47f6-b20d-82dfeac69f98
     m_ActionName: 'Player/ButtonEast[/Keyboard/c]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3334124097371664486}
+        m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
+        m_MethodName: OnRightShoulder
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 3279c734-d89b-4b04-85cd-817b792864ad
+    m_ActionName: 'Player/RightShoulder[/XInputControllerWindows/rightShoulder,/Keyboard/z]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -172,3 +188,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerIndex: 0
+  fighterController: {fileID: 0}

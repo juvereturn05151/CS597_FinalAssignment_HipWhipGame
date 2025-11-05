@@ -18,4 +18,4 @@ MonoBehaviour:
   buttAttackHopKick: {fileID: 11400000, guid: f29d6fd41ad019349a6c0fd61d1529e0, type: 2}
   buttAttackMidPoke: {fileID: 11400000, guid: b6e91ab3e4002bf489af2e550b51f555, type: 2}
   buttTornado: {fileID: 0}
-  buttLowAttack: {fileID: 0}
+  buttLowAttack: {fileID: 11400000, guid: 30d94c662f1351344aedfa7d92dd76b5, type: 2}
