@@ -25,6 +25,9 @@ namespace HipWhipGame
         [SerializeField]
         private InputBuffer inputBuffer;
         public InputBuffer InputBuffer => inputBuffer;
+        [SerializeField]
+        private CharacterController characterController;
+        public CharacterController CharacterController => characterController;
 
         void Awake()
         {
@@ -33,6 +36,7 @@ namespace HipWhipGame
             if (!fighterController) fighterController = GetComponent<FighterController>();
             if (!inputBuffer) inputBuffer = GetComponent<InputBuffer>();
             if (!cam) cam = GetComponentInChildren<Camera>();
+            if (!characterController) characterController = GetComponent<CharacterController>();
 
             foreach (var injectable in GetComponents<IFighterComponentInjectable>())
             {

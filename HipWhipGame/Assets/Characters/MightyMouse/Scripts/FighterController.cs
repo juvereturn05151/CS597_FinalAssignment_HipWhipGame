@@ -9,11 +9,11 @@ using static HipWhipGame.Enums;
 
 namespace HipWhipGame
 {
-    [RequireComponent(typeof(CharacterController))]
-    [RequireComponent(typeof(FighterStateMachine))]
-    [RequireComponent(typeof(InputBuffer))]
-    public class FighterController : MonoBehaviour
+    [RequireComponent(typeof(FighterComponentManager))]
+    public class FighterController : MonoBehaviour, IFighterComponentInjectable
     {
+        private FighterComponentManager fighterComponentManager;
+
         public int playerIndex;
 
         public enum ControlType { Player, Dummy, AI }
@@ -22,17 +22,11 @@ namespace HipWhipGame
         public ControlType controlType = ControlType.Player;
         [Tooltip("If dummy, optionally face this target every frame.")]
         public Transform lookAtTarget;
-        public Camera cam;
         public Pushbox pushbox;
 
         [Header("Core Data")]
         public FighterStats stats;
-        public Animator animator;
         public MoveDatabase moves;
-
-        CharacterController _cc;
-        FighterStateMachine _fsm;
-        InputBuffer _buffer;
 
         Vector2 movementInput;
 
@@ -41,12 +35,9 @@ namespace HipWhipGame
         bool _isGrounded;
         public bool isBlocking = false;
 
-        void Awake()
+        public void Inject(FighterComponentManager fighterComponentManager)
         {
-            _cc = GetComponent<CharacterController>();
-            _fsm = GetComponent<FighterStateMachine>();
-            _buffer = GetComponent<InputBuffer>();
-            if (!animator) animator = GetComponentInChildren<Animator>();
+            this.fighterComponentManager = fighterComponentManager;
         }
 
         void Update()
@@ -59,35 +50,33 @@ namespace HipWhipGame
             }
 
             // --- State tick ---
-            _fsm.Tick(Time.deltaTime);
+            fighterComponentManager.FighterStateMachine.Tick(Time.deltaTime);
 
             // --- Ground check ---
-            _isGrounded = _cc.isGrounded;
+            _isGrounded = fighterComponentManager.CharacterController.isGrounded;
 
-
-
-            if (_fsm.State == FighterState.BlockStun) 
+            if (fighterComponentManager.FighterStateMachine.State == FighterState.BlockStun) 
             {
                 _velocity = Vector3.zero;
                 _externalForce = Vector3.zero;
-                _cc.Move(Vector3.zero);
+                fighterComponentManager.CharacterController.Move(Vector3.zero);
                 return;
             }
 
-            if (_fsm.State != FighterState.BlockStun) // don’t interrupt blockstun
+            if (fighterComponentManager.FighterStateMachine.State != FighterState.BlockStun) // don’t interrupt blockstun
             {
-                if (isBlocking && _fsm.CanBlock())
+                if (isBlocking && fighterComponentManager.FighterStateMachine.CanBlock())
                 {
                     StartBlock();
                 }
-                else if (!isBlocking && _fsm.State == FighterState.Blocking)
+                else if (!isBlocking && fighterComponentManager.FighterStateMachine.State == FighterState.Blocking)
                 {
                     EndBlock();
                 }
             }
 
             // Skip movement while blocking
-            if (_fsm.State == FighterState.Blocking)
+            if (fighterComponentManager.FighterStateMachine.State == FighterState.Blocking)
             {
                 HandleBlockBehavior();
                 return;
@@ -102,7 +91,7 @@ namespace HipWhipGame
             }
 
             // --- Base movement ---
-            if (_fsm.State == FighterState.Idle || _fsm.State == FighterState.Jump)
+            if (fighterComponentManager.FighterStateMachine.State == FighterState.Idle || fighterComponentManager.FighterStateMachine.State == FighterState.Jump)
             {
                 // Move relative to facing direction (look-at target)
                 Vector3 input = new Vector3(h, 0, v).normalized;
@@ -130,7 +119,7 @@ namespace HipWhipGame
             Vector3 totalMove = _velocity + _externalForce;
 
             // --- Move character ---
-            _cc.Move(totalMove * Time.deltaTime);
+            fighterComponentManager.CharacterController.Move(totalMove * Time.deltaTime);
 
             // --- External force decay (smooth pushback slide) ---
             _externalForce = Vector3.Lerp(_externalForce, Vector3.zero, Time.deltaTime * 8f);
@@ -138,11 +127,11 @@ namespace HipWhipGame
             // --- Animator blend ---
             Vector3 localVel = transform.InverseTransformDirection(new Vector3(_velocity.x, 0, _velocity.z));
             float maxSpeed = Mathf.Max(0.01f, stats.walkSpeed);
-            animator.SetFloat("X", localVel.x / maxSpeed, 0.1f, Time.deltaTime);
-            animator.SetFloat("Y", localVel.z / maxSpeed, 0.1f, Time.deltaTime);
-            animator.SetBool("Move", h != 0 || v != 0);
+            fighterComponentManager.Animator.SetFloat("X", localVel.x / maxSpeed, 0.1f, Time.deltaTime);
+            fighterComponentManager.Animator.SetFloat("Y", localVel.z / maxSpeed, 0.1f, Time.deltaTime);
+            fighterComponentManager.Animator.SetBool("Move", h != 0 || v != 0);
 
-            // --- Face movement direction (optional) ---
+            // --- Face movement direction
             if (lookAtTarget)
             {
                 Vector3 dir = lookAtTarget.position - transform.position;
@@ -162,43 +151,41 @@ namespace HipWhipGame
             }
 
             // --- Attacks (data-driven) ---
-            if (_fsm.State != FighterState.Hitstun) 
+            if (fighterComponentManager.FighterStateMachine.State != FighterState.Hitstun) 
             {
                 TryStartMove();
 
             }
-            _buffer.Prune();
+            fighterComponentManager.InputBuffer.Prune();
 
 
             // --- Idle fallback ---
-            if (_fsm.State == FighterState.Idle && animator &&
-                !animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") &&
-                !animator.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
+            if (fighterComponentManager.FighterStateMachine.State == FighterState.Idle && fighterComponentManager.Animator &&
+                !fighterComponentManager.Animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") &&
+                !fighterComponentManager.Animator.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
             {
-                animator.Play("Idle", 0, 0);
-                animator.SetBool("Block", false);
+                fighterComponentManager.Animator.Play("Idle", 0, 0);
+                fighterComponentManager.Animator.SetBool("Block", false);
             }
         }
 
         void StartBlock()
         {
-            _fsm.SetState(FighterState.Blocking);
+            fighterComponentManager.FighterStateMachine.SetState(FighterState.Blocking);
             _velocity = Vector3.zero;
-            if (animator) 
+            if (fighterComponentManager.Animator) 
             {
-                animator.SetBool("Block", true);
+                fighterComponentManager.Animator.SetBool("Block", true);
             }
-                
-                
         }
 
         void EndBlock()
         {
-            _fsm.SetState(FighterState.Idle);
+            fighterComponentManager.FighterStateMachine.SetState(FighterState.Idle);
 
-            if (animator)
+            if (fighterComponentManager.Animator)
             {
-                animator.SetBool("Block", false);
+                fighterComponentManager.Animator.SetBool("Block", false);
             }
         }
 
@@ -207,7 +194,7 @@ namespace HipWhipGame
             // Stay stationary
             _velocity = Vector3.zero;
             _externalForce = Vector3.zero;
-            _cc.Move(Vector3.zero);
+            fighterComponentManager.CharacterController.Move(Vector3.zero);
 
             // Optionally rotate toward target
             if (lookAtTarget)
@@ -219,7 +206,7 @@ namespace HipWhipGame
             }
         }
 
-
+        #region Command Bindings
         public void OnMove(Vector2 moveVector)
         {
             movementInput = moveVector;
@@ -237,47 +224,45 @@ namespace HipWhipGame
 
         public void PerformPunchFast()
         {
-            _buffer.Push("PunchFast");
+            fighterComponentManager.InputBuffer.Push("PunchFast");
         }
 
         public void PerformButtAttackHopKick() 
         {
-            _buffer.Push("ButtAttackHopKick");
+            fighterComponentManager.InputBuffer.Push("ButtAttackHopKick");
         }
 
         public void PerformButtAttackMidPoke()
         {
-            _buffer.Push("ButtAttackMidPoke");
+            fighterComponentManager.InputBuffer.Push("ButtAttackMidPoke");
         }
 
         public void PerformButtLowAttack()
         {
-            _buffer.Push("ButtLowAttack");
+            fighterComponentManager.InputBuffer.Push("ButtLowAttack");
         }
 
         public void PerformButtTornado()
         {
-            _buffer.Push("ButtTornado");
+            fighterComponentManager.InputBuffer.Push("ButtTornado");
         }
+        #endregion
 
         // 
         // DUMMY LOGIC
         // 
         void HandleDummyBehavior()
         {
-            _fsm.Tick(Time.deltaTime);
+            fighterComponentManager.FighterStateMachine.Tick(Time.deltaTime);
 
             // Always stay idle unless hit
-            if (_fsm.State == FighterState.Idle)
+            if (fighterComponentManager.FighterStateMachine.State == FighterState.Idle)
             {
-                if (animator && !animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) 
+                if (fighterComponentManager.Animator && !fighterComponentManager.Animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) 
                 {
-                    animator.Play("Idle", 0, 0f);
-                    animator.SetBool("Block", false);
+                    fighterComponentManager.Animator.Play("Idle", 0, 0f);
+                    fighterComponentManager.Animator.SetBool("Block", false);
                 }
-                    
-
-                
             }
 
             // Optionally face the player
@@ -292,7 +277,7 @@ namespace HipWhipGame
             // Apply external knockback even for dummy
             if (_externalForce.sqrMagnitude > 0.0001f)
             {
-                _cc.Move(_externalForce * Time.deltaTime);
+                fighterComponentManager.CharacterController.Move(_externalForce * Time.deltaTime);
                 _externalForce = Vector3.Lerp(_externalForce, Vector3.zero, Time.deltaTime * 8f);
             }
         }
@@ -302,40 +287,37 @@ namespace HipWhipGame
         // 
         void TryStartMove()
         {
-            if (!_fsm.CanStartMove()) return;
+            if (!fighterComponentManager.FighterStateMachine.CanStartMove()) return;
 
-            if (_buffer.Consume("ButtAttackHopKick") && moves.buttAttackHopKick)
+            if (fighterComponentManager.InputBuffer.Consume("ButtAttackHopKick") && moves.buttAttackHopKick)
             {
                 GetComponent<MoveExecutor>().PlayMove(moves.buttAttackHopKick);
                 return;
             }
 
-            if (_buffer.Consume("PunchFast") && moves.punchFast)
+            if (fighterComponentManager.InputBuffer.Consume("PunchFast") && moves.punchFast)
             {
                 GetComponent<MoveExecutor>().PlayMove(moves.punchFast);
                 return;
             }
 
-            if (_buffer.Consume("ButtAttackMidPoke") && moves.buttAttackMidPoke) 
+            if (fighterComponentManager.InputBuffer.Consume("ButtAttackMidPoke") && moves.buttAttackMidPoke) 
             {
                 GetComponent<MoveExecutor>().PlayMove(moves.buttAttackMidPoke);
                 return;
             }
 
-            if (_buffer.Consume("ButtLowAttack") && moves.buttLowAttack)
+            if (fighterComponentManager.InputBuffer.Consume("ButtLowAttack") && moves.buttLowAttack)
             {
                 GetComponent<MoveExecutor>().PlayMove(moves.buttLowAttack);
                 return;
             }
 
-            if (_buffer.Consume("ButtTornado") && moves.buttTornado)
+            if (fighterComponentManager.InputBuffer.Consume("ButtTornado") && moves.buttTornado)
             {
                 GetComponent<MoveExecutor>().PlayMove(moves.buttTornado);
                 return;
             }
-            
-
-
         }
 
         // 
@@ -349,7 +331,7 @@ namespace HipWhipGame
             int remainingActive = Mathf.Max(0, move.active - frameIntoActive - 1);
             
 
-            if (_fsm.State == FighterState.Blocking)
+            if (fighterComponentManager.FighterStateMachine.State == FighterState.Blocking)
             {
                 int advantage = move.blockstunFrames - (move.recovery + remainingActive);
                 ApplyBlockstun(move.blockstunFrames);
@@ -364,13 +346,13 @@ namespace HipWhipGame
 
         public void ApplyBlockstun(float frames)
         {
-            _fsm.EnterBlockstun(frames / 60f * stats.blockstunScale);
+            fighterComponentManager.FighterStateMachine.EnterBlockstun(frames / 60f * stats.blockstunScale);
 
         }
 
         public void ApplyHitstun(float frames)
         {
-            _fsm.EnterHitstun(frames / 60f * stats.hitstunScale);
+            fighterComponentManager.FighterStateMachine.EnterHitstun(frames / 60f * stats.hitstunScale);
         }
 
         public void ApplyKnockback(Vector3 worldKnock, float scale = 1f)

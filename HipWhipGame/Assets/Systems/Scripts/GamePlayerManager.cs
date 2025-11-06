@@ -110,11 +110,11 @@ public class GamePlayerManager : MonoBehaviour
         // Iterate all players
         for (int i = 0; i < activePlayers.Count; i++)
         {
-            var fighter = activePlayers[i].GetComponent<FighterController>();
-            if (fighter == null || fighter.cam == null)
+            var fighter = activePlayers[i].GetComponent<FighterComponentManager>();
+            if (fighter == null || fighter.Cam == null)
                 continue;
 
-            Camera cam = fighter.cam;
+            Camera cam = fighter.Cam;
             cam.enabled = true;
 
             // Disable extra AudioListeners (keep only one)
