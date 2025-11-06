@@ -7,74 +7,99 @@ Copyright:    (c) 2025 DigiPen Institute of Technology. All rights reserved.
 using UnityEngine;
 using static HipWhipGame.Enums;
 
+//TODO: Refactor state machine to use State Pattern later
 namespace HipWhipGame
 {
-    public class FighterStateMachine : MonoBehaviour
+    [RequireComponent(typeof(FighterComponentManager))]
+    public class FighterStateMachine : MonoBehaviour, IFighterComponentInjectable
     {
+        private FighterComponentManager fighterComponentManager;
+        private float stateTimer;
         public FighterState State { get; private set; } = FighterState.Idle;
-        float _stateTimer;
-        float _hitstunTimer;
-        float _blockstunTimer;
+
+        public void Inject(FighterComponentManager fighterComponentManager)
+        {
+            this.fighterComponentManager = fighterComponentManager;
+        }
 
         public void SetState(FighterState newState, float lockTime = 0f)
         {
             State = newState;
-            _stateTimer = lockTime;
+            stateTimer = lockTime;
         }
-
-        public bool CanStartMove() => State == FighterState.Idle;
 
         public void Tick(float dt)
         {
             switch (State)
             {
                 case FighterState.Hitstun:
-                    _hitstunTimer -= dt;
-                    if (_hitstunTimer <= 0f)
-                        SetState(FighterState.Idle);
-                    break;
-                case FighterState.BlockStun:
-                    _blockstunTimer -= dt;
-                    float framesLeft = _blockstunTimer * 60f;
-                    Debug.Log($"Blockstun Timer: {_blockstunTimer:F3} sec ({framesLeft:F1} frames)");
-                    if (_blockstunTimer <= 0f)
+                    stateTimer -= dt;
+                    if (stateTimer <= 0f) 
                     {
-                        GetComponentInChildren<Animator>().SetBool("BlockStun", false);
-                        // choose next state based on input
-                        var controller = GetComponent<FighterController>();
-                        if (controller != null && controller.isBlocking)
-                            SetState(FighterState.Blocking);
-                        else
-                            SetState(FighterState.Idle);
+                        EndHitStun();
+                    }
+                    break;
+
+                case FighterState.BlockStun:
+                    stateTimer -= dt;
+
+                    if (stateTimer <= 0f)
+                    {
+                        EndBlockStun();
                     }
                     break;
                     
-
                 case FighterState.Attacking:
-                    if (_stateTimer > 0f)
+                    if (stateTimer > 0f)
                     {
-                        _stateTimer -= dt;
-                        if (_stateTimer <= 0f)
+                        stateTimer -= dt;
+                        if (stateTimer <= 0f)
                         {
                             State = FighterState.Idle;
                         }
                     }
                     break;
             }
-
-
         }
 
         public void EnterHitstun(float duration)
         {
             SetState(FighterState.Hitstun, duration);
-            _hitstunTimer = duration;
+            if (fighterComponentManager.Animator is Animator animator) 
+            {
+                animator.SetBool("Block", false);
+                animator.Play("HitStun", 0, 0f);
+            }
+        }
+
+        private void EndHitStun() 
+        {
+            SetState(FighterState.Idle);
         }
 
         public void EnterBlockstun(float duration)
         {
             SetState(FighterState.BlockStun, duration);
-            _blockstunTimer = Mathf.Abs(duration);
+            if (fighterComponentManager.Animator is Animator animator) 
+            {
+                animator.SetBool("BlockStun", true);
+                animator.Play("BlockStun", 0, 0f);
+            }
+        }
+
+        private void EndBlockStun() 
+        {
+            fighterComponentManager.Animator.SetBool("BlockStun", false);
+            // choose next state based on input
+            var controller = fighterComponentManager.FighterController;
+            if (controller != null && controller.isBlocking)
+            {
+                SetState(FighterState.Blocking);
+            }
+            else
+            {
+                SetState(FighterState.Idle);
+            }
         }
 
         public bool CanBlock()
@@ -82,6 +107,9 @@ namespace HipWhipGame
             return State == FighterState.Idle || State == FighterState.Moving;
         }
 
+        public bool CanStartMove() 
+        {
+            return State == FighterState.Idle;
+        }
     }
-
 }

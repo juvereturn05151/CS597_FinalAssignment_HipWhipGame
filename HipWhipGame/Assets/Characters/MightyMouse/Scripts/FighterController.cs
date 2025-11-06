@@ -352,26 +352,12 @@ namespace HipWhipGame
             if (_fsm.State == FighterState.Blocking)
             {
                 int advantage = move.blockstunFrames - (move.recovery + remainingActive);
-
-                Debug.Log(
-                    $"[{name}] {move.moveName} HIT INFO\n" +
-                    $"  Hit Frame: {hitFrame}\n" +
-                    $"  Startup: {move.startup}\n" +
-                    $"  Active: {move.active}\n" +
-                    $"  Recovery: {move.recovery}\n" +
-                    $"  Blockstun: {move.blockstunFrames}\n" +
-                    $"  Frame Into Active: {frameIntoActive}\n" +
-                    $"  Remaining Active: {remainingActive}\n" +
-                    $"  Advantage on Block: {(advantage >= 0 ? "+" : "")}{advantage}\n" +
-                    $"  Effective Duration (Recovery + Remaining Active): {move.recovery + remainingActive}"
-                );
                 ApplyBlockstun(move.blockstunFrames);
             }
             else
             {
                 int advantage = move.hitstunFrames - (move.recovery + remainingActive);
                 Debug.Log($"{move.moveName}:  is {(advantage >= 0 ? "+" : "")}{advantage} on hit.");
-                animator.SetBool("Block", false);
                 ApplyHitstun(move.hitstunFrames);
             }
         }
@@ -379,15 +365,12 @@ namespace HipWhipGame
         public void ApplyBlockstun(float frames)
         {
             _fsm.EnterBlockstun(frames / 60f * stats.blockstunScale);
-            _fsm.SetState(FighterState.BlockStun);
-            animator.SetBool("BlockStun", true);
-            if (animator) animator.Play("BlockStun", 0, 0f);
+
         }
 
         public void ApplyHitstun(float frames)
         {
             _fsm.EnterHitstun(frames / 60f * stats.hitstunScale);
-            OnHitReaction();
         }
 
         public void ApplyKnockback(Vector3 worldKnock, float scale = 1f)
@@ -399,13 +382,6 @@ namespace HipWhipGame
         public void TakeDamage(float dmg)
         {
             Debug.Log($"{name} took {dmg} damage!");
-        }
-
-        public void OnHitReaction()
-        {
-            _fsm.SetState(FighterState.Hitstun);
-            if (animator)
-                animator.Play("HitStun", 0, 0f);
         }
     }
 }
