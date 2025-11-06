@@ -37,22 +37,25 @@ namespace HipWhipGame
             const float frameDuration = 1f / 60f;
             WaitForSeconds waitFrame = new WaitForSeconds(frameDuration);
 
-            // Disable root motion if we’re driving motion manually
             animator.applyRootMotion = !move.overrideRootMotion;
-
             _fsm.SetState(FighterState.Attacking, totalFrames / 60f);
             animator.Play(move.animation.name, 0, 0f);
 
             GameObject hb = null;
 
-            //
-            // MAIN FRAME LOOP (deterministic 60 Hz logic)
-            //
             for (currentFrame = 0; currentFrame < totalFrames; currentFrame++)
             {
+                // --- INTERRUPT CHECK ---
+                if (_fsm.State != FighterState.Attacking)
+                {
+                    // Move was interrupted: cleanup & exit immediately
+                    if (hb) Destroy(hb);
+                    yield break;
+                }
+
                 bool movedThisFrame = false;
 
-                // --- Movement During Active Frames ---
+                // --- Manual motion ---
                 if (move.overrideRootMotion && move.motionSegments != null)
                 {
                     foreach (var seg in move.motionSegments)
@@ -64,20 +67,26 @@ namespace HipWhipGame
                                 transform.forward * seg.forwardSpeed +
                                 Vector3.up * seg.verticalSpeed;
 
-                            // smooth interpolation for this single frame
                             float elapsed = 0f;
                             while (elapsed < frameDuration)
                             {
+                                // Check for interruption during interpolation too
+                                if (_fsm.State != FighterState.Attacking)
+                                {
+                                    if (hb) Destroy(hb);
+                                    yield break;
+                                }
+
                                 transform.position += delta * (Time.deltaTime * 60f);
                                 elapsed += Time.deltaTime;
                                 yield return null;
                             }
-                            break; // once we interpolated, no more segments this frame
+                            break;
                         }
                     }
                 }
 
-                // --- Hitbox Spawn ---
+                // --- Hitbox spawn ---
                 if (currentFrame == move.startup)
                 {
                     Debug.Log($"Move {move.moveName} entering active frames.");
@@ -102,23 +111,24 @@ namespace HipWhipGame
                     }
                 }
 
-                // --- Hitbox Cleanup ---
+                // --- Hitbox cleanup ---
                 if (currentFrame == move.startup + move.active && hb)
                 {
                     Destroy(hb);
                 }
 
-                // --- Yield once per logic step (if not already yielded during interpolation) ---
+                // --- Wait one frame ---
                 if (!movedThisFrame)
                     yield return waitFrame;
             }
 
-            // Cleanup at end
+            // --- Final cleanup ---
             if (hb) Destroy(hb);
 
             if (_fsm.State == FighterState.Attacking)
                 _fsm.SetState(FighterState.Idle);
         }
+
 
         IEnumerator WaitFrames(int frames)
         {
