@@ -367,7 +367,7 @@ namespace HipWhipGame
                     $"  Advantage on Block: {(advantage >= 0 ? "+" : "")}{advantage}\n" +
                     $"  Effective Duration (Recovery + Remaining Active): {move.recovery + remainingActive}"
                 );
-                ApplyBlockstun(advantage);
+                ApplyBlockstun(move.blockstunFrames);
             }
             else
             {
