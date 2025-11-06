@@ -52,6 +52,12 @@ namespace HipWhipGame
             SetState(FighterState.Hitstun, duration);
             _hitstunTimer = duration;
         }
+
+        public bool CanBlock()
+        {
+            return State == FighterState.Idle || State == FighterState.Moving;
+        }
+
     }
 
 }

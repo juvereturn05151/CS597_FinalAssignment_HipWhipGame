@@ -108,6 +108,23 @@ public class InputManager : MonoBehaviour
         }
     }
 
+    public void OnRightTrigger(InputAction.CallbackContext context)
+    {
+        if (fighterController == null)
+        {
+            return;
+        }
+
+        if (context.performed)
+        {
+            fighterController.HoldBlock();
+        }
+        else if (context.canceled)
+        {
+            fighterController.ReleaseBlock();
+        }
+    }
+
     public void OnShakeController()
     {
         //if (sumo == null)

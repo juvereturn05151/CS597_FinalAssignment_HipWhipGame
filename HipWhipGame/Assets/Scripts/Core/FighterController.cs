@@ -39,6 +39,7 @@ namespace HipWhipGame
         Vector3 _velocity;        // player-controlled movement + gravity
         Vector3 _externalForce;   // knockback, pushback, etc.
         bool _isGrounded;
+        bool isBlocking = false;
 
         void Awake()
         {
@@ -62,6 +63,24 @@ namespace HipWhipGame
 
             // --- Ground check ---
             _isGrounded = _cc.isGrounded;
+
+            // Enter or exit block state
+            if (isBlocking && _fsm.CanBlock())
+            {
+                StartBlock();
+            }
+            else if (!isBlocking && _fsm.State == FighterState.Blocking)
+            {
+                EndBlock();
+            }
+
+            // Skip movement while blocking
+            if (_fsm.State == FighterState.Blocking)
+            {
+                _fsm.Tick(Time.deltaTime);
+                HandleBlockBehavior();
+                return;
+            }
 
             // --- Apply player input if controllable ---
             float h = 0f, v = 0f;
@@ -151,9 +170,59 @@ namespace HipWhipGame
             }
         }
 
+        void StartBlock()
+        {
+            _fsm.SetState(FighterState.Blocking);
+            _velocity = Vector3.zero;
+            if (animator) 
+            {
+                animator.SetBool("Block", true);
+            }
+                
+                
+        }
+
+        void EndBlock()
+        {
+            _fsm.SetState(FighterState.Idle);
+
+            if (animator)
+            {
+                animator.SetBool("Block", false);
+            }
+        }
+
+        void HandleBlockBehavior()
+        {
+            // Stay stationary
+            _velocity = Vector3.zero;
+            _externalForce = Vector3.zero;
+            _cc.Move(Vector3.zero);
+
+            // Optionally rotate toward target
+            if (lookAtTarget)
+            {
+                Vector3 dir = lookAtTarget.position - transform.position;
+                dir.y = 0f;
+                if (dir.sqrMagnitude > 0.001f)
+                    transform.forward = Vector3.Lerp(transform.forward, dir.normalized, 10f * Time.deltaTime);
+            }
+        }
+
+
         public void OnMove(Vector2 moveVector)
         {
             movementInput = moveVector;
+        }
+
+        public void HoldBlock() 
+        {
+            isBlocking = true;
+        }
+
+        public void ReleaseBlock()
+        {
+            isBlocking = false;
         }
 
         public void PerformPunchFast()
