@@ -317,6 +317,8 @@ MonoBehaviour:
   fighterController: {fileID: 8388918208163729763}
   cam: {fileID: 3723754997958721306}
   inputBuffer: {fileID: 7820648085960408042}
+  characterController: {fileID: 1695589801241104500}
+  moveExecutor: {fileID: 7368925905962000506}
 --- !u!114 &8423063465751016683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -357,10 +359,8 @@ MonoBehaviour:
   playerIndex: 0
   controlType: 0
   lookAtTarget: {fileID: 0}
-  cam: {fileID: 3723754997958721306}
   pushbox: {fileID: 2945071498198511838}
   stats: {fileID: 7621464616308743618}
-  animator: {fileID: 338579307594028477}
   moves: {fileID: 11400000, guid: 7293fd971d364cd498b341a8de8b1f4e, type: 2}
   isBlocking: 0
 --- !u!114 &7368925905962000506
@@ -375,8 +375,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b56f90a4259e11942af4b62398678e15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fighterComponentManager: {fileID: 1016682775604940308}
-  currentFrame: 0
 --- !u!114 &7621464616308743618
 MonoBehaviour:
   m_ObjectHideFlags: 0

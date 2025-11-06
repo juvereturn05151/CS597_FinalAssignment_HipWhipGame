@@ -28,11 +28,10 @@ namespace HipWhipGame
         public FighterStats stats;
         public MoveDatabase moves;
 
-        Vector2 movementInput;
-
-        Vector3 _velocity;        // player-controlled movement + gravity
-        Vector3 _externalForce;   // knockback, pushback, etc.
-        bool _isGrounded;
+        private Vector2 movementInput;
+        private Vector3 velocity;        // player-controlled movement + gravity
+        private Vector3 externalForce;   // knockback, pushback, etc.
+        private bool isGrounded;
         public bool isBlocking = false;
 
         public void Inject(FighterComponentManager fighterComponentManager)
@@ -53,12 +52,12 @@ namespace HipWhipGame
             fighterComponentManager.FighterStateMachine.Tick(Time.deltaTime);
 
             // --- Ground check ---
-            _isGrounded = fighterComponentManager.CharacterController.isGrounded;
+            isGrounded = fighterComponentManager.CharacterController.isGrounded;
 
             if (fighterComponentManager.FighterStateMachine.State == FighterState.BlockStun) 
             {
-                _velocity = Vector3.zero;
-                _externalForce = Vector3.zero;
+                velocity = Vector3.zero;
+                externalForce = Vector3.zero;
                 fighterComponentManager.CharacterController.Move(Vector3.zero);
                 return;
             }
@@ -100,32 +99,32 @@ namespace HipWhipGame
                 Vector3 moveDir = (transform.forward * input.z) + (transform.right * input.x);
                 Vector3 move = moveDir * stats.walkSpeed;
 
-                _velocity.x = move.x;
-                _velocity.z = move.z;
+                velocity.x = move.x;
+                velocity.z = move.z;
             }
             else
             {
                 // Don’t overwrite existing knockback in hitstun or attack
                 // Just let it decay naturally
-                _velocity.x *= 0.9f;  // friction decay per frame
-                _velocity.z *= 0.9f;
+                velocity.x *= 0.9f;  // friction decay per frame
+                velocity.z *= 0.9f;
             }
 
             // --- Gravity ---
-            if (_isGrounded && _velocity.y < 0) _velocity.y = -2f;
-            _velocity.y -= stats.gravity * Time.deltaTime;
+            if (isGrounded && velocity.y < 0) velocity.y = -2f;
+            velocity.y -= stats.gravity * Time.deltaTime;
 
             // --- Combine internal + external forces ---
-            Vector3 totalMove = _velocity + _externalForce;
+            Vector3 totalMove = velocity + externalForce;
 
             // --- Move character ---
             fighterComponentManager.CharacterController.Move(totalMove * Time.deltaTime);
 
             // --- External force decay (smooth pushback slide) ---
-            _externalForce = Vector3.Lerp(_externalForce, Vector3.zero, Time.deltaTime * 8f);
+            externalForce = Vector3.Lerp(externalForce, Vector3.zero, Time.deltaTime * 8f);
 
             // --- Animator blend ---
-            Vector3 localVel = transform.InverseTransformDirection(new Vector3(_velocity.x, 0, _velocity.z));
+            Vector3 localVel = transform.InverseTransformDirection(new Vector3(velocity.x, 0, velocity.z));
             float maxSpeed = Mathf.Max(0.01f, stats.walkSpeed);
             fighterComponentManager.Animator.SetFloat("X", localVel.x / maxSpeed, 0.1f, Time.deltaTime);
             fighterComponentManager.Animator.SetFloat("Y", localVel.z / maxSpeed, 0.1f, Time.deltaTime);
@@ -145,7 +144,7 @@ namespace HipWhipGame
             else
             {
                 // fallback to velocity facing if no target assigned
-                Vector3 flatVel = new Vector3(_velocity.x + _externalForce.x, 0, _velocity.z + _externalForce.z);
+                Vector3 flatVel = new Vector3(velocity.x + externalForce.x, 0, velocity.z + externalForce.z);
                 if (flatVel.sqrMagnitude > 0.001f)
                     transform.forward = flatVel.normalized;
             }
@@ -172,7 +171,7 @@ namespace HipWhipGame
         void StartBlock()
         {
             fighterComponentManager.FighterStateMachine.SetState(FighterState.Blocking);
-            _velocity = Vector3.zero;
+            velocity = Vector3.zero;
             if (fighterComponentManager.Animator) 
             {
                 fighterComponentManager.Animator.SetBool("Block", true);
@@ -192,8 +191,8 @@ namespace HipWhipGame
         void HandleBlockBehavior()
         {
             // Stay stationary
-            _velocity = Vector3.zero;
-            _externalForce = Vector3.zero;
+            velocity = Vector3.zero;
+            externalForce = Vector3.zero;
             fighterComponentManager.CharacterController.Move(Vector3.zero);
 
             // Optionally rotate toward target
@@ -275,10 +274,10 @@ namespace HipWhipGame
             }
 
             // Apply external knockback even for dummy
-            if (_externalForce.sqrMagnitude > 0.0001f)
+            if (externalForce.sqrMagnitude > 0.0001f)
             {
-                fighterComponentManager.CharacterController.Move(_externalForce * Time.deltaTime);
-                _externalForce = Vector3.Lerp(_externalForce, Vector3.zero, Time.deltaTime * 8f);
+                fighterComponentManager.CharacterController.Move(externalForce * Time.deltaTime);
+                externalForce = Vector3.Lerp(externalForce, Vector3.zero, Time.deltaTime * 8f);
             }
         }
 
@@ -358,7 +357,7 @@ namespace HipWhipGame
         public void ApplyKnockback(Vector3 worldKnock, float scale = 1f)
         {
            // Debug.Log($"{name} knocked back with {worldKnock}!");
-            _externalForce += worldKnock * (scale / Mathf.Max(0.01f, stats.weight));
+            externalForce += worldKnock * (scale / Mathf.Max(0.01f, stats.weight));
         }
 
         public void TakeDamage(float dmg)
