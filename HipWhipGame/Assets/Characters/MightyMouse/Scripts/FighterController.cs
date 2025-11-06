@@ -34,6 +34,11 @@ namespace HipWhipGame
         private bool isGrounded;
         public bool isBlocking = false;
 
+        public void SetIsBlocking(bool isBlocking) 
+        {
+            this.isBlocking = isBlocking;
+        }
+
         public void Inject(FighterComponentManager fighterComponentManager)
         {
             this.fighterComponentManager = fighterComponentManager;
@@ -206,19 +211,10 @@ namespace HipWhipGame
         }
 
         #region Command Bindings
-        public void OnMove(Vector2 moveVector)
+
+        public void UpdateMovementInput(Vector2 moveVector) 
         {
             movementInput = moveVector;
-        }
-
-        public void HoldBlock() 
-        {
-            isBlocking = true;
-        }
-
-        public void ReleaseBlock()
-        {
-            isBlocking = false;
         }
 
         public void PerformPunchFast()

@@ -248,6 +248,7 @@ GameObject:
   - component: {fileID: 8388918208163729763}
   - component: {fileID: 7368925905962000506}
   - component: {fileID: 7621464616308743618}
+  - component: {fileID: 3089616261606338496}
   m_Layer: 0
   m_Name: MightyMouse
   m_TagString: Player
@@ -319,6 +320,7 @@ MonoBehaviour:
   inputBuffer: {fileID: 7820648085960408042}
   characterController: {fileID: 1695589801241104500}
   moveExecutor: {fileID: 7368925905962000506}
+  fighterInputHandler: {fileID: 3089616261606338496}
 --- !u!114 &8423063465751016683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -393,6 +395,18 @@ MonoBehaviour:
   weight: 1
   hitstunScale: 1
   blockstunScale: 1
+--- !u!114 &3089616261606338496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7400030421977495981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd31449ef9915e345a583e6a8ff1f597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9202767699107768774
 GameObject:
   m_ObjectHideFlags: 0

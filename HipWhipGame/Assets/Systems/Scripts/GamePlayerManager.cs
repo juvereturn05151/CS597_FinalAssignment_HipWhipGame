@@ -77,6 +77,7 @@ public class GamePlayerManager : MonoBehaviour
         if (inputManager != null)
         {
             inputManager.fighterController = playerObj.GetComponent<FighterController>();
+            inputManager.SetFightingComponentManager(playerObj.GetComponent<FighterComponentManager>());
             inputManager.fighterController.playerIndex = inputManager.playerIndex;
         }
 

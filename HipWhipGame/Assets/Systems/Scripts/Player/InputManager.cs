@@ -13,14 +13,21 @@ public class InputManager : MonoBehaviour
     public int playerIndex;
     public FighterController fighterController;
 
+    private FighterComponentManager fighterComponentManager;
+
+    public void SetFightingComponentManager(FighterComponentManager fighterComponentManager) 
+    {
+        this.fighterComponentManager = fighterComponentManager;
+    }
+
     public void OnMove(InputAction.CallbackContext context)
     {
-        if (fighterController == null)
+        if (fighterComponentManager == null)
         {
             return;
         }
 
-        fighterController.OnMove(context.ReadValue<Vector2>());
+        fighterComponentManager.FighterInputHandler.OnMove(context.ReadValue<Vector2>());
     }
 
     public void OnButtonEast(InputAction.CallbackContext context)
@@ -110,18 +117,18 @@ public class InputManager : MonoBehaviour
 
     public void OnRightTrigger(InputAction.CallbackContext context)
     {
-        if (fighterController == null)
+        if (fighterComponentManager == null)
         {
             return;
         }
 
         if (context.performed)
         {
-            fighterController.HoldBlock();
+            fighterComponentManager.FighterInputHandler.HoldBlock();
         }
         else if (context.canceled)
         {
-            fighterController.ReleaseBlock();
+            fighterComponentManager.FighterInputHandler.ReleaseBlock();
         }
     }
 
