@@ -242,6 +242,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8614550981892037365}
   - component: {fileID: 1695589801241104500}
+  - component: {fileID: 1016682775604940308}
   - component: {fileID: 8423063465751016683}
   - component: {fileID: 7820648085960408042}
   - component: {fileID: 8388918208163729763}
@@ -299,6 +300,23 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.6, z: 0}
+--- !u!114 &1016682775604940308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7400030421977495981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c62580f1cf857a34fb176c33f8b4dd9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 338579307594028477}
+  fighterStateMachine: {fileID: 8423063465751016683}
+  fighterController: {fileID: 8388918208163729763}
+  cam: {fileID: 3723754997958721306}
+  inputBuffer: {fileID: 7820648085960408042}
 --- !u!114 &8423063465751016683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -344,6 +362,7 @@ MonoBehaviour:
   stats: {fileID: 7621464616308743618}
   animator: {fileID: 338579307594028477}
   moves: {fileID: 11400000, guid: 7293fd971d364cd498b341a8de8b1f4e, type: 2}
+  isBlocking: 0
 --- !u!114 &7368925905962000506
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -356,7 +375,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b56f90a4259e11942af4b62398678e15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 338579307594028477}
+  fighterComponentManager: {fileID: 1016682775604940308}
+  currentFrame: 0
 --- !u!114 &7621464616308743618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -374,7 +394,7 @@ MonoBehaviour:
   gravity: 20
   weight: 1
   hitstunScale: 1
-  pushStrength: 1
+  blockstunScale: 1
 --- !u!1 &9202767699107768774
 GameObject:
   m_ObjectHideFlags: 0

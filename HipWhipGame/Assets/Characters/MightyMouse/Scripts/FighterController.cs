@@ -4,10 +4,8 @@ Author(s):    Ju-ve Chankasemporn
 Copyright:    (c) 2025 DigiPen Institute of Technology. All rights reserved.
 */
 
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using static HipWhipGame.Enums;
-using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 namespace HipWhipGame
 {

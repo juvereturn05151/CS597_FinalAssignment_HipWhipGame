@@ -10,23 +10,26 @@ using static HipWhipGame.Enums;
 
 namespace HipWhipGame
 {
-    [RequireComponent(typeof(FighterStateMachine))]
-    public class MoveExecutor : MonoBehaviour
+    [RequireComponent(typeof(FighterComponentManager))]
+    public class MoveExecutor : MonoBehaviour, IFighterComponentInjectable
     {
-        public Animator animator;
-        FighterStateMachine _fsm;
-        FighterController _fc;
-        public int currentFrame;
-        void Awake()
+        private FighterComponentManager fighterComponentManager;
+
+        private int currentFrame;
+        public int CurrentFrame => currentFrame;
+
+        public void Inject(FighterComponentManager fighterComponentManager)
         {
-            _fsm = GetComponent<FighterStateMachine>();
-            _fc = GetComponent<FighterController>();
-            if (!animator) animator = GetComponentInChildren<Animator>();
+            this.fighterComponentManager = fighterComponentManager;
         }
 
         public void PlayMove(MoveData move)
         {
-            if (move == null || animator == null) return;
+            if (move == null || fighterComponentManager.Animator == null) 
+            {
+                return;
+            } 
+
             StopAllCoroutines();
             StartCoroutine(DoMove(move));
         }
@@ -37,16 +40,16 @@ namespace HipWhipGame
             const float frameDuration = 1f / 60f;
             WaitForSeconds waitFrame = new WaitForSeconds(frameDuration);
 
-            animator.applyRootMotion = !move.overrideRootMotion;
-            _fsm.SetState(FighterState.Attacking, totalFrames / 60f);
-            animator.Play(move.animation.name, 0, 0f);
+            fighterComponentManager.Animator.applyRootMotion = !move.overrideRootMotion;
+            fighterComponentManager.FighterStateMachine.SetState(FighterState.Attacking, totalFrames / 60f);
+            fighterComponentManager.Animator.Play(move.animation.name, 0, 0f);
 
             GameObject hb = null;
 
             for (currentFrame = 0; currentFrame < totalFrames; currentFrame++)
             {
-                // --- INTERRUPT CHECK ---
-                if (_fsm.State != FighterState.Attacking)
+                // Interrupt check
+                if (fighterComponentManager.FighterStateMachine.State != FighterState.Attacking)
                 {
                     // Move was interrupted: cleanup & exit immediately
                     if (hb) Destroy(hb);
@@ -55,7 +58,7 @@ namespace HipWhipGame
 
                 bool movedThisFrame = false;
 
-                // --- Manual motion ---
+                // Manual motion 
                 if (move.overrideRootMotion && move.motionSegments != null)
                 {
                     foreach (var seg in move.motionSegments)
@@ -71,7 +74,7 @@ namespace HipWhipGame
                             while (elapsed < frameDuration)
                             {
                                 // Check for interruption during interpolation too
-                                if (_fsm.State != FighterState.Attacking)
+                                if (fighterComponentManager.FighterStateMachine.State != FighterState.Attacking)
                                 {
                                     if (hb) Destroy(hb);
                                     yield break;
@@ -86,11 +89,9 @@ namespace HipWhipGame
                     }
                 }
 
-                // --- Hitbox spawn ---
+                // Hitbox spawn 
                 if (currentFrame == move.startup)
                 {
-                    Debug.Log($"Move {move.moveName} entering active frames.");
-
                     if (move.hitboxPrefab)
                     {
                         hb = Instantiate(move.hitboxPrefab, transform);
@@ -100,7 +101,7 @@ namespace HipWhipGame
                         var hitbox = hb.GetComponent<Hitbox>();
                         if (hitbox)
                         {
-                            hitbox.Init(owner: _fc, move);
+                            hitbox.Init(owner: fighterComponentManager.FighterController, move);
                             hitbox.Activate();
                             hitbox.SetLifetimeFrames(
                                 (int)Mathf.Max(1,
@@ -111,32 +112,25 @@ namespace HipWhipGame
                     }
                 }
 
-                // --- Hitbox cleanup ---
+                // Hitbox cleanup
                 if (currentFrame == move.startup + move.active && hb)
                 {
                     Destroy(hb);
                 }
 
-                // --- Wait one frame ---
-                if (!movedThisFrame)
+                // Wait one frame
+                if (!movedThisFrame) 
+                {
                     yield return waitFrame;
+                }
             }
 
-            // --- Final cleanup ---
+            // Final cleanup 
             if (hb) Destroy(hb);
 
-            if (_fsm.State == FighterState.Attacking)
-                _fsm.SetState(FighterState.Idle);
-        }
-
-
-        IEnumerator WaitFrames(int frames)
-        {
-            float t = frames / 60f;
-            while (t > 0f)
+            if (fighterComponentManager.FighterStateMachine.State == FighterState.Attacking) 
             {
-                t -= Time.deltaTime;
-                yield return null;
+                fighterComponentManager.FighterStateMachine.SetState(FighterState.Idle);
             }
         }
     }

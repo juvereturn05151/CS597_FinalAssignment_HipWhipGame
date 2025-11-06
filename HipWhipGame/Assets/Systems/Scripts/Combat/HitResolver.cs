@@ -19,7 +19,7 @@ namespace HipWhipGame
             if (dmg) dmg.ApplyDamage(move.damage);
 
             // Hitstun
-            defender.OnHit(move, attacker.GetComponent<MoveExecutor>().currentFrame);
+            defender.OnHit(move, attacker.GetComponent<MoveExecutor>().CurrentFrame);
 
             // Correct knockback calculation
             Vector3 worldKnock = attacker.transform.TransformDirection(move.knockback);
