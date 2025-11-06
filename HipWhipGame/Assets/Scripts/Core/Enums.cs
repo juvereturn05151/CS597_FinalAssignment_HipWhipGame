@@ -10,7 +10,7 @@ namespace HipWhipGame
 {
     public class Enums : MonoBehaviour
     {
-        public enum FighterState { Idle, Moving, Attacking, Hitstun, Knockdown, Jump, Disabled, Blocking, }
+        public enum FighterState { Idle, Moving, Attacking, Hitstun, Knockdown, Jump, Disabled, Blocking, BlockStun}
 
         //In case we implement teams later
         //public enum Team { TeamA, TeamB }

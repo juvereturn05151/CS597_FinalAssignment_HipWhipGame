@@ -18,6 +18,7 @@ namespace HipWhipGame
         [Header("Combat")]
         public float weight = 1f;   // scales knockback
         public float hitstunScale = 1f; // scales received hitstun
+        public float blockstunScale = 1f; // scales received hitstun
         public float pushStrength = 1f; // scales pushback applied to others
     }
 }

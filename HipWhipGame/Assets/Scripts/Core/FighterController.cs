@@ -4,8 +4,10 @@ Author(s):    Ju-ve Chankasemporn
 Copyright:    (c) 2025 DigiPen Institute of Technology. All rights reserved.
 */
 
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using static HipWhipGame.Enums;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 namespace HipWhipGame
 {
@@ -39,7 +41,7 @@ namespace HipWhipGame
         Vector3 _velocity;        // player-controlled movement + gravity
         Vector3 _externalForce;   // knockback, pushback, etc.
         bool _isGrounded;
-        bool isBlocking = false;
+        public bool isBlocking = false;
 
         void Awake()
         {
@@ -64,20 +66,31 @@ namespace HipWhipGame
             // --- Ground check ---
             _isGrounded = _cc.isGrounded;
 
-            // Enter or exit block state
-            if (isBlocking && _fsm.CanBlock())
+
+
+            if (_fsm.State == FighterState.BlockStun) 
             {
-                StartBlock();
+                _velocity = Vector3.zero;
+                _externalForce = Vector3.zero;
+                _cc.Move(Vector3.zero);
+                return;
             }
-            else if (!isBlocking && _fsm.State == FighterState.Blocking)
+
+            if (_fsm.State != FighterState.BlockStun) // don’t interrupt blockstun
             {
-                EndBlock();
+                if (isBlocking && _fsm.CanBlock())
+                {
+                    StartBlock();
+                }
+                else if (!isBlocking && _fsm.State == FighterState.Blocking)
+                {
+                    EndBlock();
+                }
             }
 
             // Skip movement while blocking
             if (_fsm.State == FighterState.Blocking)
             {
-                _fsm.Tick(Time.deltaTime);
                 HandleBlockBehavior();
                 return;
             }
@@ -102,13 +115,6 @@ namespace HipWhipGame
 
                 _velocity.x = move.x;
                 _velocity.z = move.z;
-
-                // Jump
-                if (_buffer.Consume("Jump") && _isGrounded)
-                {
-                    _velocity.y = stats.jumpForce;
-                    _fsm.SetState(FighterState.Jump);
-                }
             }
             else
             {
@@ -158,8 +164,13 @@ namespace HipWhipGame
             }
 
             // --- Attacks (data-driven) ---
-            TryStartMove();
+            if (_fsm.State != FighterState.Hitstun) 
+            {
+                TryStartMove();
+
+            }
             _buffer.Prune();
+
 
             // --- Idle fallback ---
             if (_fsm.State == FighterState.Idle && animator &&
@@ -167,6 +178,7 @@ namespace HipWhipGame
                 !animator.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
             {
                 animator.Play("Idle", 0, 0);
+                animator.SetBool("Block", false);
             }
         }
 
@@ -260,8 +272,14 @@ namespace HipWhipGame
             // Always stay idle unless hit
             if (_fsm.State == FighterState.Idle)
             {
-                if (animator && !animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+                if (animator && !animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) 
+                {
                     animator.Play("Idle", 0, 0f);
+                    animator.SetBool("Block", false);
+                }
+                    
+
+                
             }
 
             // Optionally face the player
@@ -325,6 +343,49 @@ namespace HipWhipGame
         // 
         // HIT REACTIONS
         // 
+
+        public void OnHit(MoveData move, int currentFrame)
+        {
+            int hitFrame = currentFrame; // the frame the attack landed
+            int frameIntoActive = hitFrame - move.startup;
+            int remainingActive = Mathf.Max(0, move.active - frameIntoActive - 1);
+            
+
+            if (_fsm.State == FighterState.Blocking)
+            {
+                int advantage = move.blockstunFrames - (move.recovery + remainingActive);
+
+                Debug.Log(
+                    $"[{name}] {move.moveName} HIT INFO\n" +
+                    $"  Hit Frame: {hitFrame}\n" +
+                    $"  Startup: {move.startup}\n" +
+                    $"  Active: {move.active}\n" +
+                    $"  Recovery: {move.recovery}\n" +
+                    $"  Blockstun: {move.blockstunFrames}\n" +
+                    $"  Frame Into Active: {frameIntoActive}\n" +
+                    $"  Remaining Active: {remainingActive}\n" +
+                    $"  Advantage on Block: {(advantage >= 0 ? "+" : "")}{advantage}\n" +
+                    $"  Effective Duration (Recovery + Remaining Active): {move.recovery + remainingActive}"
+                );
+                ApplyBlockstun(advantage);
+            }
+            else
+            {
+                int advantage = move.hitstunFrames - (move.recovery + remainingActive);
+                Debug.Log($"{move.moveName}:  is {(advantage >= 0 ? "+" : "")}{advantage} on hit.");
+                animator.SetBool("Block", false);
+                ApplyHitstun(move.hitstunFrames);
+            }
+        }
+
+        public void ApplyBlockstun(float frames)
+        {
+            _fsm.EnterBlockstun(frames / 60f * stats.blockstunScale);
+            _fsm.SetState(FighterState.BlockStun);
+            animator.SetBool("BlockStun", true);
+            if (animator) animator.Play("BlockStun", 0, 0f);
+        }
+
         public void ApplyHitstun(float frames)
         {
             _fsm.EnterHitstun(frames / 60f * stats.hitstunScale);
@@ -333,7 +394,7 @@ namespace HipWhipGame
 
         public void ApplyKnockback(Vector3 worldKnock, float scale = 1f)
         {
-            Debug.Log($"{name} knocked back with {worldKnock}!");
+           // Debug.Log($"{name} knocked back with {worldKnock}!");
             _externalForce += worldKnock * (scale / Mathf.Max(0.01f, stats.weight));
         }
 

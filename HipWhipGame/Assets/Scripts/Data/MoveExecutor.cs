@@ -16,7 +16,7 @@ namespace HipWhipGame
         public Animator animator;
         FighterStateMachine _fsm;
         FighterController _fc;
-
+        public int currentFrame;
         void Awake()
         {
             _fsm = GetComponent<FighterStateMachine>();
@@ -48,7 +48,7 @@ namespace HipWhipGame
             //
             // MAIN FRAME LOOP (deterministic 60 Hz logic)
             //
-            for (int currentFrame = 0; currentFrame < totalFrames; currentFrame++)
+            for (currentFrame = 0; currentFrame < totalFrames; currentFrame++)
             {
                 bool movedThisFrame = false;
 

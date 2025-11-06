@@ -19,7 +19,7 @@ MonoBehaviour:
   recovery: 20
   damage: 10
   hitstunFrames: 27
-  blockstunFrames: 0
+  blockstunFrames: 200
   knockback: {x: 0, y: 0, z: 3}
   guardType: 0
   pushbackOnHit: 1

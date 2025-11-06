@@ -19,7 +19,7 @@ namespace HipWhipGame
             if (dmg) dmg.ApplyDamage(move.damage);
 
             // Hitstun
-            defender.ApplyHitstun(move.hitstunFrames);
+            defender.OnHit(move, attacker.GetComponent<MoveExecutor>().currentFrame);
 
             // Correct knockback calculation
             Vector3 worldKnock = attacker.transform.TransformDirection(move.knockback);
@@ -32,8 +32,7 @@ namespace HipWhipGame
                 attacker.ApplyKnockback(recoilDir, 1f);
             }
 
-            float advantage = move.hitstunFrames - move.recovery;
-            Debug.Log($"{move.moveName}: {attacker.name} is {(advantage >= 0 ? "+" : "")}{advantage} on hit.");
+           
 
             // FX/SFX
             if (move.vfxPrefab)
