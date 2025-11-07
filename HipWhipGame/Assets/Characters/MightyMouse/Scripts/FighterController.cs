@@ -205,8 +205,10 @@ namespace HipWhipGame
             {
                 Vector3 dir = lookAtTarget.position - transform.position;
                 dir.y = 0f;
-                if (dir.sqrMagnitude > 0.001f)
+                if (dir.sqrMagnitude > 0.001f) 
+                {
                     transform.forward = Vector3.Lerp(transform.forward, dir.normalized, 10f * Time.deltaTime);
+                }
             }
         }
 
@@ -217,30 +219,6 @@ namespace HipWhipGame
             movementInput = moveVector;
         }
 
-        public void PerformPunchFast()
-        {
-            fighterComponentManager.InputBuffer.Push("PunchFast");
-        }
-
-        public void PerformButtAttackHopKick() 
-        {
-            fighterComponentManager.InputBuffer.Push("ButtAttackHopKick");
-        }
-
-        public void PerformButtAttackMidPoke()
-        {
-            fighterComponentManager.InputBuffer.Push("ButtAttackMidPoke");
-        }
-
-        public void PerformButtLowAttack()
-        {
-            fighterComponentManager.InputBuffer.Push("ButtLowAttack");
-        }
-
-        public void PerformButtTornado()
-        {
-            fighterComponentManager.InputBuffer.Push("ButtTornado");
-        }
         #endregion
 
         // 

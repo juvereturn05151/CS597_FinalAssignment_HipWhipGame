@@ -73,19 +73,18 @@ public class GamePlayerManager : MonoBehaviour
         Transform spawn = spawnPoints[index];
         GameObject playerObj = Instantiate(playerPrefab, spawn.position, spawn.rotation);
 
+        FighterComponentManager fcm = playerObj.GetComponent<FighterComponentManager>();
         var inputManager = playerInput.GetComponent<InputManager>();
         if (inputManager != null)
         {
-            inputManager.fighterController = playerObj.GetComponent<FighterController>();
-            inputManager.SetFightingComponentManager(playerObj.GetComponent<FighterComponentManager>());
-            inputManager.fighterController.playerIndex = inputManager.playerIndex;
+            inputManager.SetFightingComponentManager(fcm);
         }
 
         //Hack
-        if (inputManager.fighterController.playerIndex == 2) 
+        if (fcm.FighterController.playerIndex == 2) 
         {
-            inputManager.fighterController.lookAtTarget = activePlayers[0].transform;
-            activePlayers[0].GetComponent<FighterController>().lookAtTarget = inputManager.fighterController.transform;
+            fcm.FighterController.lookAtTarget = activePlayers[0].transform;
+            activePlayers[0].GetComponent<FighterController>().lookAtTarget = fcm.FighterController.transform;
         }
 
         activePlayers.Add(playerObj);

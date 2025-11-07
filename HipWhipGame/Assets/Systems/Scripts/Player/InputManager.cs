@@ -11,13 +11,13 @@ using HipWhipGame;
 public class InputManager : MonoBehaviour
 {
     public int playerIndex;
-    public FighterController fighterController;
 
     private FighterComponentManager fighterComponentManager;
 
     public void SetFightingComponentManager(FighterComponentManager fighterComponentManager) 
     {
         this.fighterComponentManager = fighterComponentManager;
+        this.fighterComponentManager.FighterController.playerIndex = playerIndex;
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -32,14 +32,14 @@ public class InputManager : MonoBehaviour
 
     public void OnButtonEast(InputAction.CallbackContext context)
     {
-        if (fighterController == null)
+        if (fighterComponentManager == null)
         {
             return;
         }
 
         if (context.started)
         {
-            fighterController.PerformButtLowAttack();
+            fighterComponentManager.FighterInputHandler.PerformButtLowAttack();
         }
         else if (context.canceled)
         {
@@ -49,14 +49,14 @@ public class InputManager : MonoBehaviour
 
     public void OnButtonWest(InputAction.CallbackContext context)
     {
-        if (fighterController == null)
+        if (fighterComponentManager == null)
         {
             return;
         }
 
         if (context.performed)
         {
-            fighterController.PerformPunchFast();
+            fighterComponentManager.FighterInputHandler.PerformPunchFast();
         }
         else if (context.canceled)
         {
@@ -66,14 +66,14 @@ public class InputManager : MonoBehaviour
 
     public void OnButtonNorth(InputAction.CallbackContext context)
     {
-        if (fighterController == null)
+        if (fighterComponentManager == null)
         {
             return;
         }
 
         if (context.started)
         {
-            fighterController.PerformButtAttackMidPoke();
+            fighterComponentManager.FighterInputHandler.PerformButtAttackMidPoke();
         }
         else if (context.canceled)
         {
@@ -83,14 +83,14 @@ public class InputManager : MonoBehaviour
 
     public void OnButtonSouth(InputAction.CallbackContext context)
     {
-        if (fighterController == null)
+        if (fighterComponentManager == null)
         {
             return;
         }
 
         if (context.performed)
         {
-            fighterController.PerformButtAttackHopKick();
+            fighterComponentManager.FighterInputHandler.PerformButtAttackHopKick();
         }
         else if (context.canceled)
         {
@@ -100,14 +100,14 @@ public class InputManager : MonoBehaviour
 
     public void OnRightShoulder(InputAction.CallbackContext context)
     {
-        if (fighterController == null)
+        if (fighterComponentManager == null)
         {
             return;
         }
 
         if (context.performed)
         {
-            fighterController.PerformButtTornado();
+            fighterComponentManager.FighterInputHandler.PerformButtTornado();
         }
         else if (context.canceled)
         {
