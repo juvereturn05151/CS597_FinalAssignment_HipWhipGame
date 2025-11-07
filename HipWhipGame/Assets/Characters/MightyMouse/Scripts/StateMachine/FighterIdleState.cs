@@ -21,7 +21,6 @@ namespace HipWhipGame
 
         public override void OnUpdate(float dt)
         {
-            Debug.Log("Fighter is in Idle State.");
             // Transition example
             if (fighterComponentManager.FighterController.IsBlocking && stateMachine.CanBlock())
             {

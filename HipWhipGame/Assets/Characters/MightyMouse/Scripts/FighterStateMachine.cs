@@ -19,6 +19,7 @@ namespace HipWhipGame
         public FighterComponentManager FighterComponentManager { get; private set; }
         public FighterState CurrentStateType { get; private set; } = FighterState.Disabled;
         private float stateTimer;
+        public float StateTimer => stateTimer;
 
         public void Inject(FighterComponentManager fighterComponentManager)
         {
@@ -50,18 +51,30 @@ namespace HipWhipGame
             if (stateTimer > 0)
             {
                 stateTimer -= Time.deltaTime;
-                if (stateTimer <= 0 && (CurrentStateType == FighterState.Hitstun || CurrentStateType == FighterState.BlockStun))
+                if (stateTimer <= 0)
                 {
-                    SwitchState(FighterState.Idle);
+                    if (CurrentStateType == FighterState.Hitstun)
+                    {
+                        SwitchState(FighterState.Idle);
+                    } 
+                    else if (CurrentStateType == FighterState.BlockStun) 
+                    {
+                        if (FighterComponentManager.FighterController.IsBlocking)
+                        {
+                            SwitchState(FighterState.Blocking);
+                        }
+                        else 
+                        {
+                            SwitchState(FighterState.Idle);
+                        }
+                    }
+                    
                 }
             }
         }
 
         public void SwitchState(FighterState newState, float duration = 0f)
         {
-            if (CurrentStateType == newState)
-                return;
-
             currentState?.OnExit();
             CurrentStateType = newState;
             currentState = stateMap[newState];

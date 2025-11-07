@@ -21,14 +21,14 @@ namespace HipWhipGame
 
         public override void OnUpdate(float dt)
         {
+            Debug.Log("Fighter is in Block Stun State: "+ fighterComponentManager.FighterStateMachine.StateTimer);
             // Timer handled by state machine
         }
 
         public override void OnExit()
         {
             fighterComponentManager.Animator?.SetBool("BlockStun", false);
-            if (fighterComponentManager.FighterController.IsBlocking)
-                stateMachine.SwitchState(FighterState.Blocking);
+
         }
     }
 }

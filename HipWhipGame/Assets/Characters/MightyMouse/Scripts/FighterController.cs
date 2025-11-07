@@ -62,8 +62,7 @@ namespace HipWhipGame
             }
 
             // Attack logic
-            if (fighterComponentManager.FighterStateMachine.CanStartMove() &&
-                fighterComponentManager.FighterStateMachine.CurrentStateType != FighterState.Hitstun)
+            if (fighterComponentManager.FighterStateMachine.CurrentStateType != FighterState.Hitstun)
             {
                 fighterComponentManager.FighterInputHandler.TryStartMove();
             }
@@ -231,13 +230,27 @@ namespace HipWhipGame
             int frameIntoActive = hitFrame - move.startup;
             int remainingActive = Mathf.Max(0, move.active - frameIntoActive - 1);
 
-            if (fighterComponentManager.FighterStateMachine.CurrentStateType == FighterState.Blocking)
+            bool blocked = (fighterComponentManager.FighterStateMachine.CurrentStateType == FighterState.Blocking);
+
+            if (blocked)
             {
                 ApplyBlockstun(move.blockstunFrames);
+
+                // Debug: Frame advantage on block
+                int frameAdvantage = Mathf.RoundToInt(move.recovery - move.blockstunFrames);
+                Debug.Log($"[FrameData] {name} (attacker) vs {fighterComponentManager.FighterController.name} (defender): " +
+                          $"{move.moveName} is {(frameAdvantage >= 0 ? "+" : "")}{-frameAdvantage} on block " +
+                          $"(Attacker recovery: {move.recovery}f, Defender blockstun: {move.blockstunFrames}f)");
             }
             else
             {
                 ApplyHitstun(move.hitstunFrames);
+
+                // Debug: Frame advantage on hit
+                int frameAdvantage = Mathf.RoundToInt(move.recovery - move.hitstunFrames);
+                Debug.Log($"[FrameData] {name} (attacker) vs {fighterComponentManager.FighterController.name} (defender): " +
+                          $"{move.moveName} is {(frameAdvantage >= 0 ? "+" : "")}{-frameAdvantage} on hit " +
+                          $"(Attacker recovery: {move.recovery}f, Defender hitstun: {move.hitstunFrames}f)");
             }
         }
 
@@ -261,7 +274,7 @@ namespace HipWhipGame
         {
             Vector3 appliedKnockback = worldKnock * (scale / Mathf.Max(0.01f, stats.weight));
             externalForce += appliedKnockback;
-            Debug.Log(name + " received knockback: " + appliedKnockback + " (original: " + worldKnock + ")");
+            
         }
 
         public void TakeDamage(float dmg)
