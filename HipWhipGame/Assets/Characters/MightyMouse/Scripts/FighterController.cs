@@ -120,6 +120,7 @@ namespace HipWhipGame
         private void ApplyStationaryBehavior()
         {
             velocity = Vector3.zero;
+            externalForce = Vector3.zero;
             fighterComponentManager.CharacterController.Move(Vector3.zero);
             // Do not clear externalForce here (knockback uses it)
         }
