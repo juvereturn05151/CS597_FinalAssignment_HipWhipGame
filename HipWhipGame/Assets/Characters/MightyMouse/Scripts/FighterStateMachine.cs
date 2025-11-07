@@ -51,29 +51,30 @@ namespace HipWhipGame
             if (stateTimer > 0)
             {
                 stateTimer -= dt;
-                if (stateTimer <= 0)
-                {
-                    if (CurrentStateType == FighterState.Hitstun)
-                    {
-                        SwitchState(FighterState.Idle);
-                    } 
-                    else if (CurrentStateType == FighterState.BlockStun) 
-                    {
-                        if (FighterComponentManager.FighterController.IsBlocking)
-                        {
-                            SwitchState(FighterState.Blocking);
-                        }
-                        else 
-                        {
-                            SwitchState(FighterState.Idle);
-                        }
-                    }
-                    else if(CurrentStateType == FighterState.Attacking)
-                    {
-                        SwitchState(FighterState.Idle);
-                    }
 
+            }
+            else if (stateTimer <= 0)
+            {
+                if (CurrentStateType == FighterState.Hitstun)
+                {
+                    SwitchState(FighterState.Idle);
                 }
+                else if (CurrentStateType == FighterState.BlockStun)
+                {
+                    if (FighterComponentManager.FighterController.IsBlocking)
+                    {
+                        SwitchState(FighterState.Blocking);
+                    }
+                    else
+                    {
+                        SwitchState(FighterState.Idle);
+                    }
+                }
+                else if (CurrentStateType == FighterState.Attacking)
+                {
+                    SwitchState(FighterState.Idle);
+                }
+
             }
         }
 

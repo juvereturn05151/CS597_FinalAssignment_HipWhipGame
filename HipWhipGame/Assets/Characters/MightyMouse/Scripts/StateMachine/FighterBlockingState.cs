@@ -15,7 +15,6 @@ namespace HipWhipGame
         public override void OnEnter()
         {
             fighterComponentManager.Animator?.SetBool("Block", true);
-            fighterComponentManager.FighterController.SetIsBlocking(true);
         }
 
         public override void OnUpdate(float dt)
@@ -30,7 +29,6 @@ namespace HipWhipGame
         public override void OnExit()
         {
             fighterComponentManager.Animator?.SetBool("Block", false);
-            fighterComponentManager.FighterController.SetIsBlocking(false);
         }
     }
 }
