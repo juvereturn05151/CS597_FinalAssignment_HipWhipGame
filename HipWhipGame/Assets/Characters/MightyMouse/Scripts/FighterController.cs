@@ -26,13 +26,13 @@ namespace HipWhipGame
 
         [Header("Core Data")]
         public FighterStats stats;
-        public MoveDatabase moves;
 
         private Vector2 movementInput;
         private Vector3 velocity;        // player-controlled movement + gravity
         private Vector3 externalForce;   // knockback, pushback, etc.
         private bool isGrounded;
-        public bool isBlocking = false;
+        private bool isBlocking = false;
+        public bool IsBlocking => isBlocking;
 
         public void SetIsBlocking(bool isBlocking) 
         {

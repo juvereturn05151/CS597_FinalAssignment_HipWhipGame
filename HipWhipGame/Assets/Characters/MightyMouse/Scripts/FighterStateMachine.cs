@@ -92,7 +92,7 @@ namespace HipWhipGame
             fighterComponentManager.Animator.SetBool("BlockStun", false);
             // choose next state based on input
             var controller = fighterComponentManager.FighterController;
-            if (controller != null && controller.isBlocking)
+            if (controller != null && controller.IsBlocking)
             {
                 SetState(FighterState.Blocking);
             }
