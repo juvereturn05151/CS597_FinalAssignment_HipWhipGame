@@ -45,12 +45,12 @@ namespace HipWhipGame
             SwitchState(FighterState.Idle);
         }
 
-        public void CustomUpdate()
+        public void CustomUpdate(float dt)
         {
-            currentState?.OnUpdate(Time.deltaTime);
+            currentState?.OnUpdate(dt);
             if (stateTimer > 0)
             {
-                stateTimer -= Time.deltaTime;
+                stateTimer -= dt;
                 if (stateTimer <= 0)
                 {
                     if (CurrentStateType == FighterState.Hitstun)
@@ -68,7 +68,11 @@ namespace HipWhipGame
                             SwitchState(FighterState.Idle);
                         }
                     }
-                    
+                    else if(CurrentStateType == FighterState.Attacking)
+                    {
+                        SwitchState(FighterState.Idle);
+                    }
+
                 }
             }
         }

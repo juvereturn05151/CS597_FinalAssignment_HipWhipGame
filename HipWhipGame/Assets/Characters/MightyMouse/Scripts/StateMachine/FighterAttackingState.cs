@@ -15,6 +15,7 @@ namespace HipWhipGame
 
         public override void OnEnter()
         {
+            Debug.Log("Entering Attacking State");
             // Trigger attack animation is handled elsewhere
         }
 

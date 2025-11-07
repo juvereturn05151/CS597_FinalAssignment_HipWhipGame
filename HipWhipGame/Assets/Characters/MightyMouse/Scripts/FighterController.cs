@@ -50,7 +50,7 @@ namespace HipWhipGame
             }
 
             // FSM update
-            fighterComponentManager.FighterStateMachine?.CustomUpdate();
+            fighterComponentManager.FighterStateMachine?.CustomUpdate(Time.deltaTime);
 
             // Ground check
             isGrounded = fighterComponentManager.CharacterController.isGrounded;
@@ -192,7 +192,7 @@ namespace HipWhipGame
 
         private void HandleDummyBehavior()
         {
-            fighterComponentManager.FighterStateMachine?.CustomUpdate();
+            fighterComponentManager.FighterStateMachine?.CustomUpdate(Time.deltaTime);
 
             var fsm = fighterComponentManager.FighterStateMachine;
             if (fsm.CurrentStateType == FighterState.Idle)
