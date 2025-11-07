@@ -21,18 +21,20 @@ namespace HipWhipGame
             // Hitstun
             defender.OnHit(move, attacker.GetComponent<MoveExecutor>().CurrentFrame);
 
-            // Correct knockback calculation
+            // Knockback
             Vector3 worldKnock = attacker.transform.TransformDirection(move.knockback);
+            Debug.Log("[HitResolver] Knockback Applied: " + worldKnock + " | Magnitude: " + worldKnock.magnitude + " | Move: " + move.moveName);
+
             defender.ApplyKnockback(worldKnock, 1f);
 
             // Pushback on attacker (recoil)
             if (move.pushbackOnHit > 0f)
             {
                 Vector3 recoilDir = -attacker.transform.forward * move.pushbackOnHit;
+                Debug.Log("[HitResolver] Recoil Applied: " + recoilDir + " | Magnitude: " + recoilDir.magnitude);
+
                 attacker.ApplyKnockback(recoilDir, 1f);
             }
-
-           
 
             // FX/SFX
             if (move.vfxPrefab)

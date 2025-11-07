@@ -41,7 +41,7 @@ namespace HipWhipGame
             WaitForSeconds waitFrame = new WaitForSeconds(frameDuration);
 
             fighterComponentManager.Animator.applyRootMotion = !move.overrideRootMotion;
-            fighterComponentManager.FighterStateMachine.SetState(FighterState.Attacking, totalFrames / 60f);
+            fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Attacking, totalFrames / 60f);
             fighterComponentManager.Animator.Play(move.animation.name, 0, 0f);
 
             GameObject hb = null;
@@ -49,7 +49,7 @@ namespace HipWhipGame
             for (currentFrame = 0; currentFrame < totalFrames; currentFrame++)
             {
                 // Interrupt check
-                if (fighterComponentManager.FighterStateMachine.State != FighterState.Attacking)
+                if (fighterComponentManager.FighterStateMachine.CurrentStateType != FighterState.Attacking)
                 {
                     // Move was interrupted: cleanup & exit immediately
                     if (hb) Destroy(hb);
@@ -74,7 +74,7 @@ namespace HipWhipGame
                             while (elapsed < frameDuration)
                             {
                                 // Check for interruption during interpolation too
-                                if (fighterComponentManager.FighterStateMachine.State != FighterState.Attacking)
+                                if (fighterComponentManager.FighterStateMachine.CurrentStateType != FighterState.Attacking)
                                 {
                                     if (hb) Destroy(hb);
                                     yield break;
@@ -128,9 +128,9 @@ namespace HipWhipGame
             // Final cleanup 
             if (hb) Destroy(hb);
 
-            if (fighterComponentManager.FighterStateMachine.State == FighterState.Attacking) 
+            if (fighterComponentManager.FighterStateMachine.CurrentStateType == FighterState.Attacking) 
             {
-                fighterComponentManager.FighterStateMachine.SetState(FighterState.Idle);
+                fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Idle);
             }
         }
     }
