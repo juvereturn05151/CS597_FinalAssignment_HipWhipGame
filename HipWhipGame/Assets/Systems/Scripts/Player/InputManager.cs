@@ -132,6 +132,20 @@ public class InputManager : MonoBehaviour
         }
     }
 
+    public void OnRightStick(InputAction.CallbackContext context)
+    {
+        if (fighterComponentManager == null)
+        {
+            return;
+        }
+
+        if (context.started) 
+        {
+            fighterComponentManager.FighterInputHandler.OnRightStick(context.ReadValue<Vector2>());
+        }
+
+    }
+
     public void OnShakeController()
     {
         //if (sumo == null)

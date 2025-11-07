@@ -45,5 +45,18 @@ namespace HipWhipGame
             float cutoff = Time.time - bufferWindow;
             _buffer.RemoveAll(p => p.time < cutoff);
         }
+
+        public bool Has(string action)
+        {
+            float cutoff = Time.time - bufferWindow;
+            for (int i = _buffer.Count - 1; i >= 0; --i)
+            {
+                if (_buffer[i].action == action && _buffer[i].time >= cutoff)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

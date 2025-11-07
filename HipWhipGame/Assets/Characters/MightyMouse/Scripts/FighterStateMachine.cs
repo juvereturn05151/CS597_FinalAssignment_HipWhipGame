@@ -36,6 +36,7 @@ namespace HipWhipGame
                 { FighterState.BlockStun, new FighterBlockStunState(FighterComponentManager) },
                 { FighterState.Hitstun, new FighterHitstunState(FighterComponentManager) },
                 { FighterState.Attacking, new FighterAttackingState(FighterComponentManager) },
+                { FighterState.Sidestep, new FighterSidestepState(FighterComponentManager) },
                 // Add more as needed
             };
         }

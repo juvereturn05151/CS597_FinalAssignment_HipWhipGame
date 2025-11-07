@@ -25,10 +25,8 @@ namespace HipWhipGame
 
         public void PlayMove(MoveData move)
         {
-            if (move == null || fighterComponentManager.Animator == null) 
-            {
+            if (move == null || fighterComponentManager.Animator == null)
                 return;
-            } 
 
             StopAllCoroutines();
             StartCoroutine(DoMove(move));
@@ -41,24 +39,32 @@ namespace HipWhipGame
             WaitForSeconds waitFrame = new WaitForSeconds(frameDuration);
 
             fighterComponentManager.Animator.applyRootMotion = !move.overrideRootMotion;
-            fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Attacking, totalFrames / 60f);
+
+            // Decide the FSM state based on move type
+            bool isSidestep = move.moveName == "SidestepRight" || move.moveName == "SidestepLeft";
+
+            fighterComponentManager.FighterStateMachine.SwitchState(
+                isSidestep ? FighterState.Sidestep : FighterState.Attacking,
+                totalFrames / 60f);
+
             fighterComponentManager.Animator.Play(move.animation.name, 0, 0f);
 
             GameObject hb = null;
 
             for (currentFrame = 0; currentFrame < totalFrames; currentFrame++)
             {
-                // Interrupt check
-                if (fighterComponentManager.FighterStateMachine.CurrentStateType != FighterState.Attacking)
+                var state = fighterComponentManager.FighterStateMachine.CurrentStateType;
+
+                // Allow sidestep to continue even though it's not "Attacking"
+                if (!isSidestep && state != FighterState.Attacking)
                 {
-                    // Move was interrupted: cleanup & exit immediately
                     if (hb) Destroy(hb);
                     yield break;
                 }
 
                 bool movedThisFrame = false;
 
-                // Manual motion 
+                // --- Manual motion ---
                 if (move.overrideRootMotion && move.motionSegments != null)
                 {
                     foreach (var seg in move.motionSegments)
@@ -66,15 +72,19 @@ namespace HipWhipGame
                         if (currentFrame >= seg.frameStart && currentFrame <= seg.frameEnd)
                         {
                             movedThisFrame = true;
+
                             Vector3 delta =
                                 transform.forward * seg.forwardSpeed +
+                                transform.right * seg.sideSpeed +
                                 Vector3.up * seg.verticalSpeed;
 
                             float elapsed = 0f;
                             while (elapsed < frameDuration)
                             {
-                                // Check for interruption during interpolation too
-                                if (fighterComponentManager.FighterStateMachine.CurrentStateType != FighterState.Attacking)
+                                // Stop interpolation if move interrupted
+                                var s = fighterComponentManager.FighterStateMachine.CurrentStateType;
+                                if ((!isSidestep && s != FighterState.Attacking) ||
+                                    (isSidestep && s != FighterState.Sidestep))
                                 {
                                     if (hb) Destroy(hb);
                                     yield break;
@@ -84,13 +94,14 @@ namespace HipWhipGame
                                 elapsed += Time.deltaTime;
                                 yield return null;
                             }
+
                             break;
                         }
                     }
                 }
 
-                // Hitbox spawn 
-                if (currentFrame == move.startup)
+                // --- Hitbox spawn (skip for sidestep) ---
+                if (!isSidestep && currentFrame == move.startup)
                 {
                     if (move.hitboxPrefab)
                     {
@@ -112,25 +123,28 @@ namespace HipWhipGame
                     }
                 }
 
-                // Hitbox cleanup
-                if (currentFrame == move.startup + move.active && hb)
+                // --- Hitbox cleanup ---
+                if (!isSidestep && currentFrame == move.startup + move.active && hb)
                 {
                     Destroy(hb);
                 }
 
-                // Wait one frame
-                if (!movedThisFrame) 
+                // --- Wait one frame ---
+                if (!movedThisFrame)
                 {
                     yield return waitFrame;
                 }
             }
 
-            // Final cleanup 
+            // --- Cleanup ---
             if (hb) Destroy(hb);
 
-            if (fighterComponentManager.FighterStateMachine.CurrentStateType == FighterState.Attacking) 
+            // --- Return to Idle when move finishes ---
+            var fsm = fighterComponentManager.FighterStateMachine;
+            if (fsm.CurrentStateType == FighterState.Attacking ||
+                fsm.CurrentStateType == FighterState.Sidestep)
             {
-                fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Idle);
+                fsm.SwitchState(FighterState.Idle);
             }
         }
     }

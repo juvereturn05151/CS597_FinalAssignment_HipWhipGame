@@ -11,7 +11,7 @@ namespace HipWhipGame
     public class Enums : MonoBehaviour
     {
         public enum FighterState { Idle, Moving, Attacking, Hitstun, Knockdown, 
-                                    Jump, Disabled, Blocking, BlockStun}
+                                    Jump, Disabled, Blocking, BlockStun, Sidestep}
 
         public enum GuardType { Block, LowBLock }
     }

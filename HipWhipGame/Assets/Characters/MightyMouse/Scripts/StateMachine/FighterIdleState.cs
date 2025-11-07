@@ -15,7 +15,7 @@ namespace HipWhipGame
 
         public override void OnEnter()
         {
-            Debug.Log("Fighter is in Idle State");
+            //Debug.Log("Fighter is in Idle State");
             fighterComponentManager.Animator?.Play("Idle", 0, 0);
             fighterComponentManager.Animator?.SetBool("Block", false);
         }

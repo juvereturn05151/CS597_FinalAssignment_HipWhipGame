@@ -17,6 +17,8 @@ public class MoveDatabase : ScriptableObject
     public MoveData buttAttackMidPoke;
     public MoveData buttTornado;
     public MoveData buttLowAttack;
+    public MoveData sideStepLeft;
+    public MoveData sideStepRight;
 
     //public MoveData special;
     //public MoveData jumpAttack;

@@ -23,6 +23,8 @@ namespace HipWhipGame
 
         [Tooltip("Vertical speed (units per frame)")]
         public float verticalSpeed = 0f;
+
+        public float sideSpeed;
     }
 
 }

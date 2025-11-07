@@ -31,11 +31,25 @@ namespace HipWhipGame
             _moveCommands.Add(new ButtAttackMidPokeCommand(fighterComponentManager, moves.buttAttackMidPoke));
             _moveCommands.Add(new ButtLowAttackCommand(fighterComponentManager, moves.buttLowAttack));
             _moveCommands.Add(new ButtTornadoCommand(fighterComponentManager, moves.buttTornado));
+            _moveCommands.Add(new SidestepLeftCommand(fighterComponentManager, moves.sideStepLeft));
+            _moveCommands.Add(new SidestepRightCommand(fighterComponentManager, moves.sideStepRight));
         }
 
         public void OnMove(Vector2 updatedVector)
         {
             moveCommand.UpdateVectorInput(updatedVector);
+        }
+
+        public void OnRightStick(Vector2 updatedVector)
+        {
+            if (updatedVector.x >= 0.1f) 
+            {
+                TryPressCommand<SidestepRightCommand>();
+            }
+            else if (updatedVector.x <= -0.1f)
+            {
+                TryPressCommand<SidestepLeftCommand>();
+            }
         }
 
         public void HoldBlock() => blockCommand.Pressed();
