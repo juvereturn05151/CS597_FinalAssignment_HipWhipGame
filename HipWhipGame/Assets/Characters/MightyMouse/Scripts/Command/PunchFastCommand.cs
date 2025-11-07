@@ -4,6 +4,7 @@ namespace HipWhipGame
 {
     public class PunchFastCommand : ICommand
     {
+        public string Name => "PunchFast";
         private FighterComponentManager fighterComponentManager;
         public PunchFastCommand(FighterComponentManager fighterComponentManager)
         {
@@ -11,7 +12,7 @@ namespace HipWhipGame
         }
         public void Execute()
         {
-            fighterComponentManager.InputBuffer.Push("PunchFast");
+            fighterComponentManager.InputBuffer.Push(Name);
         }
 
         public void Release()

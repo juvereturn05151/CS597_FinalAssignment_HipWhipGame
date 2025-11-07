@@ -4,6 +4,7 @@ namespace HipWhipGame
 {
     public class BlockCommand
     {
+        public string Name => "Block";
         private FighterComponentManager fighterComponentManager;
         public BlockCommand(FighterComponentManager fighterComponentManager)
         {

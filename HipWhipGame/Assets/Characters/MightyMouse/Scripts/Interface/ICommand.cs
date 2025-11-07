@@ -10,6 +10,7 @@ namespace HipWhipGame
 {
     public interface ICommand
     {
+        string Name { get; }
         void Execute();
 
         void Release();

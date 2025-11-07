@@ -5,6 +5,9 @@ namespace HipWhipGame
     [RequireComponent(typeof(FighterComponentManager))]
     public class FighterInputHandler : MonoBehaviour, IFighterComponentInjectable
     {
+        [SerializeField]
+        private MoveDatabase moves;
+
         private FighterComponentManager fighterComponentManager;
 
         private MoveCommand moveCommand;
@@ -14,6 +17,7 @@ namespace HipWhipGame
         private ButtAttackMidPokeCommand buttAttackMidPokeCommand;
         private ButtLowAttackCommand buttLowAttackCommand;
         private ButtTornadoCommand buttTornadoCommand;
+
         public void Inject(FighterComponentManager fighterComponentManager)
         {
             this.fighterComponentManager = fighterComponentManager;

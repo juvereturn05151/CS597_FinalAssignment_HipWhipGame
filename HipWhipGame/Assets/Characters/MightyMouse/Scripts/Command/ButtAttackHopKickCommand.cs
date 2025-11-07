@@ -4,6 +4,7 @@ namespace HipWhipGame
 {
     public class ButtAttackHopKickCommand : ICommand
     {
+        public string Name => "ButtAttackHopKick";
         private FighterComponentManager fighterComponentManager;
         public ButtAttackHopKickCommand(FighterComponentManager fighterComponentManager)
         {
@@ -11,7 +12,7 @@ namespace HipWhipGame
         }
         public void Execute()
         {
-            fighterComponentManager.InputBuffer.Push("ButtAttackHopKick");
+            fighterComponentManager.InputBuffer.Push(Name);
         }
 
         public void Release()

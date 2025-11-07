@@ -4,6 +4,7 @@ namespace HipWhipGame
 {
     public class ButtTornadoCommand : ICommand
     {
+        public string Name => "ButtTornado";
         private FighterComponentManager fighterComponentManager;
         public ButtTornadoCommand(FighterComponentManager fighterComponentManager)
         {
@@ -11,7 +12,7 @@ namespace HipWhipGame
         }
         public void Execute()
         {
-            fighterComponentManager.InputBuffer.Push("ButtTornado");
+            fighterComponentManager.InputBuffer.Push(Name);
         }
 
         public void Release()
