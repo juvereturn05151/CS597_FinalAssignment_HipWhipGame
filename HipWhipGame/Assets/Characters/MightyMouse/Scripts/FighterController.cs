@@ -157,8 +157,7 @@ namespace HipWhipGame
             // --- Attacks (data-driven) ---
             if (fighterComponentManager.FighterStateMachine.State != FighterState.Hitstun) 
             {
-                TryStartMove();
-
+                fighterComponentManager.FighterInputHandler.TryStartMove();
             }
             fighterComponentManager.InputBuffer.Prune();
 
@@ -256,44 +255,6 @@ namespace HipWhipGame
         }
 
         // 
-        // PLAYER ATTACK EXECUTION
-        // 
-        void TryStartMove()
-        {
-            if (!fighterComponentManager.FighterStateMachine.CanStartMove()) return;
-
-            if (fighterComponentManager.InputBuffer.Consume("ButtAttackHopKick") && moves.buttAttackHopKick)
-            {
-                GetComponent<MoveExecutor>().PlayMove(moves.buttAttackHopKick);
-                return;
-            }
-
-            if (fighterComponentManager.InputBuffer.Consume("PunchFast") && moves.punchFast)
-            {
-                GetComponent<MoveExecutor>().PlayMove(moves.punchFast);
-                return;
-            }
-
-            if (fighterComponentManager.InputBuffer.Consume("ButtAttackMidPoke") && moves.buttAttackMidPoke) 
-            {
-                GetComponent<MoveExecutor>().PlayMove(moves.buttAttackMidPoke);
-                return;
-            }
-
-            if (fighterComponentManager.InputBuffer.Consume("ButtLowAttack") && moves.buttLowAttack)
-            {
-                GetComponent<MoveExecutor>().PlayMove(moves.buttLowAttack);
-                return;
-            }
-
-            if (fighterComponentManager.InputBuffer.Consume("ButtTornado") && moves.buttTornado)
-            {
-                GetComponent<MoveExecutor>().PlayMove(moves.buttTornado);
-                return;
-            }
-        }
-
-        // 
         // HIT REACTIONS
         // 
 
@@ -320,7 +281,6 @@ namespace HipWhipGame
         public void ApplyBlockstun(float frames)
         {
             fighterComponentManager.FighterStateMachine.EnterBlockstun(frames / 60f * stats.blockstunScale);
-
         }
 
         public void ApplyHitstun(float frames)

@@ -11,10 +11,14 @@ namespace HipWhipGame
     public interface ICommand
     {
         string Name { get; }
-        void Execute();
+        void Pressed();
 
         void Release();
 
         void UpdateVectorInput(Vector2 updatedVector);
+
+        bool TryExecute();
+
+        void TryStartMove();
     }
 }

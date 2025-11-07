@@ -1,16 +1,20 @@
+using UnityEditor.Overlays;
 using UnityEngine;
 
 namespace HipWhipGame
 {
     public class ButtAttackMidPokeCommand : ICommand
     {
-        public string Name => "ButtAttackMidPoke";
         private FighterComponentManager fighterComponentManager;
-        public ButtAttackMidPokeCommand(FighterComponentManager fighterComponentManager)
+        private MoveData moveData;
+        public string Name => "ButtAttackMidPoke";
+
+        public ButtAttackMidPokeCommand(FighterComponentManager fighterComponentManager, MoveData moveData)
         {
             this.fighterComponentManager = fighterComponentManager;
+            this.moveData = moveData;
         }
-        public void Execute()
+        public void Pressed()
         {
             fighterComponentManager.InputBuffer.Push(Name);
         }
@@ -23,6 +27,16 @@ namespace HipWhipGame
         public void UpdateVectorInput(Vector2 updatedVector)
         {
             
+        }
+
+        public bool TryExecute()
+        {
+            return fighterComponentManager.InputBuffer.Consume(Name) && moveData;
+        }
+
+        public void TryStartMove()
+        {
+            fighterComponentManager.MoveExecutor.PlayMove(moveData);
         }
     }
 }

@@ -4,13 +4,16 @@ namespace HipWhipGame
 {
     public class ButtAttackHopKickCommand : ICommand
     {
-        public string Name => "ButtAttackHopKick";
         private FighterComponentManager fighterComponentManager;
-        public ButtAttackHopKickCommand(FighterComponentManager fighterComponentManager)
+        public string Name => "ButtAttackHopKick";
+        public MoveData moveData;
+        
+        public ButtAttackHopKickCommand(FighterComponentManager fighterComponentManager, MoveData moveData)
         {
             this.fighterComponentManager = fighterComponentManager;
+            this.moveData = moveData;
         }
-        public void Execute()
+        public void Pressed()
         {
             fighterComponentManager.InputBuffer.Push(Name);
         }
@@ -23,6 +26,16 @@ namespace HipWhipGame
         public void UpdateVectorInput(Vector2 updatedVector)
         {
             
+        }
+
+        public bool TryExecute()
+        {
+            return fighterComponentManager.InputBuffer.Consume(Name) && moveData;
+        }
+
+        public void TryStartMove()
+        {
+            fighterComponentManager.MoveExecutor.PlayMove(moveData);
         }
     }
 }

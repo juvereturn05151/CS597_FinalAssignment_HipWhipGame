@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace HipWhipGame
@@ -5,30 +6,31 @@ namespace HipWhipGame
     [RequireComponent(typeof(FighterComponentManager))]
     public class FighterInputHandler : MonoBehaviour, IFighterComponentInjectable
     {
-        [SerializeField]
-        private MoveDatabase moves;
+        [SerializeField] private MoveDatabase moves;
 
         private FighterComponentManager fighterComponentManager;
 
+        // Individual references (optional, for direct access)
         private MoveCommand moveCommand;
         private BlockCommand blockCommand;
-        private PunchFastCommand punchFastCommand;
-        private ButtAttackHopKickCommand buttAttackHopKickCommand;
-        private ButtAttackMidPokeCommand buttAttackMidPokeCommand;
-        private ButtLowAttackCommand buttLowAttackCommand;
-        private ButtTornadoCommand buttTornadoCommand;
+
+        // Unified command list
+        private readonly List<ICommand> _moveCommands = new();
 
         public void Inject(FighterComponentManager fighterComponentManager)
         {
             this.fighterComponentManager = fighterComponentManager;
 
-            moveCommand = new MoveCommand(fighterComponentManager);
-            blockCommand = new BlockCommand(fighterComponentManager);
-            punchFastCommand = new PunchFastCommand(fighterComponentManager);
-            buttAttackHopKickCommand = new ButtAttackHopKickCommand(fighterComponentManager);
-            buttAttackMidPokeCommand = new ButtAttackMidPokeCommand(fighterComponentManager);
-            buttLowAttackCommand = new ButtLowAttackCommand(fighterComponentManager);
-            buttTornadoCommand = new ButtTornadoCommand(fighterComponentManager);
+            // Initialize movement & block
+            moveCommand = new MoveCommand(fighterComponentManager, null);
+            blockCommand = new BlockCommand(fighterComponentManager, null);
+
+            // Create and register all move commands
+            _moveCommands.Add(new PunchFastCommand(fighterComponentManager, moves.punchFast));
+            _moveCommands.Add(new ButtAttackHopKickCommand(fighterComponentManager, moves.buttAttackHopKick));
+            _moveCommands.Add(new ButtAttackMidPokeCommand(fighterComponentManager, moves.buttAttackMidPoke));
+            _moveCommands.Add(new ButtLowAttackCommand(fighterComponentManager, moves.buttLowAttack));
+            _moveCommands.Add(new ButtTornadoCommand(fighterComponentManager, moves.buttTornado));
         }
 
         public void OnMove(Vector2 updatedVector)
@@ -36,39 +38,43 @@ namespace HipWhipGame
             moveCommand.UpdateVectorInput(updatedVector);
         }
 
-        public void HoldBlock() 
+        public void HoldBlock() => blockCommand.Pressed();
+        public void ReleaseBlock() => blockCommand.Release();
+
+        // These can directly call Pressed() if needed
+        public void PerformPunchFast() => TryPressCommand<PunchFastCommand>();
+        public void PerformButtAttackHopKick() => TryPressCommand<ButtAttackHopKickCommand>();
+        public void PerformButtAttackMidPoke() => TryPressCommand<ButtAttackMidPokeCommand>();
+        public void PerformButtLowAttack() => TryPressCommand<ButtLowAttackCommand>();
+        public void PerformButtTornado() => TryPressCommand<ButtTornadoCommand>();
+
+        private void TryPressCommand<T>() where T : ICommand
         {
-            blockCommand.Execute();
+            foreach (var cmd in _moveCommands)
+            {
+                if (cmd is T)
+                {
+                    cmd.Pressed();
+                    break;
+                }
+            }
         }
 
-        public void ReleaseBlock() 
+        public void TryStartMove()
         {
-            blockCommand.Release();
-        }
+            if (!fighterComponentManager.FighterStateMachine.CanStartMove())
+                return;
 
-        public void PerformPunchFast() 
-        {
-            punchFastCommand.Execute();
-        }
-
-        public void PerformButtAttackHopKick()
-        {
-            buttAttackHopKickCommand.Execute();
-        }
-
-        public void PerformButtAttackMidPoke()
-        {
-            buttAttackMidPokeCommand.Execute();
-        }
-
-        public void PerformButtLowAttack()
-        {
-            buttLowAttackCommand.Execute();
-        }
-
-        public void PerformButtTornado()
-        {
-            buttTornadoCommand.Execute();
+            // Loop through all move commands
+            foreach (var command in _moveCommands)
+            {
+                // Only execute the first valid one
+                if ((command).TryExecute())
+                {
+                    (command).TryStartMove();
+                    return;
+                }
+            }
         }
     }
 }
