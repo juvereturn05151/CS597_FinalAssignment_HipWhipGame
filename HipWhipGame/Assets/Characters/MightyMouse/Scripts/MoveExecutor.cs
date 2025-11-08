@@ -40,12 +40,7 @@ namespace HipWhipGame
 
             fighterComponentManager.Animator.applyRootMotion = !move.overrideRootMotion;
 
-            // Decide the FSM state based on move type
-            bool isSidestep = move.moveName == "SidestepRight" || move.moveName == "SidestepLeft";
-
-            fighterComponentManager.FighterStateMachine.SwitchState(
-                move.state,
-                totalFrames / 60f);
+            fighterComponentManager.FighterStateMachine.SwitchState(move.state,totalFrames / 60f);
 
             fighterComponentManager.Animator.Play(move.animation.name, 0, 0f);
 
@@ -99,31 +94,32 @@ namespace HipWhipGame
                     }
                 }
 
-                // --- Hitbox spawn (skip for sidestep) ---
-                if (!isSidestep && currentFrame == move.startup)
+                // --- Hitbox spawn ---
+                if (currentFrame == move.startup)
                 {
-                    if (move.hitboxPrefab)
+                    // --- Hitbox spawn only for attacking---
+                    if (move.state == FighterState.Attacking) 
                     {
-                        hb = Instantiate(move.hitboxPrefab, transform);
-                        hb.transform.localPosition = move.hitboxLocalPos;
-                        hb.transform.localScale = move.hitboxLocalScale;
-
-                        var hitbox = hb.GetComponent<Hitbox>();
-                        if (hitbox)
+                        if (move.hitboxPrefab)
                         {
-                            hitbox.Init(owner: fighterComponentManager.FighterController, move);
-                            hitbox.Activate();
-                            hitbox.SetLifetimeFrames(
-                                (int)Mathf.Max(1,
-                                    move.hitboxLifetimeFrames > 0
-                                        ? move.hitboxLifetimeFrames
-                                        : move.active));
+                            hb = Instantiate(move.hitboxPrefab, transform);
+                            hb.transform.localPosition = move.hitboxLocalPos;
+                            hb.transform.localScale = move.hitboxLocalScale;
+
+                            var hitbox = hb.GetComponent<Hitbox>();
+                            if (hitbox)
+                            {
+                                hitbox.Init(owner: fighterComponentManager.FighterController, move);
+                                hitbox.Activate();
+                                hitbox.SetLifetimeFrames((int)Mathf.Max(1, move.hitboxLifetimeFrames > 0 ? move.hitboxLifetimeFrames : move.active));
+                            }
                         }
                     }
+
                 }
 
                 // --- Hitbox cleanup ---
-                if (!isSidestep && currentFrame == move.startup + move.active && hb)
+                if (currentFrame == move.startup + move.active && hb)
                 {
                     Destroy(hb);
                 }
@@ -139,13 +135,7 @@ namespace HipWhipGame
             if (hb) Destroy(hb);
 
             // --- Return to Idle when move finishes ---
-            var fsm = fighterComponentManager.FighterStateMachine;
-            if (fsm.CurrentStateType == FighterState.Attacking ||
-                fsm.CurrentStateType == FighterState.Sidestep ||
-                fsm.CurrentStateType == FighterState.TryGrab)
-            {
-                fsm.SwitchState(FighterState.Idle);
-            }
+            fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Idle);
         }
     }
 }
