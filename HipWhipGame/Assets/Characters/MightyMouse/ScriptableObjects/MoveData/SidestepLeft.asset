@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveName: SidestepLeft
   animation: {fileID: 7400000, guid: c7c40c3969363f541a63a8f5d0fd24d8, type: 2}
+  state: 9
   startup: 2
   active: 6
   recovery: 8
@@ -41,3 +42,8 @@ MonoBehaviour:
     sideSpeed: -0.3
   plusOnHit: 0
   plusOnBlock: 0
+  isGrab: 0
+  grabRange: 1.2
+  grabDuration: 0.8
+  grabOffset: {x: 0, y: 0, z: 0}
+  grabVictimAnim: 

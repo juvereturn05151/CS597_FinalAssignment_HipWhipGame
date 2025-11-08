@@ -79,6 +79,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "LeftShoulder",
+                    "type": "Button",
+                    "id": "d3ffc2ae-64b6-4a91-adb7-b99ccdc089e2",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "RightTrigger",
                     "type": "Button",
                     "id": "6d8fd55d-78cb-44d1-bf6d-996b10b154cb",
@@ -394,6 +403,28 @@
                     "processors": "",
                     "groups": "Gameplay;Keyboard&Mouse",
                     "action": "RightShoulder",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3f177fb7-e061-4c10-9357-e095c400e2be",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gameplay;Gamepad",
+                    "action": "LeftShoulder",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f34b152c-1f13-4a17-9991-a2ebd61f1ff6",
+                    "path": "<Keyboard>/v",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gameplay;Keyboard&Mouse",
+                    "action": "LeftShoulder",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

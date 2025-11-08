@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveName: ButtMidPoke
   animation: {fileID: 7400000, guid: 4afac8f4e1c077348b1d9c3550aab762, type: 2}
+  state: 2
   startup: 13
   active: 13
   recovery: 11
@@ -38,21 +39,31 @@ MonoBehaviour:
     frameEnd: 12
     forwardSpeed: 0.05
     verticalSpeed: 0
+    sideSpeed: 0
   - frameStart: 13
     frameEnd: 13
     forwardSpeed: 0.2
     verticalSpeed: -0.02
+    sideSpeed: 0
   - frameStart: 14
     frameEnd: 15
     forwardSpeed: 0.08
     verticalSpeed: -0.03
+    sideSpeed: 0
   - frameStart: 16
     frameEnd: 18
     forwardSpeed: 0.02
     verticalSpeed: -0.01
+    sideSpeed: 0
   - frameStart: 19
     frameEnd: 24
     forwardSpeed: 0
     verticalSpeed: 0
+    sideSpeed: 0
   plusOnHit: 0
   plusOnBlock: 0
+  isGrab: 0
+  grabRange: 1.2
+  grabDuration: 0.8
+  grabOffset: {x: 0, y: 0, z: 0}
+  grabVictimAnim: 

@@ -18,6 +18,7 @@ namespace HipWhipGame
         public AnimationClip animation;
 
         [Header("Frame Data (at 60 FPS)")]
+        public FighterState state;
         public int startup = 5;
         public int active = 3;
         public int recovery = 12;
@@ -51,6 +52,13 @@ namespace HipWhipGame
 
         [HideInInspector] public float plusOnHit;
         [HideInInspector] public float plusOnBlock;
+
+        [Header("Grab Settings")]
+        public bool isGrab;
+        public float grabRange = 1.2f;
+        public float grabDuration = 0.8f;
+        public Vector3 grabOffset;        // where opponent should be moved to
+        public string grabVictimAnim;
 
         public float TotalAnimTimeSec => animation ? animation.length : (startup + active + recovery) / 60f;
     }

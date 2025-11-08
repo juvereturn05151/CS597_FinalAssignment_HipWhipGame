@@ -14,11 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveName: HitStun
   animation: {fileID: 7400000, guid: 4fbdfd8c49b09a7468c2f5d214835d4d, type: 2}
+  state: 3
   startup: 5
   active: 3
   recovery: 12
   damage: 10
   hitstunFrames: 15
+  blockstunFrames: 0
   knockback: {x: 2, y: 0.5, z: 0}
   guardType: 0
   pushbackOnHit: 1.5
@@ -33,3 +35,10 @@ MonoBehaviour:
   vfxPrefab: {fileID: 0}
   overrideRootMotion: 1
   motionSegments: []
+  plusOnHit: 0
+  plusOnBlock: 0
+  isGrab: 0
+  grabRange: 1.2
+  grabDuration: 0.8
+  grabOffset: {x: 0, y: 0, z: 0}
+  grabVictimAnim: 

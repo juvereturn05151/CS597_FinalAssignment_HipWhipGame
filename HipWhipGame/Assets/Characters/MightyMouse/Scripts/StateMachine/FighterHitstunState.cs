@@ -17,6 +17,7 @@ namespace HipWhipGame
         {
             fighterComponentManager.Animator?.SetBool("Block", false);
             fighterComponentManager.Animator?.Play("HitStun", 0, 0f);
+            fighterComponentManager.FighterController.SetIsInterrupted(true);
         }
 
         public override void OnUpdate(float dt)
@@ -27,6 +28,7 @@ namespace HipWhipGame
         public override void OnExit()
         {
             // Transition back to idle handled by StateMachine
+            fighterComponentManager.FighterController.SetIsInterrupted(false);
         }
     }
 }

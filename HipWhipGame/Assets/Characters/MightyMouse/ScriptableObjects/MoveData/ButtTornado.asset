@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveName: ButtTornado
   animation: {fileID: 7400000, guid: 628072250be3b2f4db5daedad61c5037, type: 2}
+  state: 2
   startup: 20
   active: 30
   recovery: 17
@@ -36,3 +37,8 @@ MonoBehaviour:
   motionSegments: []
   plusOnHit: 0
   plusOnBlock: 0
+  isGrab: 0
+  grabRange: 1.2
+  grabDuration: 0.8
+  grabOffset: {x: 0, y: 0, z: 0}
+  grabVictimAnim: 

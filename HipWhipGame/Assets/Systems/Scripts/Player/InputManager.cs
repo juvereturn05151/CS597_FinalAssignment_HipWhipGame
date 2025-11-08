@@ -146,6 +146,21 @@ public class InputManager : MonoBehaviour
 
     }
 
+    public void OnLeftShoulder(InputAction.CallbackContext context)
+    {
+        if (fighterComponentManager == null)
+        {
+            return;
+        }
+        if (context.performed)
+        {
+            fighterComponentManager.FighterInputHandler.PerformTryGrab();
+        }
+        else if (context.canceled)
+        {
+        }
+    }
+
     public void OnShakeController()
     {
         //if (sumo == null)

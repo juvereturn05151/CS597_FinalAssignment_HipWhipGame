@@ -15,6 +15,8 @@ namespace HipWhipGame
     {
         private FighterBaseState currentState;
         private Dictionary<FighterState, FighterBaseState> stateMap;
+        private List<FighterState> uninterruptedList;
+        public bool IsInUninterruptedState => uninterruptedList.Contains(CurrentStateType);
 
         public FighterComponentManager FighterComponentManager { get; private set; }
         public FighterState CurrentStateType { get; private set; } = FighterState.Disabled;
@@ -37,7 +39,15 @@ namespace HipWhipGame
                 { FighterState.Hitstun, new FighterHitstunState(FighterComponentManager) },
                 { FighterState.Attacking, new FighterAttackingState(FighterComponentManager) },
                 { FighterState.Sidestep, new FighterSidestepState(FighterComponentManager) },
+                { FighterState.TryGrab, new FighterTryGrabState(FighterComponentManager) },
                 // Add more as needed
+            };
+
+            uninterruptedList = new List<FighterState>
+            {
+                FighterState.Attacking,
+                FighterState.Sidestep,
+                FighterState.TryGrab,
             };
         }
 
@@ -71,7 +81,7 @@ namespace HipWhipGame
                         SwitchState(FighterState.Idle);
                     }
                 }
-                else if (CurrentStateType == FighterState.Attacking)
+                else if (CurrentStateType == FighterState.Attacking || CurrentStateType == FighterState.TryGrab)
                 {
                     SwitchState(FighterState.Idle);
                 }

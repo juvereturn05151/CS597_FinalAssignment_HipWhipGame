@@ -35,6 +35,11 @@ namespace HipWhipGame
         public bool IsBlocking => isBlocking;
         public void SetIsBlocking(bool value) => isBlocking = value;
 
+        private bool isInterrupted = false;
+
+        public bool IsInterrupted => isInterrupted;
+        public void SetIsInterrupted(bool value) => isInterrupted = value;
+
         public void Inject(FighterComponentManager fighterComponentManager)
         {
             this.fighterComponentManager = fighterComponentManager;

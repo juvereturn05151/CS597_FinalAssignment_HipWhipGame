@@ -33,6 +33,7 @@ namespace HipWhipGame
             _moveCommands.Add(new ButtTornadoCommand(fighterComponentManager, moves.buttTornado));
             _moveCommands.Add(new SidestepLeftCommand(fighterComponentManager, moves.sideStepLeft));
             _moveCommands.Add(new SidestepRightCommand(fighterComponentManager, moves.sideStepRight));
+            _moveCommands.Add(new TryGrabCommand(fighterComponentManager, moves.tryGrab));
         }
 
         public void OnMove(Vector2 updatedVector)
@@ -61,6 +62,7 @@ namespace HipWhipGame
         public void PerformButtAttackMidPoke() => TryPressCommand<ButtAttackMidPokeCommand>();
         public void PerformButtLowAttack() => TryPressCommand<ButtLowAttackCommand>();
         public void PerformButtTornado() => TryPressCommand<ButtTornadoCommand>();
+        public void PerformTryGrab() => TryPressCommand<TryGrabCommand>();
 
         private void TryPressCommand<T>() where T : ICommand
         {

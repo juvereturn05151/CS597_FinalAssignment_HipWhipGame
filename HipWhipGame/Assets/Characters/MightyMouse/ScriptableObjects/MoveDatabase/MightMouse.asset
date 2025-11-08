@@ -21,3 +21,4 @@ MonoBehaviour:
   buttLowAttack: {fileID: 11400000, guid: 30d94c662f1351344aedfa7d92dd76b5, type: 2}
   sideStepLeft: {fileID: 11400000, guid: 0aebe366b78e4de43a8d3ef255e2205f, type: 2}
   sideStepRight: {fileID: 11400000, guid: 57739ff674ee14b49be25fdabd9c5229, type: 2}
+  tryGrab: {fileID: 11400000, guid: bfb4838af64fbdd4fb99b64d85072a2a, type: 2}

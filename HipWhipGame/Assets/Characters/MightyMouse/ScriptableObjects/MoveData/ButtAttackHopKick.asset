@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveName: ButtAttackHopKick
   animation: {fileID: 7400000, guid: b6ad4b837f434b84ebd09e7b00323169, type: 2}
+  state: 2
   startup: 15
   active: 22
   recovery: 83
@@ -38,17 +39,26 @@ MonoBehaviour:
     frameEnd: 22
     forwardSpeed: 0.15
     verticalSpeed: 0.2
+    sideSpeed: 0
   - frameStart: 23
     frameEnd: 23
     forwardSpeed: 0.35
     verticalSpeed: 0.25
+    sideSpeed: 0
   - frameStart: 24
     frameEnd: 24
     forwardSpeed: 0.5
     verticalSpeed: 0.2
+    sideSpeed: 0
   - frameStart: 25
     frameEnd: 25
     forwardSpeed: 0.3
     verticalSpeed: 0.1
+    sideSpeed: 0
   plusOnHit: 0
   plusOnBlock: 0
+  isGrab: 0
+  grabRange: 1.2
+  grabDuration: 0.8
+  grabOffset: {x: 0, y: 0, z: 0}
+  grabVictimAnim: 

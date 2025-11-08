@@ -44,7 +44,7 @@ namespace HipWhipGame
             bool isSidestep = move.moveName == "SidestepRight" || move.moveName == "SidestepLeft";
 
             fighterComponentManager.FighterStateMachine.SwitchState(
-                isSidestep ? FighterState.Sidestep : FighterState.Attacking,
+                move.state,
                 totalFrames / 60f);
 
             fighterComponentManager.Animator.Play(move.animation.name, 0, 0f);
@@ -56,7 +56,7 @@ namespace HipWhipGame
                 var state = fighterComponentManager.FighterStateMachine.CurrentStateType;
 
                 // Allow sidestep to continue even though it's not "Attacking"
-                if (!isSidestep && state != FighterState.Attacking)
+                if (fighterComponentManager.FighterController.IsInterrupted)
                 {
                     if (hb) Destroy(hb);
                     yield break;
@@ -83,8 +83,7 @@ namespace HipWhipGame
                             {
                                 // Stop interpolation if move interrupted
                                 var s = fighterComponentManager.FighterStateMachine.CurrentStateType;
-                                if ((!isSidestep && s != FighterState.Attacking) ||
-                                    (isSidestep && s != FighterState.Sidestep))
+                                if (fighterComponentManager.FighterController.IsInterrupted)
                                 {
                                     if (hb) Destroy(hb);
                                     yield break;
@@ -142,7 +141,8 @@ namespace HipWhipGame
             // --- Return to Idle when move finishes ---
             var fsm = fighterComponentManager.FighterStateMachine;
             if (fsm.CurrentStateType == FighterState.Attacking ||
-                fsm.CurrentStateType == FighterState.Sidestep)
+                fsm.CurrentStateType == FighterState.Sidestep ||
+                fsm.CurrentStateType == FighterState.TryGrab)
             {
                 fsm.SwitchState(FighterState.Idle);
             }
