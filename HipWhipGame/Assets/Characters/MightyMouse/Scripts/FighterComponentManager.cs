@@ -34,6 +34,9 @@ namespace HipWhipGame
         [SerializeField]
         private FighterInputHandler fighterInputHandler;
         public FighterInputHandler FighterInputHandler => fighterInputHandler;
+        [SerializeField]
+        private FighterGrabManager fighterGrabManager;
+        public FighterGrabManager FighterGrabManager => fighterGrabManager;
 
         void Awake()
         {
@@ -45,6 +48,7 @@ namespace HipWhipGame
             if (!characterController) characterController = GetComponent<CharacterController>();
             if (!moveExecutor) moveExecutor = GetComponent<MoveExecutor>();
             if (!fighterInputHandler) fighterInputHandler = GetComponent<FighterInputHandler>();
+            if (!fighterGrabManager) fighterGrabManager = GetComponent<FighterGrabManager>();
 
             foreach (var injectable in GetComponents<IFighterComponentInjectable>())
             {

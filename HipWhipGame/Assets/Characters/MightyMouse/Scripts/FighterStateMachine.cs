@@ -40,6 +40,8 @@ namespace HipWhipGame
                 { FighterState.Attacking, new FighterAttackingState(FighterComponentManager) },
                 { FighterState.Sidestep, new FighterSidestepState(FighterComponentManager) },
                 { FighterState.TryGrab, new FighterTryGrabState(FighterComponentManager) },
+                { FighterState.Grabbing, new FighterGrabbing(FighterComponentManager) },
+                { FighterState.BeingGrabbed, new FighterBeingGrabbed(FighterComponentManager) },
                 // Add more as needed
             };
 

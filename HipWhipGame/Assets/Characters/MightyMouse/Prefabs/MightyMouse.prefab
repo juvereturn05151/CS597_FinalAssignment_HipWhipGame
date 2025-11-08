@@ -249,6 +249,7 @@ GameObject:
   - component: {fileID: 7368925905962000506}
   - component: {fileID: 7621464616308743618}
   - component: {fileID: 3089616261606338496}
+  - component: {fileID: 6086692153399069145}
   m_Layer: 0
   m_Name: MightyMouse
   m_TagString: Player
@@ -321,6 +322,7 @@ MonoBehaviour:
   characterController: {fileID: 1695589801241104500}
   moveExecutor: {fileID: 7368925905962000506}
   fighterInputHandler: {fileID: 3089616261606338496}
+  fighterGrabManager: {fileID: 6086692153399069145}
 --- !u!114 &8423063465751016683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -363,8 +365,6 @@ MonoBehaviour:
   lookAtTarget: {fileID: 0}
   pushbox: {fileID: 2945071498198511838}
   stats: {fileID: 7621464616308743618}
-  moves: {fileID: 11400000, guid: 7293fd971d364cd498b341a8de8b1f4e, type: 2}
-  isBlocking: 0
 --- !u!114 &7368925905962000506
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -408,6 +408,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moves: {fileID: 11400000, guid: 7293fd971d364cd498b341a8de8b1f4e, type: 2}
+--- !u!114 &6086692153399069145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7400030421977495981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56da4de0dfefba04f81111e5cba034b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9202767699107768774
 GameObject:
   m_ObjectHideFlags: 0

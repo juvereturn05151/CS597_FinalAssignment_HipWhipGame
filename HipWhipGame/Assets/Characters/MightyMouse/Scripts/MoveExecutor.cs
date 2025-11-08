@@ -5,6 +5,7 @@ Copyright:    (c) 2025 DigiPen Institute of Technology. All rights reserved.
 */
 
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using static HipWhipGame.Enums;
 
@@ -98,7 +99,7 @@ namespace HipWhipGame
                 if (currentFrame == move.startup)
                 {
                     // --- Hitbox spawn only for attacking---
-                    if (move.state == FighterState.Attacking) 
+                    if (move.state == FighterState.Attacking)
                     {
                         if (move.hitboxPrefab)
                         {
@@ -114,8 +115,32 @@ namespace HipWhipGame
                                 hitbox.SetLifetimeFrames((int)Mathf.Max(1, move.hitboxLifetimeFrames > 0 ? move.hitboxLifetimeFrames : move.active));
                             }
                         }
-                    }
+                    } 
+                    else if (move.state == FighterState.TryGrab) 
+                    {
+                        if (!fighterComponentManager.FighterController.lookAtTarget)
+                            yield break;
 
+                        Transform target = fighterComponentManager.FighterController.lookAtTarget;
+                        Vector3 fighterPos = fighterComponentManager.FighterController.transform.position;
+                        Vector3 targetPos = target.position;
+
+                        // Distance check
+                        float distance = Vector3.Distance(fighterPos, targetPos);
+                        bool inRange = distance <= move.grabRange;
+
+                        // Direction check (optional: ensure target is in front)
+                        Vector3 toTarget = (targetPos - fighterPos).normalized;
+                        float dot = Vector3.Dot(fighterComponentManager.FighterController.transform.forward, toTarget);
+                        bool inFront = dot > 0.3f; // Adjust threshold for strictness
+
+                        if (inRange && inFront)
+                        {
+                            fighterComponentManager.FighterGrabManager.SetUpGrabData(move);
+                            fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Grabbing);
+                            yield break;
+                        }
+                    }
                 }
 
                 // --- Hitbox cleanup ---

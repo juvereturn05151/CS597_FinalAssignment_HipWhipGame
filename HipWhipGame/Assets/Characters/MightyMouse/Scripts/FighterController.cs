@@ -40,6 +40,13 @@ namespace HipWhipGame
         public bool IsInterrupted => isInterrupted;
         public void SetIsInterrupted(bool value) => isInterrupted = value;
 
+        private bool isMovable = true;
+
+        public bool IsMovable => isMovable;
+        public void SetIsMovable(bool value) => isMovable = value;
+
+
+
         public void Inject(FighterComponentManager fighterComponentManager)
         {
             this.fighterComponentManager = fighterComponentManager;
@@ -88,14 +95,6 @@ namespace HipWhipGame
         {
             FighterStateMachine fsm = fighterComponentManager.FighterStateMachine;
 
-            // Stop movement only for block states, not for hitstun
-            if (fsm.CurrentStateType == FighterState.Blocking ||
-                fsm.CurrentStateType == FighterState.BlockStun)
-            {
-                ApplyStationaryBehavior();
-                return;
-            }
-
             // Directional input
             float h = movementInput.x;
             float v = movementInput.y;
@@ -110,6 +109,15 @@ namespace HipWhipGame
             // Gravity
             if (isGrounded && velocity.y < 0) velocity.y = -2f;
             velocity.y -= stats.gravity * Time.deltaTime;
+
+            // Stop movement only for block states, not for hitstun
+            if (fsm.CurrentStateType == FighterState.Blocking ||
+                fsm.CurrentStateType == FighterState.BlockStun ||
+                !isMovable)
+            {
+                ApplyStationaryBehavior();
+                return;
+            }
 
             // Combine movement and forces
             Vector3 totalMove = velocity + externalForce;

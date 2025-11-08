@@ -21,7 +21,7 @@ MonoBehaviour:
   damage: 10
   hitstunFrames: 27
   blockstunFrames: 25
-  knockback: {x: 0, y: 0, z: 3}
+  knockback: {x: 0, y: 0, z: 20}
   guardType: 0
   pushbackOnHit: 1
   canCancelOnHit: 0
@@ -44,6 +44,6 @@ MonoBehaviour:
   plusOnBlock: 0
   isGrab: 1
   grabRange: 1.2
-  grabDuration: 0.8
+  grabDuration: 2
   grabOffset: {x: 0, y: 0, z: 0}
   grabVictimAnim: 
