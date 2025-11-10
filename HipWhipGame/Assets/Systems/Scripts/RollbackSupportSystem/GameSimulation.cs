@@ -1,0 +1,54 @@
+/*
+File Name:    GameSimulation.cs
+Author(s):    Ju-ve Chankasemporn
+Copyright:    (c) 2025 DigiPen Institute of Technology. All rights reserved.
+*/
+
+using UnityEngine;
+using HipWhipGame;
+
+namespace RollbackSupport
+{
+    public class GameSimulation : MonoBehaviour
+    {
+        public Fighter fighter1;
+        public Fighter fighter2;
+        public RollbackManager rollback = new RollbackManager();
+        public int FrameNumber { get; private set; }
+
+        public void Initialize()
+        {
+            fighter1.Initialize(new Vector3(-2, 3, 0));
+            fighter2.Initialize(new Vector3(2, 3, 0));
+
+            PhysicsWorld.Instance.Register(fighter1.body);
+            PhysicsWorld.Instance.Register(fighter2.body);
+            HitboxManager.Instance.Register(fighter1);
+            HitboxManager.Instance.Register(fighter2);
+        }
+
+        public void Step()
+        {
+            FrameNumber++;
+            fighter1.SimulateFrame();
+            fighter2.SimulateFrame();
+
+            PhysicsWorld.Instance.Step();
+            HitboxManager.Instance.CheckHits();
+
+            fighter1.AnimatorSync.ApplyVisuals();
+            fighter2.AnimatorSync.ApplyVisuals();
+
+            rollback.Push(FrameNumber, GameStateSnapshot.Capture(FrameNumber, fighter1, fighter2));
+        }
+
+        public void RollbackTo(int frame)
+        {
+            if (rollback.TryGetSnapshot(frame, out var snap))
+            {
+                snap.Restore(fighter1, fighter2);
+                FrameNumber = frame;
+            }
+        }
+    }
+}

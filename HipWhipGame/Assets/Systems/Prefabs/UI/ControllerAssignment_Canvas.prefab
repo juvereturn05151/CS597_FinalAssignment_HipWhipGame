@@ -199,7 +199,7 @@ MonoBehaviour:
   - {fileID: 9169603826732626504}
   - {fileID: 2997162079785375733}
   - {fileID: 8042779344862601253}
-  gameSceneName: Playground
+  gameSceneName: PlaygroundRollback
 --- !u!1001 &3730354769068248721
 PrefabInstance:
   m_ObjectHideFlags: 0
