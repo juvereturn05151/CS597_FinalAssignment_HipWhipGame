@@ -20,9 +20,6 @@ namespace RollbackSupport
         private InputBuffer inputBuffer;
         public InputBuffer InputBuffer => inputBuffer;
         [SerializeField]
-        private CharacterController characterController;
-        public CharacterController CharacterController => characterController;
-        [SerializeField]
         private MoveExecutor moveExecutor;
         public MoveExecutor MoveExecutor => moveExecutor;
         //[SerializeField]
@@ -31,6 +28,10 @@ namespace RollbackSupport
         //[SerializeField]
         //private FighterGrabManager fighterGrabManager;
         //public FighterGrabManager FighterGrabManager => fighterGrabManager;
+
+        [SerializeField]
+        private Fighter fighter;
+        public Fighter Fighter => fighter;
 
         void Awake()
         {

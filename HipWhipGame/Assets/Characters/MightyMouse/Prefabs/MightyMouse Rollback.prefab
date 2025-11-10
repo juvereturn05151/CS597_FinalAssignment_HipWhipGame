@@ -41,6 +41,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8614550981892037365}
+  - component: {fileID: 4607452152584998997}
   - component: {fileID: 5060805126365526105}
   - component: {fileID: 8003538907918242849}
   - component: {fileID: 7666988433601055934}
@@ -68,6 +69,22 @@ Transform:
   - {fileID: 1096803524096936252}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4607452152584998997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7400030421977495981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45671e50f0369dc469325a4fc4db1279, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 338579307594028477}
+  cam: {fileID: 3723754997958721306}
+  moveExecutor: {fileID: 8003538907918242849}
+  fighter: {fileID: 5060805126365526105}
 --- !u!114 &5060805126365526105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80,6 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38db1a1a9336d4a4285604083bb54ac6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerIndex: 0
   fighterName: MightyMouse
   State: 0
   body:
@@ -91,6 +109,7 @@ MonoBehaviour:
   MoveExec: {fileID: 8003538907918242849}
   AnimatorSync: {fileID: 7666988433601055934}
   moves: {fileID: 11400000, guid: 4b58da71a39a4a54f97c2aa8c6582ca3, type: 2}
+  lookAtTarget: {fileID: 0}
   LastInput:
     frame: 0
     horiz: 0

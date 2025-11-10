@@ -7,24 +7,30 @@ namespace RollbackSupport
 
     public class Fighter : MonoBehaviour
     {
+        public int playerIndex;
         public string fighterName;
         public FighterState State;
         public KinematicBody body = new KinematicBody();
         public MoveExecutor MoveExec;
         public DeterministicAnimator AnimatorSync;
         public MoveDatabase moves;
+        public Transform lookAtTarget;
+        public GameSimulation gameSimulation;
 
         public InputFrame LastInput;
 
-        public void Initialize(Vector3 start)
+        public void Initialize(Vector3 start, GameSimulation gameSimulation)
         {
             body.Teleport(start);
             MoveExec.Bind(this);
             AnimatorSync.Bind(this);
+            this.gameSimulation = gameSimulation;
         }
 
         public void SimulateFrame()
         {
+            Debug.Log($"Frame {gameSimulation.FrameNumber} | Fighter: {fighterName} | PosX {body.position.x:F2}");
+
             if (!MoveExec.IsExecuting)
             {
                 ProcessMovement();

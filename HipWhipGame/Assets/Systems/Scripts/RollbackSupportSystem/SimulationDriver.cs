@@ -18,7 +18,7 @@ namespace RollbackSupport
         {
             Application.targetFrameRate = 120;
             QualitySettings.vSyncCount = 0;
-            simulation.Initialize();
+            //simulation.Initialize();
         }
 
         void Update()

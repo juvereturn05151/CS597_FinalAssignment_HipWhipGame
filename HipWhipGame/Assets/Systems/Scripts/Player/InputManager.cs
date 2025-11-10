@@ -6,7 +6,6 @@ Copyright:    (c) 2025 DigiPen Institute of Technology. All rights reserved.
 
 using UnityEngine;
 using UnityEngine.InputSystem;
-//using HipWhipGame;
 using RollbackSupport;
 
 public class InputManager : MonoBehaviour
@@ -18,7 +17,7 @@ public class InputManager : MonoBehaviour
     public void SetFightingComponentManager(FighterComponentManager fighterComponentManager) 
     {
         this.fighterComponentManager = fighterComponentManager;
-        this.fighterComponentManager.FighterController.playerIndex = playerIndex;
+        this.fighterComponentManager.Fighter.playerIndex = playerIndex;
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -28,7 +27,7 @@ public class InputManager : MonoBehaviour
             return;
         }
 
-        fighterComponentManager.FighterInputHandler.OnMove(context.ReadValue<Vector2>());
+        //fighterComponentManager.FighterInputHandler.OnMove(context.ReadValue<Vector2>());
     }
 
     public void OnButtonEast(InputAction.CallbackContext context)
@@ -40,7 +39,7 @@ public class InputManager : MonoBehaviour
 
         if (context.started)
         {
-            fighterComponentManager.FighterInputHandler.PerformButtLowAttack();
+            //fighterComponentManager.FighterInputHandler.PerformButtLowAttack();
         }
         else if (context.canceled)
         {
@@ -57,7 +56,7 @@ public class InputManager : MonoBehaviour
 
         if (context.performed)
         {
-            fighterComponentManager.FighterInputHandler.PerformPunchFast();
+            //fighterComponentManager.FighterInputHandler.PerformPunchFast();
         }
         else if (context.canceled)
         {
@@ -74,7 +73,7 @@ public class InputManager : MonoBehaviour
 
         if (context.started)
         {
-            fighterComponentManager.FighterInputHandler.PerformButtAttackMidPoke();
+            //fighterComponentManager.FighterInputHandler.PerformButtAttackMidPoke();
         }
         else if (context.canceled)
         {
@@ -91,7 +90,7 @@ public class InputManager : MonoBehaviour
 
         if (context.performed)
         {
-            fighterComponentManager.FighterInputHandler.PerformButtAttackHopKick();
+            //fighterComponentManager.FighterInputHandler.PerformButtAttackHopKick();
         }
         else if (context.canceled)
         {
@@ -108,7 +107,7 @@ public class InputManager : MonoBehaviour
 
         if (context.performed)
         {
-            fighterComponentManager.FighterInputHandler.PerformButtTornado();
+            //fighterComponentManager.FighterInputHandler.PerformButtTornado();
         }
         else if (context.canceled)
         {
@@ -125,11 +124,11 @@ public class InputManager : MonoBehaviour
 
         if (context.performed)
         {
-            fighterComponentManager.FighterInputHandler.HoldBlock();
+            //fighterComponentManager.FighterInputHandler.HoldBlock();
         }
         else if (context.canceled)
         {
-            fighterComponentManager.FighterInputHandler.ReleaseBlock();
+            //fighterComponentManager.FighterInputHandler.ReleaseBlock();
         }
     }
 
@@ -142,7 +141,7 @@ public class InputManager : MonoBehaviour
 
         if (context.started) 
         {
-            fighterComponentManager.FighterInputHandler.OnRightStick(context.ReadValue<Vector2>());
+            //fighterComponentManager.FighterInputHandler.OnRightStick(context.ReadValue<Vector2>());
         }
 
     }
@@ -155,7 +154,7 @@ public class InputManager : MonoBehaviour
         }
         if (context.performed)
         {
-            fighterComponentManager.FighterInputHandler.PerformTryGrab();
+            //fighterComponentManager.FighterInputHandler.PerformTryGrab();
         }
         else if (context.canceled)
         {

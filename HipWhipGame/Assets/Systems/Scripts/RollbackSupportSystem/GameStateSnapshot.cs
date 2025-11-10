@@ -2,7 +2,8 @@ using UnityEngine;
 
 namespace RollbackSupport
 {
-    public class GameStateSnapshot : MonoBehaviour
+    [System.Serializable]
+    public struct GameStateSnapshot
     {
         public FighterStateSnapshot P1;
         public FighterStateSnapshot P2;

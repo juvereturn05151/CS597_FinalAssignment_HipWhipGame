@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace RollbackSupport
+namespace HipWhipGame
 {
     public class GamePlayerManager : MonoBehaviour
     {
@@ -78,7 +78,7 @@ namespace RollbackSupport
             var inputManager = playerInput.GetComponent<InputManager>();
             if (inputManager != null)
             {
-                inputManager.SetFightingComponentManager(fcm);
+                //inputManager.SetFightingComponentManager(fcm);
             }
 
             //Hack
