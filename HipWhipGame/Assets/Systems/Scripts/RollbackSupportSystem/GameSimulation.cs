@@ -18,8 +18,8 @@ namespace RollbackSupport
 
         public void Initialize()
         {
-            fighter1.Initialize(new Vector3(-2, 3, 0), this);
-            fighter2.Initialize(new Vector3(2, 3, 0), this);
+            fighter1.Initialize(new Vector3(-2, 0, 0), this);
+            fighter2.Initialize(new Vector3(2, 0, 0), this);
 
             PhysicsWorld.Instance.Register(fighter1.body);
             PhysicsWorld.Instance.Register(fighter2.body);

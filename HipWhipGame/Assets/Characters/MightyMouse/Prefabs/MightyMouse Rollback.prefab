@@ -110,6 +110,7 @@ MonoBehaviour:
   AnimatorSync: {fileID: 7666988433601055934}
   moves: {fileID: 11400000, guid: 4b58da71a39a4a54f97c2aa8c6582ca3, type: 2}
   lookAtTarget: {fileID: 0}
+  gameSimulation: {fileID: 0}
   LastInput:
     frame: 0
     horiz: 0

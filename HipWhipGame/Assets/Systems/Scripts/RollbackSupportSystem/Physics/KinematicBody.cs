@@ -5,6 +5,7 @@ namespace RollbackSupport
     [System.Serializable]
     public class KinematicBody
     {
+        public string debugName;
         public Vector3 position;
         public Vector3 velocity;
         public bool grounded;

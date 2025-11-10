@@ -21,7 +21,7 @@ namespace RollbackSupport
 
         public void Initialize(Vector3 start, GameSimulation gameSimulation)
         {
-            body.Teleport(start);
+            //body.Teleport(start);
             MoveExec.Bind(this);
             AnimatorSync.Bind(this);
             this.gameSimulation = gameSimulation;
@@ -29,7 +29,7 @@ namespace RollbackSupport
 
         public void SimulateFrame()
         {
-            Debug.Log($"Frame {gameSimulation.FrameNumber} | Fighter: {fighterName} | PosX {body.position.x:F2}");
+            //Debug.Log($"Frame {gameSimulation.FrameNumber} | Fighter: {fighterName} | PosX {body.position.x:F2}");
 
             if (!MoveExec.IsExecuting)
             {

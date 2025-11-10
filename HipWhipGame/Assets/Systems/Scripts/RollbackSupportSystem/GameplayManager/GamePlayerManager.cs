@@ -82,6 +82,8 @@ namespace RollbackSupport
                 inputManager.SetFightingComponentManager(fcm);
             }
 
+            fcm.Fighter.body.Teleport(spawn.position);
+
             //Hack
             if (fcm.Fighter.playerIndex == 2)
             {
