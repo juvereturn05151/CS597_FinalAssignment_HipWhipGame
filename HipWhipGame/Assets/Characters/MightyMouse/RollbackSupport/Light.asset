@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 303d8bb4016a3c040a60f6e7624fa1cb, type: 3}
   m_Name: Light
   m_EditorClassIdentifier: 
-  moveName: Light
+  moveName: PunchFast
   animName: PunchFast
   totalFrames: 35
   hitboxes: []

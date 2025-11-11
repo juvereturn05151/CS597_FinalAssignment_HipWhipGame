@@ -27,6 +27,8 @@ public class InputManager : MonoBehaviour
             return;
         }
 
+        fighterComponentManager.Fighter.LastInput.horiz = (sbyte)context.ReadValue<Vector2>().x;
+        fighterComponentManager.Fighter.LastInput.vert = (sbyte)context.ReadValue<Vector2>().y;
         //fighterComponentManager.FighterInputHandler.OnMove(context.ReadValue<Vector2>());
     }
 
@@ -56,11 +58,12 @@ public class InputManager : MonoBehaviour
 
         if (context.performed)
         {
+            fighterComponentManager.Fighter.LastInput.light = true;
             //fighterComponentManager.FighterInputHandler.PerformPunchFast();
         }
         else if (context.canceled)
         {
-            
+            fighterComponentManager.Fighter.LastInput.light = false;
         }
     }
 

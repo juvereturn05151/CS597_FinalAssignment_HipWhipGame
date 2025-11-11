@@ -21,7 +21,6 @@ namespace RollbackSupport
 
         public void Initialize(Vector3 start, GameSimulation gameSimulation)
         {
-            //body.Teleport(start);
             MoveExec.Bind(this);
             AnimatorSync.Bind(this);
             this.gameSimulation = gameSimulation;
@@ -29,8 +28,6 @@ namespace RollbackSupport
 
         public void SimulateFrame()
         {
-            //Debug.Log($"Frame {gameSimulation.FrameNumber} | Fighter: {fighterName} | PosX {body.position.x:F2}");
-
             if (!MoveExec.IsExecuting)
             {
                 ProcessMovement();
@@ -46,22 +43,82 @@ namespace RollbackSupport
 
         void ProcessMovement()
         {
+            // 1. Blocking logic
             if (LastInput.block)
             {
                 State = FighterState.Block;
                 return;
             }
 
-            Vector3 move = Vector3.right * LastInput.horiz * 0.08f;
-            body.position += move;
+            // 2. Determine facing direction
+            Vector3 forward = transform.forward;
+            Vector3 right = transform.right;
 
-            if (LastInput.vert > 0 && body.grounded)
+            if (lookAtTarget)
             {
-                body.velocity.y = 0.25f;
-                body.grounded = false;
-                State = FighterState.Jump;
+                Vector3 dir = lookAtTarget.position - transform.position;
+                dir.y = 0;
+                if (dir.sqrMagnitude > 0.0001f)
+                    forward = dir.normalized;
+
+                right = Quaternion.Euler(0, 90f, 0) * forward;
             }
+
+            // 3. Compute input direction
+            Vector3 input = new Vector3(LastInput.horiz, 0f, LastInput.vert);
+            if (input.sqrMagnitude > 1f)
+                input.Normalize();
+
+            Vector3 moveDir = (forward * input.z + right * input.x).normalized;
+
+            // 4. Apply horizontal movement (fixed per frame, deterministic)
+            const float movePerFrame = 0.08f;
+            body.position += moveDir * movePerFrame;
+
+            //// 5. Apply gravity (fixed per frame)
+            //const float gravityPerFrame = -0.016f;
+            //if (body.useGravity)
+            //    body.velocity.y += gravityPerFrame;
+
+            //body.position.y += body.velocity.y;
+
+            // 6. Ground collision check
+            //if (body.position.y < 0f)
+            //{
+            //    body.position.y = 0f;
+            //    body.velocity.y = 0f;
+            //    body.grounded = true;
+            //}
+            //else
+            //{
+            //    body.grounded = false;
+            //}
+
+            // 7. Jump
+            //if (LastInput.vert > 0 && body.grounded)
+            //{
+            //    body.velocity.y = 0.25f;
+            //    body.grounded = false;
+            //    State = FighterState.Jump;
+            //}
+
+            // 8. Rotate toward target
+            if (lookAtTarget)
+            {
+                Vector3 face = lookAtTarget.position - transform.position;
+                face.y = 0f;
+                if (face.sqrMagnitude > 0.0001f)
+                    transform.rotation = Quaternion.LookRotation(face);
+            }
+            else if (moveDir.sqrMagnitude > 0.001f)
+            {
+                transform.forward = moveDir;
+            }
+
+            // 9. Apply visual transform from rollback body
+            transform.position = body.position;
         }
+
 
         void HandleAttacks()
         {

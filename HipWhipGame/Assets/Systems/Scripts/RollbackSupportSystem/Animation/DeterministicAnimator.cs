@@ -19,15 +19,20 @@ namespace RollbackSupport
         {
             if (!animator) return;
 
-            // Simple example: sync attack animation by frame
             if (fighter.MoveExec.IsExecuting)
             {
                 var move = fighter.MoveExec.CurrentMoveName;
                 float norm = (float)fighter.MoveExec.CurrentFrame / fighter.moves.Get(move).totalFrames;
                 animator.Play(move, 0, norm);
             }
+            else
+            {
+                // Move finished: manually play Idle
+                animator.Play("Idle", 0, 0f);
+            }
 
             animator.Update(0f);
         }
+
     }
 }
