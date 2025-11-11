@@ -27,9 +27,8 @@ public class InputManager : MonoBehaviour
             return;
         }
 
-        fighterComponentManager.Fighter.LastInput.horiz = (sbyte)context.ReadValue<Vector2>().x;
-        fighterComponentManager.Fighter.LastInput.vert = (sbyte)context.ReadValue<Vector2>().y;
-        //fighterComponentManager.FighterInputHandler.OnMove(context.ReadValue<Vector2>());
+        fighterComponentManager.Fighter.LastInput.horiz = context.ReadValue<Vector2>().x;
+        fighterComponentManager.Fighter.LastInput.vert = context.ReadValue<Vector2>().y;
     }
 
     public void OnButtonEast(InputAction.CallbackContext context)

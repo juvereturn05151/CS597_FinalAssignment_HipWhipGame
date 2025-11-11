@@ -66,41 +66,14 @@ namespace RollbackSupport
 
             // 3. Compute input direction
             Vector3 input = new Vector3(LastInput.horiz, 0f, LastInput.vert);
-            if (input.sqrMagnitude > 1f)
-                input.Normalize();
+            //if (input.sqrMagnitude > 1f)
+            //    input.Normalize();
 
             Vector3 moveDir = (forward * input.z + right * input.x).normalized;
 
             // 4. Apply horizontal movement (fixed per frame, deterministic)
             const float movePerFrame = 0.08f;
             body.position += moveDir * movePerFrame;
-
-            //// 5. Apply gravity (fixed per frame)
-            //const float gravityPerFrame = -0.016f;
-            //if (body.useGravity)
-            //    body.velocity.y += gravityPerFrame;
-
-            //body.position.y += body.velocity.y;
-
-            // 6. Ground collision check
-            //if (body.position.y < 0f)
-            //{
-            //    body.position.y = 0f;
-            //    body.velocity.y = 0f;
-            //    body.grounded = true;
-            //}
-            //else
-            //{
-            //    body.grounded = false;
-            //}
-
-            // 7. Jump
-            //if (LastInput.vert > 0 && body.grounded)
-            //{
-            //    body.velocity.y = 0.25f;
-            //    body.grounded = false;
-            //    State = FighterState.Jump;
-            //}
 
             // 8. Rotate toward target
             if (lookAtTarget)
