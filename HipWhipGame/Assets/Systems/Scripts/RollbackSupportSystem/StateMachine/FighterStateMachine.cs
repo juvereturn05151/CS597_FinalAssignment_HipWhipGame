@@ -33,8 +33,8 @@ namespace RollbackSupport
             stateMap = new Dictionary<FighterState, FighterBaseState>
             {
                 { FighterState.Idle, new FighterIdleState(FighterComponentManager) },
-                //{ FighterState.Blocking, new FighterBlockingState(FighterComponentManager) },
-                //{ FighterState.BlockStun, new FighterBlockStunState(FighterComponentManager) },
+                { FighterState.Block, new FighterBlockingState(FighterComponentManager) },
+                { FighterState.BlockStun, new FighterBlockStunState(FighterComponentManager) },
                 { FighterState.Hitstun, new FighterHitstunState(FighterComponentManager) },
                 { FighterState.Attack, new FighterAttackingState(FighterComponentManager) },
                 //{ FighterState.Sidestep, new FighterSidestepState(FighterComponentManager) },
@@ -73,8 +73,7 @@ namespace RollbackSupport
         {
             // determine transitions that end automatically
             if (CurrentStateType == FighterState.Attack ||
-                CurrentStateType == FighterState.Hitstun ||
-                CurrentStateType == FighterState.Block)
+                CurrentStateType == FighterState.Hitstun )
             {
                 SwitchState(FighterState.Idle);
             }

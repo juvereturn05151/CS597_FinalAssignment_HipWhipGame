@@ -7,9 +7,14 @@ namespace RollbackSupport
         public Animator animator;
         private Fighter fighter;
 
-        // cache for local velocity
+        // cache for velocity
         private Vector3 lastFramePos;
         private Vector3 localVel;
+
+        // timers for deterministic animation phases
+        private float walkAnimTimer;
+        private float hitstunTimer;
+        private float blockstunTimer;
 
         public void Bind(Fighter f)
         {
@@ -29,17 +34,26 @@ namespace RollbackSupport
             var fsm = fighter.FighterComponentManager?.FighterStateMachine;
             var state = fsm?.CurrentStateType ?? FighterState.Idle;
 
+            // --- Attack animation ---
             if (fighter.MoveExec.IsExecuting)
             {
-                // attack animation (deterministic frame)
-                var move = fighter.MoveExec.CurrentMoveName;
-                float norm = (float)fighter.MoveExec.CurrentFrame / fighter.moves.Get(move).totalFrames;
-                animator.Play(move, 0, norm);
+                PlayAttack();
             }
+            // --- Block reaction (deterministic) ---
+            else if (state == FighterState.BlockStun)
+            {
+                UpdateBlockstunVisual();
+            }
+            else if (state == FighterState.Block)
+            {
+                PlayBlockHold();
+            }
+            // --- Hit reaction ---
             else if (state == FighterState.Hitstun)
             {
                 UpdateHitstunVisual();
             }
+            // --- Movement and idle ---
             else
             {
                 UpdateMovementBlend();
@@ -49,13 +63,26 @@ namespace RollbackSupport
             lastFramePos = fighter.body.position;
         }
 
+        // ------------------------------------------------------------
+        // ATTACK
+        // ------------------------------------------------------------
+        private void PlayAttack()
+        {
+            var move = fighter.MoveExec.CurrentMoveName;
+            if (string.IsNullOrEmpty(move)) return;
 
+            var data = fighter.moves.Get(move);
+            if (data == null) return;
 
-        private float walkAnimTimer;
+            float norm = (float)fighter.MoveExec.CurrentFrame / data.totalFrames;
+            animator.Play(move, 0, norm);
+        }
 
+        // ------------------------------------------------------------
+        // WALK / IDLE
+        // ------------------------------------------------------------
         private void UpdateMovementBlend()
         {
-            // compute local velocity based on rollback body positions
             Vector3 delta = fighter.body.position - lastFramePos;
             localVel = fighter.transform.InverseTransformDirection(new Vector3(delta.x, 0f, delta.z));
 
@@ -72,13 +99,9 @@ namespace RollbackSupport
 
             if (moving)
             {
-                // advance visual playback deterministically (1 frame = 1/60s)
                 walkAnimTimer += 1f / 60f;
-
-                // assuming your walk animation is about 1 second long
                 float walkCycleLength = 1f;
                 float normTime = (walkAnimTimer % walkCycleLength) / walkCycleLength;
-
                 animator.Play("Walk", 0, normTime);
             }
             else
@@ -88,20 +111,42 @@ namespace RollbackSupport
             }
         }
 
-        private float hitstunTimer;
-
+        // ------------------------------------------------------------
+        // HITSTUN
+        // ------------------------------------------------------------
         private void UpdateHitstunVisual()
         {
-            // increment deterministic timer
             hitstunTimer += 1f / 60f;
 
-            // assume your HitReact clip length is about 0.4s
-            float hitLength = 1.0f;
-            float norm = Mathf.Clamp01(hitstunTimer / hitLength);
+            float clipLength = 1.0f;
+            float norm = Mathf.Clamp01(hitstunTimer / clipLength);
 
             animator.Play("HitStun", 0, norm);
         }
 
         public void ResetHitstunTimer() => hitstunTimer = 0f;
+
+        // ------------------------------------------------------------
+        // BLOCK / BLOCKSTUN
+        // ------------------------------------------------------------
+        private void PlayBlockHold()
+        {
+            // constant pose (doesn't advance)
+            animator.Play("HighBlock", 0, 0f);
+            blockstunTimer = 0f;
+        }
+
+        private void UpdateBlockstunVisual()
+        {
+            blockstunTimer += 1f / 60f;
+
+            // adjust to match your BlockStun clip duration
+            float clipLength = 0.5f;
+            float norm = Mathf.Clamp01(blockstunTimer / clipLength);
+
+            animator.Play("BlockStun", 0, norm);
+        }
+
+        public void ResetBlockstunTimer() => blockstunTimer = 0f;
     }
 }

@@ -128,10 +128,12 @@ public class InputManager : MonoBehaviour
         if (context.performed)
         {
             //fighterComponentManager.FighterInputHandler.HoldBlock();
+            fighterComponentManager.Fighter.LastInput.block = true;
         }
         else if (context.canceled)
         {
             //fighterComponentManager.FighterInputHandler.ReleaseBlock();
+            fighterComponentManager.Fighter.LastInput.block = false;
         }
     }
 

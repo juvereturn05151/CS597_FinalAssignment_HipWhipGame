@@ -6,12 +6,13 @@ namespace RollbackSupport
     [CreateAssetMenu(menuName = "Fighter/MoveDatabase")]
     public class MoveDatabase : ScriptableObject
     {
-        public MoveData light, heavy, grab;
+        public MoveData light, heavy, grab, block;
 
         public MoveData Get(string name)
         {
             if (light && light.moveName == name) return light;
             if (heavy && heavy.moveName == name) return heavy;
+            if (block && block.moveName == name) return block;
             if (grab && grab.moveName == name) return grab;
             return null;
         }

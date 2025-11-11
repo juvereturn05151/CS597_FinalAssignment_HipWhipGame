@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace RollbackSupport
 {
-    public enum FighterState { Idle, Walk, Jump, Attack, Block, Hitstun, TryGrab, Disabled, Sidestep }
+    public enum FighterState { Idle, Walk, Jump, Attack, Block, BlockStun, Hitstun, TryGrab, Disabled, Sidestep }
 
     public class Fighter : MonoBehaviour, IFighterComponentInjectable
     {
@@ -52,8 +52,13 @@ namespace RollbackSupport
             {
                 SimulateHitstun();
             }
+            else if (InBlockstun)
+            {
+                SimulateBlockstun();
+            }
             else if (!MoveExec.IsExecuting)
             {
+                HandleBlocking();
                 ProcessMovement();
                 HandleAttacks();
             }
@@ -64,7 +69,6 @@ namespace RollbackSupport
 
             transform.position = body.position;
         }
-
         void ProcessMovement()
         {
             // 1. Blocking logic
@@ -163,6 +167,52 @@ namespace RollbackSupport
             if (hitstunTimer <= 0)
             {
                 hitVelocity = Vector3.zero;
+                FighterComponentManager.FighterStateMachine.SwitchState(FighterState.Idle);
+            }
+        }
+
+        private Vector3 blockPushVel;
+        private int blockstunTimer;
+        public bool isBlocking;
+        public bool IsBlocking()
+        {
+            return FighterComponentManager.FighterStateMachine.CurrentStateType == FighterState.Block ||
+                   FighterComponentManager.FighterStateMachine.CurrentStateType == FighterState.BlockStun;
+        }
+        public bool InBlockstun => blockstunTimer > 0;
+
+        private void HandleBlocking()
+        {
+            if (LastInput.block && !InBlockstun && !InHitstun)
+            {
+                FighterComponentManager.FighterStateMachine.SwitchState(FighterState.Block);
+            }
+            else if (!LastInput.block)
+            {
+                FighterComponentManager.FighterStateMachine.SwitchState(FighterState.Idle);
+            }
+        }
+
+        public void TakeBlock(MoveData move, Vector3 worldKnock)
+        {
+            if (move == null) return;
+
+            Debug.Log($"[{fighterName}] Blocked {move.moveName}");
+
+            blockstunTimer = move.blockstunFrames;
+            blockPushVel = worldKnock * 0.25f / blockstunTimer; // lighter knockback
+            FighterComponentManager.FighterStateMachine.SwitchState(FighterState.BlockStun, blockstunTimer);
+        }
+
+        private void SimulateBlockstun()
+        {
+            body.position += blockPushVel;
+            blockstunTimer--;
+
+            if (blockstunTimer <= 0)
+            {
+                blockPushVel = Vector3.zero;
+                isBlocking = false;
                 FighterComponentManager.FighterStateMachine.SwitchState(FighterState.Idle);
             }
         }
