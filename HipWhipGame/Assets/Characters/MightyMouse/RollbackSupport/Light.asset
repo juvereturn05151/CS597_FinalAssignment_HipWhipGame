@@ -14,7 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveName: PunchFast
   animName: PunchFast
+  startup: 10
+  active: 5
+  recovery: 20
   totalFrames: 35
+  hitstunFrames: 15
+  blockstunFrames: 10
+  knockback: {x: 2, y: 0.5, z: 0}
+  canCancelOnHit: 0
+  canCancelOnBlock: 0
+  cancelInto: []
   hitboxes:
   - start: 10
     end: 15
@@ -22,3 +31,14 @@ MonoBehaviour:
       localCenter: {x: 0, y: 0.5, z: 0.72}
       size: {x: 0.5, y: 0.45, z: 0.5}
       enabled: 1
+  sfx: {fileID: 0}
+  vfxPrefab: {fileID: 0}
+  overrideRootMotion: 1
+  motionSegments: []
+  plusOnHit: -5
+  plusOnBlock: -10
+  isGrab: 0
+  grabRange: 1.2
+  grabDuration: 0.8
+  grabOffset: {x: 0, y: 0, z: 0}
+  grabVictimAnim: 
