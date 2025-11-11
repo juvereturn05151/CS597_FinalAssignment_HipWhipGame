@@ -21,7 +21,7 @@ namespace RollbackSupport
         public int recovery = 12;
 
         [Tooltip("Total number of frames for this move (auto-calculated if 0).")]
-        public int totalFrames;
+        public int totalFrames => startup + active + recovery;
 
         [Header("Hit Properties")]
         [Tooltip("Number of frames the opponent is stunned on hit.")]
@@ -32,6 +32,8 @@ namespace RollbackSupport
 
         [Tooltip("Knockback direction and magnitude applied on hit.")]
         public Vector3 knockback = new Vector3(2f, 0.5f, 0f);
+
+        public float pushbackOnHit = 1.5f;
 
         [Header("Cancel Rules")]
         [Tooltip("Can this move be canceled into another move on hit?")]
@@ -83,8 +85,6 @@ namespace RollbackSupport
         private void OnValidate()
         {
             // Auto-fill totalFrames if not manually specified
-            if (totalFrames <= 0)
-                totalFrames = startup + active + recovery;
 
             // Auto-compute frame advantage when recoveries are defined
             plusOnHit = hitstunFrames - recovery;

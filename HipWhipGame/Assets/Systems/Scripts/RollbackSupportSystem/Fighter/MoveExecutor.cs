@@ -9,6 +9,7 @@ namespace RollbackSupport
         public FighterComponentManager FighterComponentManager { get; private set; }
         private Fighter fighter;
         private MoveData currentMove;
+        public MoveData CurrentMove => currentMove;
         private int frame;
         private bool executing;
 

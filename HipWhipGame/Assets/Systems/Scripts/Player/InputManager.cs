@@ -92,11 +92,12 @@ public class InputManager : MonoBehaviour
 
         if (context.performed)
         {
+            fighterComponentManager.Fighter.LastInput.heavy = true;
             //fighterComponentManager.FighterInputHandler.PerformButtAttackHopKick();
         }
         else if (context.canceled)
         {
-
+            fighterComponentManager.Fighter.LastInput.heavy = false;
         }
     }
 

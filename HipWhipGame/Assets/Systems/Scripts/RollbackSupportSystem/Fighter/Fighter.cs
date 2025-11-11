@@ -25,6 +25,10 @@ namespace RollbackSupport
 
         public bool IsPushedThisFrame;
 
+        private Vector3 hitVelocity;
+        private int hitstunTimer;
+        public bool InHitstun => hitstunTimer > 0;
+
         public InputFrame LastInput;
 
         public FighterComponentManager FighterComponentManager { get; private set; }
@@ -44,7 +48,11 @@ namespace RollbackSupport
 
         public void SimulateFrame()
         {
-            if (!MoveExec.IsExecuting)
+            if (InHitstun)
+            {
+                SimulateHitstun();
+            }
+            else if (!MoveExec.IsExecuting)
             {
                 ProcessMovement();
                 HandleAttacks();
@@ -111,20 +119,54 @@ namespace RollbackSupport
 
         void HandleAttacks()
         {
-            if (LastInput.light) 
+            if (LastInput.light)
             {
-                MoveExec.StartMove(moves.light); 
+                MoveExec.StartMove(moves.light);
                 FighterComponentManager.FighterStateMachine.SwitchState(FighterState.Attack);
             }
-            else if (LastInput.heavy) MoveExec.StartMove(moves.heavy);
+            else if (LastInput.heavy) 
+            {
+                MoveExec.StartMove(moves.heavy);
+                FighterComponentManager.FighterStateMachine.SwitchState(FighterState.Attack);
+            } 
         }
 
-        public void TakeHit()
+
+        public void TakeHit(MoveData move, Vector3 worldKnock)
         {
-            Debug.Log($"[{playerIndex.ToString()}] Took hit!");
-            const int hitstunFrames = 30; // adjust per move later
-            FighterComponentManager.FighterStateMachine.SwitchState(FighterState.Hitstun, hitstunFrames);
+            if (move == null) return;
+
+            Debug.Log($"[{fighterName}] Took hit from [{move.moveName}]!");
+
+            // Apply hit reaction
+            ApplyHitReaction(move.hitstunFrames, worldKnock);
         }
+
+        public void ApplyHitReaction(int stunFrames, Vector3 knockback)
+        {
+            hitstunTimer = stunFrames;
+            hitVelocity = knockback / stunFrames; // consistent knockback per frame
+            FighterComponentManager.FighterStateMachine.SwitchState(FighterState.Hitstun, stunFrames);
+        }
+
+        public void ApplyRecoil(Vector3 recoil)
+        {
+            body.position += recoil;
+        }
+
+        private void SimulateHitstun()
+        {
+            // Apply knockback motion deterministically
+            body.position += hitVelocity;
+
+            hitstunTimer--;
+            if (hitstunTimer <= 0)
+            {
+                hitVelocity = Vector3.zero;
+                FighterComponentManager.FighterStateMachine.SwitchState(FighterState.Idle);
+            }
+        }
+
 
 #if UNITY_EDITOR
         void OnDrawGizmos()
