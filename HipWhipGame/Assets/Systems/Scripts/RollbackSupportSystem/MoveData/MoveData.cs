@@ -74,7 +74,7 @@ namespace RollbackSupport
         public float grabRange = 1.2f;
 
         [Tooltip("Duration (seconds) the grab holds the opponent.")]
-        public float grabDuration = 0.8f;
+        public int grabDuration = 5;
 
         [Tooltip("Where to reposition the opponent relative to attacker when grabbed.")]
         public Vector3 grabOffset;

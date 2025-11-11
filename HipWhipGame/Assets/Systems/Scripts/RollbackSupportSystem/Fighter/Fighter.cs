@@ -2,7 +2,10 @@ using UnityEngine;
 
 namespace RollbackSupport
 {
-    public enum FighterState { Idle, Walk, Jump, Attack, Block, BlockStun, Hitstun, TryGrab, Disabled, Sidestep }
+    public enum FighterState { Idle, Walk, Jump, Attack, Block, BlockStun, Hitstun, TryGrab, Disabled, Sidestep,     // startup frames of the grab
+        Grabbing,    // holding the opponent
+        BeingGrabbed,
+    }
 
     public class Fighter : MonoBehaviour, IFighterComponentInjectable
     {
@@ -56,6 +59,11 @@ namespace RollbackSupport
             {
                 SimulateBlockstun();
             }
+            else if (!IsMovable)
+            {
+                // skip movement and input handling if frozen
+                MoveExec.SimulateFrame();
+            }
             else if (!MoveExec.IsExecuting)
             {
                 HandleBlocking();
@@ -70,6 +78,7 @@ namespace RollbackSupport
 
             transform.position = body.position;
         }
+
         void ProcessMovement()
         {
 
@@ -135,7 +144,13 @@ namespace RollbackSupport
 
         void HandleAttacks()
         {
-            if (LastInput.light)
+            if (LastInput.grab)
+            {
+                MoveExec.StartMove(moves.grab);
+                FighterComponentManager.FighterStateMachine.SwitchState(FighterState.TryGrab);
+            }
+
+            else if(LastInput.light)
             {
                 MoveExec.StartMove(moves.light);
                 FighterComponentManager.FighterStateMachine.SwitchState(FighterState.Attack);
@@ -228,6 +243,30 @@ namespace RollbackSupport
                 FighterComponentManager.FighterStateMachine.SwitchState(FighterState.Idle);
             }
         }
+
+        // ================================================================
+        // MOVEMENT CONTROL
+        // ================================================================
+        private bool isMovable = true;
+
+        /// <summary>
+        /// Whether this fighter is currently allowed to move or act.
+        /// Deterministic flag — should only change during rollback-safe events.
+        /// </summary>
+        public bool IsMovable
+        {
+            get => isMovable;
+            private set => isMovable = value;
+        }
+
+        /// <summary>
+        /// Locks or unlocks the fighter's ability to move and perform actions.
+        /// </summary>
+        public void SetIsMovable(bool canMove)
+        {
+            isMovable = canMove;
+        }
+
 
 
 #if UNITY_EDITOR

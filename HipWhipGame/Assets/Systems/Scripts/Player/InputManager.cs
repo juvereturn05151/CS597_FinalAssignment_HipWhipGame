@@ -160,10 +160,12 @@ public class InputManager : MonoBehaviour
         }
         if (context.performed)
         {
+            fighterComponentManager.Fighter.LastInput.grab = true;
             //fighterComponentManager.FighterInputHandler.PerformTryGrab();
         }
         else if (context.canceled)
         {
+            fighterComponentManager.Fighter.LastInput.grab = false;
         }
     }
 

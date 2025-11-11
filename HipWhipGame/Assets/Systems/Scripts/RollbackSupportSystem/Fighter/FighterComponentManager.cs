@@ -10,9 +10,6 @@ namespace RollbackSupport
         [SerializeField]
         private FighterStateMachine fighterStateMachine;
         public FighterStateMachine FighterStateMachine => fighterStateMachine;
-        //[SerializeField]
-        //private FighterController fighterController;
-        //public FighterController FighterController => fighterController;
         [SerializeField]
         private Camera cam;
         public Camera Cam => cam;
@@ -22,12 +19,9 @@ namespace RollbackSupport
         [SerializeField]
         private MoveExecutor moveExecutor;
         public MoveExecutor MoveExecutor => moveExecutor;
-        //[SerializeField]
-        //private FighterInputHandler fighterInputHandler;
-        //public FighterInputHandler FighterInputHandler => fighterInputHandler;
-        //[SerializeField]
-        //private FighterGrabManager fighterGrabManager;
-        //public FighterGrabManager FighterGrabManager => fighterGrabManager;
+        [SerializeField]
+        private FighterGrabManager fighterGrabManager;
+        public FighterGrabManager FighterGrabManager => fighterGrabManager;
 
         [SerializeField]
         private Fighter fighter;
@@ -37,12 +31,10 @@ namespace RollbackSupport
         {
             if (!animator) animator = GetComponentInChildren<Animator>();
             if (!fighterStateMachine) fighterStateMachine = GetComponent<FighterStateMachine>();
-            //if (!fighterController) fighterController = GetComponent<FighterController>();
-            //if (!inputBuffer) inputBuffer = GetComponent<InputBuffer>();
             if (!cam) cam = GetComponentInChildren<Camera>();
             if (!moveExecutor) moveExecutor = GetComponent<MoveExecutor>();
-            //if (!fighterInputHandler) fighterInputHandler = GetComponent<FighterInputHandler>();
-            //if (!fighterGrabManager) fighterGrabManager = GetComponent<FighterGrabManager>();
+            if (!fighterGrabManager) fighterGrabManager = GetComponent<FighterGrabManager>();
+            if (!fighter) fighter = GetComponent<Fighter>();
 
             foreach (var injectable in GetComponents<IFighterComponentInjectable>())
             {

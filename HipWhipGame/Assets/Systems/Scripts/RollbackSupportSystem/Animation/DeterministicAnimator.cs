@@ -39,6 +39,15 @@ namespace RollbackSupport
             {
                 PlayAttack();
             }
+            else if (state == FighterState.Grabbing)
+            {
+                UpdateGrabbingVisual();
+            }
+            else if (state == FighterState.BeingGrabbed)
+            {
+                UpdateBeingGrabbedVisual();
+            }
+
             // --- Block reaction (deterministic) ---
             else if (state == FighterState.BlockStun)
             {
@@ -148,5 +157,38 @@ namespace RollbackSupport
         }
 
         public void ResetBlockstunTimer() => blockstunTimer = 0f;
+
+        private float grabbingTimer;
+        private float beingGrabbedTimer;
+
+
+        private void UpdateGrabbingVisual()
+        {
+            grabbingTimer += 1f / 60f;
+
+            // assume your Grabbing animation lasts about 1 second
+            float clipLength = 1.0f;
+            float norm = Mathf.Clamp01(grabbingTimer / clipLength);
+
+            animator.Play("Grabbing", 0, norm);
+        }
+
+        private void UpdateBeingGrabbedVisual()
+        {
+            beingGrabbedTimer += 1f / 60f;
+
+            // assume your BeingGrabbed animation lasts about 1 second
+            float clipLength = 1.0f;
+            float norm = Mathf.Clamp01(beingGrabbedTimer / clipLength);
+
+            animator.Play("BeingGrabbed", 0, norm);
+        }
+
+        // Called when switching to these states
+        public void ResetGrabTimers()
+        {
+            grabbingTimer = 0f;
+            beingGrabbedTimer = 0f;
+        }
     }
 }

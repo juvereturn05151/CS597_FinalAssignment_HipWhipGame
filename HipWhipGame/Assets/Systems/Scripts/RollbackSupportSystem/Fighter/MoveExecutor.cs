@@ -113,13 +113,15 @@ namespace RollbackSupport
 
         private void TryGrabOpponent()
         {
-            var opponent = FighterComponentManager.Fighter;
-            float dist = Vector3.Distance(fighter.body.position, FighterComponentManager.Fighter.body.position);
+            var opponent = FighterComponentManager.Fighter.lookAtTarget;
+            float dist = Vector3.Distance(fighter.body.position, opponent.GetComponent<Fighter>().body.position);
             if (dist <= currentMove.grabRange)
             {
+                executing = false;
                 Debug.Log($"[{fighter.fighterName}] grabbed [{FighterComponentManager.Fighter.fighterName}]!");
-                //opponent.TakeGrab(currentMove);
-                
+                fighter.FighterComponentManager.FighterGrabManager.SetUpGrabData(currentMove);
+                fighter.FighterComponentManager.FighterStateMachine.SwitchState(FighterState.Grabbing);
+
             }
         }
 
