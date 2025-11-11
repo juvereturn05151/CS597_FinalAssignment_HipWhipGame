@@ -23,6 +23,8 @@ namespace RollbackSupport
 
             PhysicsWorld.Instance.Register(fighter1.body);
             PhysicsWorld.Instance.Register(fighter2.body);
+            PushboxManager.Instance.Register(fighter1);
+            PushboxManager.Instance.Register(fighter2);
             HitboxManager.Instance.Register(fighter1);
             HitboxManager.Instance.Register(fighter2);
         }
@@ -34,8 +36,8 @@ namespace RollbackSupport
             fighter2.SimulateFrame();
 
 
-
             PhysicsWorld.Instance.Step();
+            PushboxManager.Instance.ResolvePush();
             HitboxManager.Instance.CheckHits();
 
             fighter1.AnimatorSync.ApplyVisuals();

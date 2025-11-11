@@ -18,6 +18,14 @@ namespace RollbackSupport
         public Transform lookAtTarget;
         public GameSimulation gameSimulation;
         public HurtboxComponent Hurtboxes = new HurtboxComponent();
+        public CollisionBox pushbox = new CollisionBox
+        {
+            localCenter = new Vector3(0, 1.0f, 0),
+            size = new Vector3(0.6f, 2.0f, 0.6f),
+            enabled = true
+        };
+
+        public bool IsPushedThisFrame;
 
         public InputFrame LastInput;
 
@@ -117,6 +125,11 @@ namespace RollbackSupport
                 Bounds b = hb.ToWorld(transform);
                 Gizmos.DrawWireCube(b.center, b.size);
             }
+
+            if (!pushbox.enabled) return;
+            Gizmos.color = Color.cyan;
+            Bounds p = pushbox.ToWorld(transform);
+            Gizmos.DrawWireCube(p.center, p.size);
         }
 #endif
     }
