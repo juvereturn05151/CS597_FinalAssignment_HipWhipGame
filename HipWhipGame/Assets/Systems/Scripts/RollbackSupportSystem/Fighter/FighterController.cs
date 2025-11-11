@@ -100,8 +100,6 @@ namespace RollbackSupport
             }
         }
 
-
-
         private void HandleSidestep()
         {
             if (LastInput.sidestep < 0)
@@ -211,12 +209,6 @@ namespace RollbackSupport
                 fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Idle);
             }
         }
-
-
-
-        /// <summary>
-        /// Locks or unlocks the fighter's ability to move and perform actions.
-        /// </summary>
 
     }
 }

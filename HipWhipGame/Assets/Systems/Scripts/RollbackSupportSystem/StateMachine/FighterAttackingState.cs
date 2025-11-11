@@ -4,6 +4,7 @@ Author(s):    Ju-ve Chankasemporn
 Copyright:    (c) 2025 DigiPen Institute of Technology. All rights reserved.
 */
 
+using HipWhipGame;
 using UnityEngine;
 
 namespace RollbackSupport
@@ -14,12 +15,12 @@ namespace RollbackSupport
 
         public override void OnEnter(int duration = 0)
         {
-            // Trigger attack animation is handled elsewhere
+           
         }
 
         public override void OnUpdate()
         {
-            // Optional: early cancel windows, hit confirms, etc.
+            
         }
 
         public override void OnExit()
@@ -29,7 +30,7 @@ namespace RollbackSupport
 
         public override void OnUpdateAnimation()
         {
-
+            fighterComponentManager.DeterministicAnimator.PerformMove();
         }
     }
 }

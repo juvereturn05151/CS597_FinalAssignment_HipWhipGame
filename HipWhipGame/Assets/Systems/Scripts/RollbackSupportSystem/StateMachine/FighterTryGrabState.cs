@@ -27,7 +27,7 @@ namespace RollbackSupport
 
         public override void OnUpdateAnimation()
         {
-
+            fighterComponentManager.DeterministicAnimator.PerformMove();
         }
     }
 }

@@ -1,3 +1,10 @@
+/*
+File Name:    DeterministicAnimator.cs
+Author(s):    Ju-ve Chankasemporn
+Copyright:    (c) 2025 DigiPen Institute of Technology. All rights reserved.
+*/
+
+
 using UnityEngine;
 
 namespace RollbackSupport
@@ -13,15 +20,10 @@ namespace RollbackSupport
         // cache for velocity
         private Vector3 lastFramePos;
         public Vector3 LastFramePos => lastFramePos;
-        private Vector3 localVel;
 
         // timers for deterministic animation phases
-        private float walkAnimTimer;
         private float hitstunTimer;
         private float blockstunTimer;
-
-        private float grabbingTimer;
-        private float beingGrabbedTimer;
 
         public void Inject(FighterComponentManager fighterComponentManager)
         {
@@ -48,44 +50,14 @@ namespace RollbackSupport
 
             fsm.UpdateAnimation();
 
-            // --- Attack animation ---
-            //if (fighterComponentManager.MoveExecutor.IsExecuting)
-            //{
-            //    PlayAttack();
-            //}
-            //else if (state == FighterState.Grabbing)
-            //{
-            //    UpdateGrabbingVisual();
-            //}
-            //else if (state == FighterState.BeingGrabbed)
-            //{
-            //    UpdateBeingGrabbedVisual();
-            //}
-            //else if (state == FighterState.BlockStun)
-            //{
-            //    UpdateBlockstunVisual();
-            //}
-            //else if (state == FighterState.Block)
-            //{
-            //    PlayBlockHold();
-            //}
-            //else if (state == FighterState.Hitstun)
-            //{
-            //    UpdateHitstunVisual();
-            //}
-            //else
-            //{
-            //    UpdateMovementBlend();
-            //}
-
             animator.Update(0f);
             lastFramePos = fighter.body.position;
         }
 
         // ------------------------------------------------------------
-        // ATTACK
+        // MOVE
         // ------------------------------------------------------------
-        private void PlayAttack()
+        public void PerformMove()
         {
             var move = fighterComponentManager.MoveExecutor.CurrentMoveName;
 
@@ -99,39 +71,6 @@ namespace RollbackSupport
 
             float norm = (float)fighterComponentManager.MoveExecutor.CurrentFrame / data.totalFrames;
             animator.Play(move, 0, norm);
-        }
-
-        // ------------------------------------------------------------
-        // WALK / IDLE
-        // ------------------------------------------------------------
-        private void UpdateMovementBlend()
-        {
-            Vector3 delta = fighter.body.position - lastFramePos;
-            localVel = fighter.transform.InverseTransformDirection(new Vector3(delta.x, 0f, delta.z));
-
-            const float movePerFrame = 0.08f;
-            float maxSpeed = Mathf.Max(0.0001f, movePerFrame);
-
-            float x = Mathf.Clamp(localVel.x / maxSpeed, -1f, 1f);
-            float y = Mathf.Clamp(localVel.z / maxSpeed, -1f, 1f);
-            bool moving = (Mathf.Abs(x) + Mathf.Abs(y)) > 0.01f;
-
-            animator.SetFloat("X", x);
-            animator.SetFloat("Y", y);
-            animator.SetBool("Move", moving);
-
-            if (moving)
-            {
-                walkAnimTimer += 1f / 60f;
-                float walkCycleLength = 1f;
-                float normTime = (walkAnimTimer % walkCycleLength) / walkCycleLength;
-                animator.Play("Walk", 0, normTime);
-            }
-            else
-            {
-                walkAnimTimer = 0f;
-                animator.Play("Idle", 0, 0f);
-            }
         }
 
         // ------------------------------------------------------------
@@ -173,31 +112,5 @@ namespace RollbackSupport
 
         public void ResetBlockstunTimer() => blockstunTimer = 0f;
 
-        private void UpdateGrabbingVisual()
-        {
-            grabbingTimer += 1f / 60f;
-
-            // assume your Grabbing animation lasts about 1 second
-            float clipLength = 1.0f;
-            float norm = Mathf.Clamp01(grabbingTimer / clipLength);
-
-            animator.Play("Grabbing", 0, norm);
-        }
-
-        private void UpdateBeingGrabbedVisual()
-        {
-            beingGrabbedTimer += 1f / 60f;
-
-            // assume your BeingGrabbed animation lasts about 1 second
-            float clipLength = 1.0f;
-            float norm = Mathf.Clamp01(beingGrabbedTimer / clipLength);
-
-            animator.Play("BeingGrabbed", 0, norm);
-        }
-        public void ResetGrabTimers()
-        {
-            grabbingTimer = 0f;
-            beingGrabbedTimer = 0f;
-        }
     }
 }
