@@ -15,4 +15,10 @@ MonoBehaviour:
   moveName: PunchFast
   animName: PunchFast
   totalFrames: 35
-  hitboxes: []
+  hitboxes:
+  - start: 10
+    end: 15
+    box:
+      localCenter: {x: 0, y: 0.5, z: 0.72}
+      size: {x: 0.5, y: 0.45, z: 0.5}
+      enabled: 1

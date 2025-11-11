@@ -1,5 +1,6 @@
 using HipWhipGame;
 using UnityEngine;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 namespace RollbackSupport
 {
@@ -16,6 +17,7 @@ namespace RollbackSupport
         public MoveDatabase moves;
         public Transform lookAtTarget;
         public GameSimulation gameSimulation;
+        public HurtboxComponent Hurtboxes = new HurtboxComponent();
 
         public InputFrame LastInput;
 
@@ -23,6 +25,7 @@ namespace RollbackSupport
         {
             MoveExec.Bind(this);
             AnimatorSync.Bind(this);
+            Hurtboxes.AddBox(new Vector3(0, 1.0f, 0), new Vector3(0.6f, 2.0f, 0.6f));
             this.gameSimulation = gameSimulation;
         }
 
@@ -66,8 +69,8 @@ namespace RollbackSupport
 
             // 3. Compute input direction
             Vector3 input = new Vector3(LastInput.horiz, 0f, LastInput.vert);
-            //if (input.sqrMagnitude > 1f)
-            //    input.Normalize();
+            if (input.sqrMagnitude > 1f)
+                input.Normalize();
 
             Vector3 moveDir = (forward * input.z + right * input.x).normalized;
 
@@ -101,7 +104,20 @@ namespace RollbackSupport
 
         public void TakeHit()
         {
+            Debug.Log($"[{playerIndex.ToString()}] Took hit!");
             State = FighterState.Hitstun;
         }
+
+#if UNITY_EDITOR
+        void OnDrawGizmos()
+        {
+            Gizmos.color = Color.green;
+            foreach (var hb in Hurtboxes.ActiveBoxes)
+            {
+                Bounds b = hb.ToWorld(transform);
+                Gizmos.DrawWireCube(b.center, b.size);
+            }
+        }
+#endif
     }
 }

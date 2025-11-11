@@ -55,5 +55,35 @@ namespace RollbackSupport
                 executing = true;
             }
         }
+
+#if UNITY_EDITOR
+        void OnDrawGizmos()
+        {
+            if (ActiveHitboxes == null || ActiveHitboxes.Count == 0)
+                return;
+
+            Gizmos.color = Color.red;
+
+            foreach (var box in ActiveHitboxes)
+            {
+                if (!box.enabled) continue;
+
+                // Convert local box to world space
+                Bounds b = box.ToWorld(transform);
+
+                // Draw an outline cube for clarity
+                Gizmos.DrawWireCube(b.center, b.size);
+
+                // Slight transparency for fill
+                Color fill = new Color(1f, 0f, 0f, 0.15f);
+                Gizmos.color = fill;
+                Gizmos.DrawCube(b.center, b.size);
+
+                // Restore outline color
+                Gizmos.color = Color.red;
+            }
+        }
+#endif
+
     }
 }

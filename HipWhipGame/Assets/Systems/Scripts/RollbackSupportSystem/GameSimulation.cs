@@ -33,6 +33,8 @@ namespace RollbackSupport
             fighter1.SimulateFrame();
             fighter2.SimulateFrame();
 
+
+
             PhysicsWorld.Instance.Step();
             HitboxManager.Instance.CheckHits();
 

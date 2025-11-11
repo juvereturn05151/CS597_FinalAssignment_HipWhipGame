@@ -19,15 +19,24 @@ namespace RollbackSupport
             for (int i = 0; i < fighters.Count; i++)
                 for (int j = i + 1; j < fighters.Count; j++)
                 {
-                    var a = fighters[i];
-                    var b = fighters[j];
-                    foreach (var hb in a.MoveExec.ActiveHitboxes)
-                        foreach (var hb2 in b.moves.hurtboxes)
+                    var attacker = fighters[i];
+                    var defender = fighters[j];
+
+                    // Skip if no move executing
+                    if (!attacker.MoveExec.IsExecuting)
+                        continue;
+
+                    foreach (var hitbox in attacker.MoveExec.ActiveHitboxes)
+                        foreach (var hurt in defender.Hurtboxes.ActiveBoxes)
                         {
-                            if (CollisionBox.Overlaps(hb, a.transform, hb2, b.transform))
-                                b.TakeHit();
+                            if (CollisionBox.Overlaps(hitbox, attacker.transform, hurt, defender.transform))
+                            {
+                                defender.TakeHit();
+                                return;
+                            }
                         }
                 }
         }
+
     }
 }
