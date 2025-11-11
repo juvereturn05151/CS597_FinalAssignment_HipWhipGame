@@ -146,6 +146,7 @@ public class InputManager : MonoBehaviour
 
         if (context.started) 
         {
+            fighterComponentManager.Fighter.LastInput.sidestep = context.ReadValue<Vector2>().x;
             //fighterComponentManager.FighterInputHandler.OnRightStick(context.ReadValue<Vector2>());
         }
 

@@ -15,7 +15,5 @@ MonoBehaviour:
   light: {fileID: 11400000, guid: 465b90f329cc5fe40bbd20e06753b397, type: 2}
   heavy: {fileID: 11400000, guid: 11f0be0b732ea89498b45a9e0dc48845, type: 2}
   grab: {fileID: 11400000, guid: d394ceb2cdcd96f4b881019b4068e43b, type: 2}
-  hurtboxes:
-  - localCenter: {x: 0, y: 0, z: 0}
-    size: {x: 1, y: 1, z: 1}
-    enabled: 0
+  sideStepLeft: {fileID: 11400000, guid: 437cdac029e405440b31e89f45624f33, type: 2}
+  sideStepRight: {fileID: 11400000, guid: 3a62d19c647af674abfea0954632b0e4, type: 2}

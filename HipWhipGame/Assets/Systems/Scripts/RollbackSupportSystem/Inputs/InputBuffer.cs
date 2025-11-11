@@ -13,7 +13,7 @@ namespace RollbackSupport
         public InputFrame Predict(int frame, InputFrame last)
         {
             last.frame = frame;
-            last.light = last.heavy = last.grab = false;
+            last.light = last.heavy = last.grab = last.block = false;
             return last;
         }
     }

@@ -59,6 +59,7 @@ namespace RollbackSupport
             else if (!MoveExec.IsExecuting)
             {
                 HandleBlocking();
+                HandleSidestep();
                 ProcessMovement();
                 HandleAttacks();
             }
@@ -71,12 +72,6 @@ namespace RollbackSupport
         }
         void ProcessMovement()
         {
-            // 1. Blocking logic
-            //if (LastInput.block)
-            //{
-            //    State = FighterState.Block;
-            //    return;
-            //}
 
             // 2. Determine facing direction
             Vector3 forward = transform.forward;
@@ -120,6 +115,23 @@ namespace RollbackSupport
             transform.position = body.position;
         }
 
+
+
+        private void HandleSidestep()
+        {
+            if (LastInput.sidestep < 0)
+            {
+                MoveExec.StartMove(moves.sideStepLeft);
+                FighterComponentManager.FighterStateMachine.SwitchState(FighterState.Sidestep);
+            }
+            else if (LastInput.sidestep > 0)
+            {
+                MoveExec.StartMove(moves.sideStepRight);
+                FighterComponentManager.FighterStateMachine.SwitchState(FighterState.Sidestep);
+            }
+
+            LastInput.sidestep = 0;
+        }
 
         void HandleAttacks()
         {

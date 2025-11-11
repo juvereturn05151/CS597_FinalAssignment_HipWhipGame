@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 303d8bb4016a3c040a60f6e7624fa1cb, type: 3}
+  m_Name: SidestepLeft
+  m_EditorClassIdentifier: 
+  moveName: Sidestep
+  animName: Sidestep
+  startup: 2
+  active: 6
+  recovery: 8
+  hitstunFrames: 15
+  blockstunFrames: 10
+  knockback: {x: 0, y: 0, z: 3}
+  pushbackOnHit: 1
+  canCancelOnHit: 0
+  canCancelOnBlock: 0
+  cancelInto: []
+  hitboxes: []
+  sfx: {fileID: 0}
+  vfxPrefab: {fileID: 0}
+  overrideRootMotion: 1
+  motionSegments:
+  - frameStart: 0
+    frameEnd: 8
+    forwardSpeed: 0
+    verticalSpeed: 0
+    sideSpeed: -0.3
+  plusOnHit: 7
+  plusOnBlock: 2
+  isGrab: 0
+  grabRange: 1.2
+  grabDuration: 0.8
+  grabOffset: {x: 0, y: 0, z: 0}
+  grabVictimAnim: 
