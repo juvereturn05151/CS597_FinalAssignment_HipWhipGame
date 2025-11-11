@@ -42,13 +42,13 @@ namespace RollbackSupport
 
         private bool TryResolvePair(FighterComponentManager a, FighterComponentManager b)
         {
-            if (!a.FighterCollisionComponent.pushbox.enabled || !b.FighterCollisionComponent.pushbox.enabled) 
+            if (!a.FighterCollisionComponent.Pushbox.enabled || !b.FighterCollisionComponent.Pushbox.enabled) 
             {
                 return false;
             }
                 
-            Bounds A = a.FighterCollisionComponent.pushbox.ToWorld(a.transform);
-            Bounds B = b.FighterCollisionComponent.pushbox.ToWorld(b.transform);
+            Bounds A = a.FighterCollisionComponent.Pushbox.ToWorld(a.transform);
+            Bounds B = b.FighterCollisionComponent.Pushbox.ToWorld(b.transform);
 
             if (!A.Intersects(B))
                 return false;

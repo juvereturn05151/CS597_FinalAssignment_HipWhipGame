@@ -12,6 +12,7 @@ namespace RollbackSupport
 
         // cache for velocity
         private Vector3 lastFramePos;
+        public Vector3 LastFramePos => lastFramePos;
         private Vector3 localVel;
 
         // timers for deterministic animation phases
@@ -37,7 +38,10 @@ namespace RollbackSupport
 
         public void ApplyVisuals()
         {
-            if (!animator || fighter == null) return;
+            if (!animator || fighter == null) 
+            {
+                return;
+            } 
 
             var fsm = fighterComponentManager?.FighterStateMachine;
             var state = fsm?.CurrentStateType ?? FighterState.Idle;

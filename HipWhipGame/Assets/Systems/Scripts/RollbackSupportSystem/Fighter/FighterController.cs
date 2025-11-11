@@ -17,8 +17,6 @@ namespace RollbackSupport
         public MoveDatabase moves;
         public Transform lookAtTarget;
 
-
-
         private Vector3 hitVelocity;
         private int hitstunTimer;
         public bool InHitstun => hitstunTimer > 0;
@@ -36,6 +34,11 @@ namespace RollbackSupport
         {
             get => isMovable;
             private set => isMovable = value;
+        }
+
+        public void SetIsMovable(bool canMove)
+        {
+            isMovable = canMove;
         }
 
         public void Inject(FighterComponentManager fighterComponentManager)
@@ -173,11 +176,6 @@ namespace RollbackSupport
             fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Hitstun, stunFrames);
         }
 
-        public void ApplyRecoil(Vector3 recoil)
-        {
-            body.position += recoil;
-        }
-
         private void SimulateHitstun()
         {
             // Apply knockback motion deterministically
@@ -218,7 +216,6 @@ namespace RollbackSupport
             Debug.Log($"[{fighterName}] Blocked {move.moveName}");
 
             blockstunTimer = move.blockstunFrames;
-            //blockPushVel = worldKnock * 0.25f / blockstunTimer; // lighter knockback
             fighterComponentManager.FighterStateMachine.SwitchState(FighterState.BlockStun, blockstunTimer);
         }
 
@@ -240,9 +237,6 @@ namespace RollbackSupport
         /// <summary>
         /// Locks or unlocks the fighter's ability to move and perform actions.
         /// </summary>
-        public void SetIsMovable(bool canMove)
-        {
-            isMovable = canMove;
-        }
+
     }
 }
