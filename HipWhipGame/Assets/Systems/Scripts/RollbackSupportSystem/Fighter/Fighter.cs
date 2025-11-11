@@ -200,7 +200,7 @@ namespace RollbackSupport
             Debug.Log($"[{fighterName}] Blocked {move.moveName}");
 
             blockstunTimer = move.blockstunFrames;
-            blockPushVel = worldKnock * 0.25f / blockstunTimer; // lighter knockback
+            //blockPushVel = worldKnock * 0.25f / blockstunTimer; // lighter knockback
             FighterComponentManager.FighterStateMachine.SwitchState(FighterState.BlockStun, blockstunTimer);
         }
 
