@@ -7,7 +7,7 @@ namespace RollbackSupport
     {
         private FighterComponentManager fighterComponentManager;
 
-        public Animator animator;
+        private Animator animator;
         private FighterController fighter;
 
         // cache for velocity

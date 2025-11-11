@@ -7,9 +7,9 @@ namespace RollbackSupport
     {
         public static readonly PushboxManager Instance = new PushboxManager();
 
-        private readonly List<FighterController> fighters = new List<FighterController>();
+        private readonly List<FighterComponentManager> fighters = new List<FighterComponentManager>();
 
-        public void Register(FighterController f)
+        public void Register(FighterComponentManager f)
         {
             if (!fighters.Contains(f)) 
             {
@@ -40,15 +40,15 @@ namespace RollbackSupport
             }
         }
 
-        private bool TryResolvePair(FighterController a, FighterController b)
+        private bool TryResolvePair(FighterComponentManager a, FighterComponentManager b)
         {
-            if (!a.pushbox.enabled || !b.pushbox.enabled) 
+            if (!a.FighterCollisionComponent.pushbox.enabled || !b.FighterCollisionComponent.pushbox.enabled) 
             {
                 return false;
             }
                 
-            Bounds A = a.pushbox.ToWorld(a.transform);
-            Bounds B = b.pushbox.ToWorld(b.transform);
+            Bounds A = a.FighterCollisionComponent.pushbox.ToWorld(a.transform);
+            Bounds B = b.FighterCollisionComponent.pushbox.ToWorld(b.transform);
 
             if (!A.Intersects(B))
                 return false;
@@ -72,10 +72,10 @@ namespace RollbackSupport
             Vector3 correction = new Vector3(overlap.x * dir.x * 0.5f, 0, overlap.z * dir.z * 0.5f);
 
             // Apply push equally
-            a.body.position += correction;
-            b.body.position -= correction;
+            a.FighterController.body.position += correction;
+            b.FighterController.body.position -= correction;
 
-            a.IsPushedThisFrame = b.IsPushedThisFrame = true;
+            a.FighterCollisionComponent.IsPushedThisFrame = b.FighterCollisionComponent.IsPushedThisFrame = true;
             return true;
         }
     }

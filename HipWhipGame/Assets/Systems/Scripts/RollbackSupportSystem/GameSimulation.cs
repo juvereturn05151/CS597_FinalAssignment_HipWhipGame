@@ -20,13 +20,10 @@ namespace RollbackSupport
             this.fighter1 = fighter1;
             this.fighter2 = fighter2;
 
-            this.fighter1.FighterController.Initialize();
-            this.fighter2.FighterController.Initialize();
-
             PhysicsWorld.Instance.Register(this.fighter1.FighterController.body);
             PhysicsWorld.Instance.Register(this.fighter2.FighterController.body);
-            PushboxManager.Instance.Register(this.fighter1.FighterController);
-            PushboxManager.Instance.Register(this.fighter2.FighterController);
+            PushboxManager.Instance.Register(this.fighter1);
+            PushboxManager.Instance.Register(this.fighter2);
             HitboxManager.Instance.Register(this.fighter1);
             HitboxManager.Instance.Register(this.fighter2);
         }

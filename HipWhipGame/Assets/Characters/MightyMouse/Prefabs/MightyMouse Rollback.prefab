@@ -47,6 +47,7 @@ GameObject:
   - component: {fileID: 7666988433601055934}
   - component: {fileID: 2628868656523102296}
   - component: {fileID: 1044645334956613487}
+  - component: {fileID: 5150551955394687577}
   m_Layer: 0
   m_Name: MightyMouse Rollback
   m_TagString: Player
@@ -84,6 +85,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fighterController: {fileID: 5060805126365526105}
+  fighterCollisionComponent: {fileID: 5150551955394687577}
   fighterStateMachine: {fileID: 2628868656523102296}
   moveExecutor: {fileID: 8003538907918242849}
   animator: {fileID: 338579307594028477}
@@ -111,7 +113,6 @@ MonoBehaviour:
     grounded: 0
     useGravity: 1
     isKinematic: 0
-  MoveExec: {fileID: 8003538907918242849}
   moves: {fileID: 11400000, guid: 4b58da71a39a4a54f97c2aa8c6582ca3, type: 2}
   lookAtTarget: {fileID: 0}
   Hurtboxes:
@@ -155,7 +156,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1defb0faf20e5dc41b95e911e81a142a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 338579307594028477}
 --- !u!114 &2628868656523102296
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,6 +180,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd795c697c94352488bd36e580b56979, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5150551955394687577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7400030421977495981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4715d48e451574544b65dd5bde9fba3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Hurtboxes:
+    boxes: []
+  pushbox:
+    localCenter: {x: 0, y: 1, z: 0}
+    size: {x: 0.6, y: 2, z: 0.6}
+    enabled: 1
 --- !u!1 &9202767699107768774
 GameObject:
   m_ObjectHideFlags: 0

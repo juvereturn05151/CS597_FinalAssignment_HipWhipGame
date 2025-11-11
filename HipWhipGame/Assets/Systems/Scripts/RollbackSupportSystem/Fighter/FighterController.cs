@@ -17,15 +17,7 @@ namespace RollbackSupport
         public MoveDatabase moves;
         public Transform lookAtTarget;
 
-        public HurtboxComponent Hurtboxes = new HurtboxComponent();
-        public CollisionBox pushbox = new CollisionBox
-        {
-            localCenter = new Vector3(0, 1.0f, 0),
-            size = new Vector3(0.6f, 2.0f, 0.6f),
-            enabled = true
-        };
 
-        public bool IsPushedThisFrame;
 
         private Vector3 hitVelocity;
         private int hitstunTimer;
@@ -44,11 +36,6 @@ namespace RollbackSupport
         {
             get => isMovable;
             private set => isMovable = value;
-        }
-
-        public void Initialize()
-        {
-            Hurtboxes.AddBox(new Vector3(0, 1.0f, 0), new Vector3(0.6f, 2.0f, 0.6f));
         }
 
         public void Inject(FighterComponentManager fighterComponentManager)
@@ -257,24 +244,5 @@ namespace RollbackSupport
         {
             isMovable = canMove;
         }
-
-
-
-#if UNITY_EDITOR
-        void OnDrawGizmos()
-        {
-            Gizmos.color = Color.green;
-            foreach (var hb in Hurtboxes.ActiveBoxes)
-            {
-                Bounds b = hb.ToWorld(transform);
-                Gizmos.DrawWireCube(b.center, b.size);
-            }
-
-            if (!pushbox.enabled) return;
-            Gizmos.color = Color.cyan;
-            Bounds p = pushbox.ToWorld(transform);
-            Gizmos.DrawWireCube(p.center, p.size);
-        }
-#endif
     }
 }

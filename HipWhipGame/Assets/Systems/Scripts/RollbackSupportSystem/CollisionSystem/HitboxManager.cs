@@ -39,7 +39,7 @@ namespace RollbackSupport
 
                     foreach (var hitbox in attacker.MoveExecutor.ActiveHitboxes)
                     {
-                        foreach (var hurt in defender.FighterController.Hurtboxes.ActiveBoxes)
+                        foreach (var hurt in defender.FighterCollisionComponent.Hurtboxes.ActiveBoxes)
                         {
                             if (CollisionBox.Overlaps(hitbox, attacker.transform, hurt, defender.transform))
                             {

@@ -1,4 +1,10 @@
-using Unity.VisualScripting;
+/*
+File Name:    FighterComponentManager.cs
+Author(s):    Ju-ve Chankasemporn
+Copyright:    (c) 2025 DigiPen Institute of Technology. All rights reserved.
+*/
+
+
 using UnityEngine;
 
 namespace RollbackSupport
@@ -8,6 +14,9 @@ namespace RollbackSupport
         [SerializeField]
         private FighterController fighterController;
         public FighterController FighterController => fighterController;
+        [SerializeField]
+        private FighterCollisionComponent fighterCollisionComponent;
+        public FighterCollisionComponent FighterCollisionComponent => fighterCollisionComponent;
         [SerializeField]
         private FighterStateMachine fighterStateMachine;
         public FighterStateMachine FighterStateMachine => fighterStateMachine;
@@ -33,6 +42,7 @@ namespace RollbackSupport
         private void Awake()
         {
             if (!fighterController) fighterController = GetComponent<FighterController>();
+            if (!fighterCollisionComponent) fighterCollisionComponent = GetComponent<FighterCollisionComponent>(); 
             if (!fighterStateMachine) fighterStateMachine = GetComponent<FighterStateMachine>();
             if (!moveExecutor) moveExecutor = GetComponent<MoveExecutor>();
             if (!animator) animator = GetComponentInChildren<Animator>();
