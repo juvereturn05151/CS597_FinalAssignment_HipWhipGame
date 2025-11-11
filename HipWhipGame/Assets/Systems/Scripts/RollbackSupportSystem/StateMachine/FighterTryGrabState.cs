@@ -10,7 +10,7 @@ namespace RollbackSupport
     {
         public FighterTryGrabState(FighterComponentManager fighterComponentManager) : base(fighterComponentManager) { }
 
-        public override void OnEnter()
+        public override void OnEnter(int duration = 0)
         {
 
         }
@@ -23,6 +23,11 @@ namespace RollbackSupport
         public override void OnExit()
         {
             
+        }
+
+        public override void OnUpdateAnimation()
+        {
+
         }
     }
 }

@@ -5,7 +5,6 @@ Copyright:    (c) 2025 DigiPen Institute of Technology. All rights reserved.
 */
 
 using UnityEngine;
-using static HipWhipGame.Enums;
 
 namespace RollbackSupport
 {
@@ -13,7 +12,7 @@ namespace RollbackSupport
     {
         public FighterAttackingState(FighterComponentManager fighterComponentManager) : base(fighterComponentManager) { }
 
-        public override void OnEnter()
+        public override void OnEnter(int duration = 0)
         {
             // Trigger attack animation is handled elsewhere
         }
@@ -26,6 +25,11 @@ namespace RollbackSupport
         public override void OnExit()
         {
             
+        }
+
+        public override void OnUpdateAnimation()
+        {
+
         }
     }
 }

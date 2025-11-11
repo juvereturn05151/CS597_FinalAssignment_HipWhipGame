@@ -19,8 +19,6 @@ namespace RollbackSupport
 
         public FighterComponentManager FighterComponentManager { get; private set; }
         public FighterState CurrentStateType { get; private set; } = FighterState.Disabled;
-        private float stateTimer;
-        public float StateTimer => stateTimer;
 
         public void Inject(FighterComponentManager fighterComponentManager)
         {
@@ -33,6 +31,7 @@ namespace RollbackSupport
             stateMap = new Dictionary<FighterState, FighterBaseState>
             {
                 { FighterState.Idle, new FighterIdleState(FighterComponentManager) },
+                { FighterState.Walk, new FighterWalkState(FighterComponentManager) },
                 { FighterState.Block, new FighterBlockingState(FighterComponentManager) },
                 { FighterState.BlockStun, new FighterBlockStunState(FighterComponentManager) },
                 { FighterState.Hitstun, new FighterHitstunState(FighterComponentManager) },
@@ -60,23 +59,11 @@ namespace RollbackSupport
         public void Step()
         {
             currentState?.OnUpdate();
-
-            if (stateTimer > 0)
-            {
-                stateTimer--;
-                if (stateTimer == 0)
-                    OnTimerExpire();
-            }
         }
 
-        private void OnTimerExpire()
+        public void UpdateAnimation()
         {
-            // determine transitions that end automatically
-            if (CurrentStateType == FighterState.Attack ||
-                CurrentStateType == FighterState.Hitstun )
-            {
-                SwitchState(FighterState.Idle);
-            }
+            currentState?.OnUpdateAnimation();
         }
 
         public void SwitchState(FighterState newState, int duration = 0)
@@ -84,8 +71,7 @@ namespace RollbackSupport
             currentState?.OnExit();
             CurrentStateType = newState;
             currentState = stateMap[newState];
-            stateTimer = duration;
-            currentState.OnEnter();
+            currentState.OnEnter(duration);
         }
 
         public bool CanBlock() =>

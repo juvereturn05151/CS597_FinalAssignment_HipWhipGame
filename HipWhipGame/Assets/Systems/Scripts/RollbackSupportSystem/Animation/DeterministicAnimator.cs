@@ -46,35 +46,37 @@ namespace RollbackSupport
             var fsm = fighterComponentManager?.FighterStateMachine;
             var state = fsm?.CurrentStateType ?? FighterState.Idle;
 
+            fsm.UpdateAnimation();
+
             // --- Attack animation ---
-            if (fighterComponentManager.MoveExecutor.IsExecuting)
-            {
-                PlayAttack();
-            }
-            else if (state == FighterState.Grabbing)
-            {
-                UpdateGrabbingVisual();
-            }
-            else if (state == FighterState.BeingGrabbed)
-            {
-                UpdateBeingGrabbedVisual();
-            }
-            else if (state == FighterState.BlockStun)
-            {
-                UpdateBlockstunVisual();
-            }
-            else if (state == FighterState.Block)
-            {
-                PlayBlockHold();
-            }
-            else if (state == FighterState.Hitstun)
-            {
-                UpdateHitstunVisual();
-            }
-            else
-            {
-                UpdateMovementBlend();
-            }
+            //if (fighterComponentManager.MoveExecutor.IsExecuting)
+            //{
+            //    PlayAttack();
+            //}
+            //else if (state == FighterState.Grabbing)
+            //{
+            //    UpdateGrabbingVisual();
+            //}
+            //else if (state == FighterState.BeingGrabbed)
+            //{
+            //    UpdateBeingGrabbedVisual();
+            //}
+            //else if (state == FighterState.BlockStun)
+            //{
+            //    UpdateBlockstunVisual();
+            //}
+            //else if (state == FighterState.Block)
+            //{
+            //    PlayBlockHold();
+            //}
+            //else if (state == FighterState.Hitstun)
+            //{
+            //    UpdateHitstunVisual();
+            //}
+            //else
+            //{
+            //    UpdateMovementBlend();
+            //}
 
             animator.Update(0f);
             lastFramePos = fighter.body.position;

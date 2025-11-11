@@ -13,7 +13,7 @@ namespace RollbackSupport
     {
         public FighterBlockStunState(FighterComponentManager fighterComponentManager) : base(fighterComponentManager) { }
 
-        public override void OnEnter()
+        public override void OnEnter(int duration = 0)
         {
             //fighterComponentManager.Animator?.SetBool("BlockStun", true);
             //fighterComponentManager.Animator?.Play("BlockStun", 0, 0);
@@ -28,6 +28,11 @@ namespace RollbackSupport
         public override void OnExit()
         {
             //fighterComponentManager.Animator?.SetBool("BlockStun", false);
+
+        }
+
+        public override void OnUpdateAnimation()
+        {
 
         }
     }

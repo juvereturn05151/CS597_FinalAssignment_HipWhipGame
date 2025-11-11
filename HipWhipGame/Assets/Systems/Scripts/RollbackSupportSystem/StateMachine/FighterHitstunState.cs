@@ -13,7 +13,7 @@ namespace RollbackSupport
     {
         public FighterHitstunState(FighterComponentManager fighterComponentManager) : base(fighterComponentManager) { }
 
-        public override void OnEnter()
+        public override void OnEnter(int duration = 0)
         {
             //fighterComponentManager.Animator?.SetBool("Block", false);
             //fighterComponentManager.Animator?.Play("HitStun", 0, 0f);
@@ -33,6 +33,11 @@ namespace RollbackSupport
         {
             // Transition back to idle handled by StateMachine
             //fighterComponentManager.FighterController.SetIsInterrupted(false);
+        }
+
+        public override void OnUpdateAnimation() 
+        {
+        
         }
     }
 }

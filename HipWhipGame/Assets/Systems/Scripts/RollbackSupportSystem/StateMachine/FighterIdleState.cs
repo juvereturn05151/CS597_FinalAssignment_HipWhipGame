@@ -13,11 +13,12 @@ namespace RollbackSupport
     {
         public FighterIdleState(FighterComponentManager fighterComponentManager) : base(fighterComponentManager) { }
 
-        public override void OnEnter()
+        public override void OnEnter(int duration = 0)
         {
             //Debug.Log("Fighter is in Idle State");
             //fighterComponentManager.Animator?.Play("Idle", 0, 0);
             //fighterComponentManager.Animator?.SetBool("Block", false);
+            fighterComponentManager.Animator.Play("Idle", 0, 0f);
         }
 
         public override void OnUpdate()
@@ -30,5 +31,10 @@ namespace RollbackSupport
         }
 
         public override void OnExit() { }
+
+        public override void OnUpdateAnimation()
+        {
+
+        }
     }
 }

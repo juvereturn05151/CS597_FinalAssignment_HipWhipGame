@@ -18,12 +18,14 @@ namespace RollbackSupport
         }
 
         /// <summary> Called when entering this state. </summary>
-        public abstract void OnEnter();
+        public abstract void OnEnter(int duration = 0);
 
         /// <summary> Called every frame while in this state. </summary>
         public abstract void OnUpdate();
 
         /// <summary> Called when exiting this state. </summary>
         public abstract void OnExit();
+
+        public abstract void OnUpdateAnimation();
     }
 }

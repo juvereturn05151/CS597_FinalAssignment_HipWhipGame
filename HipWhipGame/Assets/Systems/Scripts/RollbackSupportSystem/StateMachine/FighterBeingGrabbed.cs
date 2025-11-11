@@ -4,16 +4,13 @@ Author(s):    Ju-ve Chankasemporn
 Copyright:    (c) 2025 DigiPen Institute of Technology. All rights reserved.
 */
 
-using UnityEngine;
-using static HipWhipGame.Enums;
-
 namespace RollbackSupport
 {
     public class FighterBeingGrabbed : FighterBaseState
     {
         public FighterBeingGrabbed(FighterComponentManager fighterComponentManager) : base(fighterComponentManager) { }
 
-        public override void OnEnter()
+        public override void OnEnter(int duration = 0)
         {
             fighterComponentManager.DeterministicAnimator.ResetGrabTimers();
         }
@@ -24,6 +21,11 @@ namespace RollbackSupport
         }
 
         public override void OnExit()
+        {
+
+        }
+
+        public override void OnUpdateAnimation()
         {
 
         }

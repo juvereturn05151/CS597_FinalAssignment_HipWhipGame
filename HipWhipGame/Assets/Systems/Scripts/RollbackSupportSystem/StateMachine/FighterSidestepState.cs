@@ -10,7 +10,7 @@ namespace RollbackSupport
     {
         public FighterSidestepState(FighterComponentManager mgr) : base(mgr) { }
 
-        public override void OnEnter()
+        public override void OnEnter(int duration = 0)
         {
 
         }
@@ -18,5 +18,10 @@ namespace RollbackSupport
         public override void OnUpdate() { }
 
         public override void OnExit() { }
+
+        public override void OnUpdateAnimation()
+        {
+
+        }
     }
 }

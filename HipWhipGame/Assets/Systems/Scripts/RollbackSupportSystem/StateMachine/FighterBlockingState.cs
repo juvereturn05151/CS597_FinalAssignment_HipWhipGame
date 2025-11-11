@@ -12,7 +12,7 @@ namespace RollbackSupport
     {
         public FighterBlockingState(FighterComponentManager fighterComponentManager) : base(fighterComponentManager) { }
 
-        public override void OnEnter()
+        public override void OnEnter(int duration = 0)
         {
             //fighterComponentManager.Animator?.SetBool("Block", true);
         }
@@ -29,6 +29,11 @@ namespace RollbackSupport
         public override void OnExit()
         {
             //fighterComponentManager.Animator?.SetBool("Block", false);
+        }
+
+        public override void OnUpdateAnimation()
+        {
+
         }
     }
 }

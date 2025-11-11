@@ -10,7 +10,7 @@ namespace RollbackSupport
     {
         public FighterGrabbing(FighterComponentManager fighterComponentManager) : base(fighterComponentManager) { }
 
-        public override void OnEnter()
+        public override void OnEnter(int duration = 0)
         {
             fighterComponentManager.FighterGrabManager.Grab();
             fighterComponentManager.DeterministicAnimator.ResetGrabTimers();
@@ -22,6 +22,11 @@ namespace RollbackSupport
         }
 
         public override void OnExit()
+        {
+
+        }
+
+        public override void OnUpdateAnimation()
         {
 
         }
