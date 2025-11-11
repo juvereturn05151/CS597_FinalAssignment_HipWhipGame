@@ -19,7 +19,7 @@ namespace RollbackSupport
             //fighterComponentManager.Animator?.Play("HitStun", 0, 0f);
             //fighterComponentManager.FighterController.SetIsInterrupted(true);
 
-            var fighter = fighterComponentManager.Fighter;
+            var fighter = fighterComponentManager.FighterController;
 
             if (fighter.AnimatorSync)
                 fighter.AnimatorSync.ResetHitstunTimer();

@@ -7,12 +7,14 @@ namespace RollbackSupport
     {
         public static readonly PushboxManager Instance = new PushboxManager();
 
-        private readonly List<Fighter> fighters = new List<Fighter>();
+        private readonly List<FighterController> fighters = new List<FighterController>();
 
-        public void Register(Fighter f)
+        public void Register(FighterController f)
         {
-            if (!fighters.Contains(f))
+            if (!fighters.Contains(f)) 
+            {
                 fighters.Add(f);
+            }
         }
 
         public void Clear()
@@ -36,7 +38,7 @@ namespace RollbackSupport
             }
         }
 
-        private bool TryResolvePair(Fighter a, Fighter b)
+        private bool TryResolvePair(FighterController a, FighterController b)
         {
             if (!a.pushbox.enabled || !b.pushbox.enabled)
                 return false;

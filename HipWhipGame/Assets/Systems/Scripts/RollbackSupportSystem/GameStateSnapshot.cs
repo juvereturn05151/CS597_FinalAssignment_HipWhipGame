@@ -9,7 +9,7 @@ namespace RollbackSupport
         public FighterStateSnapshot P2;
         public int FrameNumber;
 
-        public static GameStateSnapshot Capture(int frame, Fighter f1, Fighter f2)
+        public static GameStateSnapshot Capture(int frame, FighterController f1, FighterController f2)
         {
             return new GameStateSnapshot
             {
@@ -19,7 +19,7 @@ namespace RollbackSupport
             };
         }
 
-        public void Restore(Fighter f1, Fighter f2)
+        public void Restore(FighterController f1, FighterController f2)
         {
             P1.ApplyTo(f1);
             P2.ApplyTo(f2);

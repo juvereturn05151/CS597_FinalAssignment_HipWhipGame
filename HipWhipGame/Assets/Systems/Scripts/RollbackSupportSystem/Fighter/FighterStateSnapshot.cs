@@ -10,7 +10,7 @@ namespace RollbackSupport
         public int moveFrame;
         public string moveName;
 
-        public static FighterStateSnapshot From(Fighter f)
+        public static FighterStateSnapshot From(FighterController f)
         {
             return new FighterStateSnapshot
             {
@@ -22,7 +22,7 @@ namespace RollbackSupport
             };
         }
 
-        public void ApplyTo(Fighter f)
+        public void ApplyTo(FighterController f)
         {
             f.body.position = pos;
             f.body.velocity = vel;

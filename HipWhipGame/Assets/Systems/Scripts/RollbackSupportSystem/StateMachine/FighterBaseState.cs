@@ -4,8 +4,6 @@ Author(s):    Ju-ve Chankasemporn
 Copyright:    (c) 2025 DigiPen Institute of Technology. All rights reserved.
 */
 
-using UnityEngine;
-
 namespace RollbackSupport
 {
     public abstract class FighterBaseState

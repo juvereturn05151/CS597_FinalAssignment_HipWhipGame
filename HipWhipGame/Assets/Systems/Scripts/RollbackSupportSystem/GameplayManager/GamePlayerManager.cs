@@ -82,16 +82,14 @@ namespace RollbackSupport
                 inputManager.SetFightingComponentManager(fcm);
             }
 
-            fcm.Fighter.body.Teleport(spawn.position);
+            fcm.FighterController.body.Teleport(spawn.position);
 
             //Hack
-            if (fcm.Fighter.playerIndex == 2)
+            if (fcm.FighterController.playerIndex == 2)
             {
-                fcm.Fighter.lookAtTarget = activePlayers[0].transform;
-                activePlayers[0].GetComponent<Fighter>().lookAtTarget = fcm.Fighter.transform;
-                simulation.fighter1 = activePlayers[0].GetComponent<Fighter>();
-                simulation.fighter2 = fcm.Fighter;
-                simulation.Initialize();
+                fcm.FighterController.lookAtTarget = activePlayers[0].transform;
+                activePlayers[0].GetComponent<FighterController>().lookAtTarget = fcm.FighterController.transform;
+                simulation.Initialize(activePlayers[0].GetComponent<FighterController>(), fcm.FighterController);
             }
 
             activePlayers.Add(playerObj);

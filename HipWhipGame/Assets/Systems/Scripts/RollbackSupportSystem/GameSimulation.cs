@@ -5,28 +5,30 @@ Copyright:    (c) 2025 DigiPen Institute of Technology. All rights reserved.
 */
 
 using UnityEngine;
-using HipWhipGame;
 
 namespace RollbackSupport
 {
     public class GameSimulation : MonoBehaviour
     {
-        public Fighter fighter1;
-        public Fighter fighter2;
+        private FighterController fighter1;
+        private FighterController fighter2;
         public RollbackManager rollback = new RollbackManager();
         public int FrameNumber { get; private set; }
 
-        public void Initialize()
+        public void Initialize(FighterController fighter1, FighterController fighter2)
         {
-            fighter1.Initialize(new Vector3(-2, 0, 0), this);
-            fighter2.Initialize(new Vector3(2, 0, 0), this);
+            this.fighter1 = fighter1;
+            this.fighter2 = fighter2;
 
-            PhysicsWorld.Instance.Register(fighter1.body);
-            PhysicsWorld.Instance.Register(fighter2.body);
-            PushboxManager.Instance.Register(fighter1);
-            PushboxManager.Instance.Register(fighter2);
-            HitboxManager.Instance.Register(fighter1);
-            HitboxManager.Instance.Register(fighter2);
+            this.fighter1.Initialize();
+            this.fighter2.Initialize();
+
+            PhysicsWorld.Instance.Register(this.fighter1.body);
+            PhysicsWorld.Instance.Register(this.fighter2.body);
+            PushboxManager.Instance.Register(this.fighter1);
+            PushboxManager.Instance.Register(this.fighter2);
+            HitboxManager.Instance.Register(this.fighter1);
+            HitboxManager.Instance.Register(this.fighter2);
         }
 
         public void Step()

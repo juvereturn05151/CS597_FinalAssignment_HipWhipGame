@@ -6,9 +6,9 @@ namespace RollbackSupport
     public class HitboxManager
     {
         public static readonly HitboxManager Instance = new HitboxManager();
-        private readonly List<Fighter> fighters = new List<Fighter>();
+        private readonly List<FighterController> fighters = new List<FighterController>();
 
-        public void Register(Fighter f)
+        public void Register(FighterController f)
         {
             if (!fighters.Contains(f)) fighters.Add(f);
         }
@@ -28,7 +28,8 @@ namespace RollbackSupport
                     if (move == null)
                         continue;
 
-                    foreach (var hitbox in attacker.MoveExec.ActiveHitboxes)
+                    foreach (var hitbox in attacker.MoveExec.ActiveHitboxes) 
+                    {
                         foreach (var hurt in defender.Hurtboxes.ActiveBoxes)
                         {
                             if (CollisionBox.Overlaps(hitbox, attacker.transform, hurt, defender.transform))
@@ -50,8 +51,8 @@ namespace RollbackSupport
                                 return;
                             }
                         }
+                    }
                 }
         }
-
     }
 }

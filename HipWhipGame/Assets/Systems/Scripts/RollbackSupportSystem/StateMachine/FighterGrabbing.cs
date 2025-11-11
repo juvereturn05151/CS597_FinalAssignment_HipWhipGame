@@ -16,18 +16,17 @@ namespace RollbackSupport
         public override void OnEnter()
         {
             fighterComponentManager.FighterGrabManager.Grab();
-            fighterComponentManager.Fighter.AnimatorSync.ResetGrabTimers();
+            fighterComponentManager.FighterController.AnimatorSync.ResetGrabTimers();
         }
 
         public override void OnUpdate()
         {
-            //fighterComponentManager.FighterGrabManager.UpdateGrab();
             fighterComponentManager.FighterGrabManager.UpdateGrab();
         }
 
         public override void OnExit()
         {
-            //fighterComponentManager.Animator?.SetBool("Grabbing", false);
+
         }
     }
 }

@@ -17,7 +17,7 @@ public class InputManager : MonoBehaviour
     public void SetFightingComponentManager(FighterComponentManager fighterComponentManager) 
     {
         this.fighterComponentManager = fighterComponentManager;
-        this.fighterComponentManager.Fighter.playerIndex = playerIndex;
+        this.fighterComponentManager.FighterController.playerIndex = playerIndex;
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -27,8 +27,8 @@ public class InputManager : MonoBehaviour
             return;
         }
 
-        fighterComponentManager.Fighter.LastInput.horiz = context.ReadValue<Vector2>().x;
-        fighterComponentManager.Fighter.LastInput.vert = context.ReadValue<Vector2>().y;
+        fighterComponentManager.FighterController.LastInput.horiz = context.ReadValue<Vector2>().x;
+        fighterComponentManager.FighterController.LastInput.vert = context.ReadValue<Vector2>().y;
     }
 
     public void OnButtonEast(InputAction.CallbackContext context)
@@ -57,12 +57,12 @@ public class InputManager : MonoBehaviour
 
         if (context.performed)
         {
-            fighterComponentManager.Fighter.LastInput.light = true;
+            fighterComponentManager.FighterController.LastInput.light = true;
             //fighterComponentManager.FighterInputHandler.PerformPunchFast();
         }
         else if (context.canceled)
         {
-            fighterComponentManager.Fighter.LastInput.light = false;
+            fighterComponentManager.FighterController.LastInput.light = false;
         }
     }
 
@@ -92,12 +92,12 @@ public class InputManager : MonoBehaviour
 
         if (context.performed)
         {
-            fighterComponentManager.Fighter.LastInput.heavy = true;
+            fighterComponentManager.FighterController.LastInput.heavy = true;
             //fighterComponentManager.FighterInputHandler.PerformButtAttackHopKick();
         }
         else if (context.canceled)
         {
-            fighterComponentManager.Fighter.LastInput.heavy = false;
+            fighterComponentManager.FighterController.LastInput.heavy = false;
         }
     }
 
@@ -128,12 +128,12 @@ public class InputManager : MonoBehaviour
         if (context.performed)
         {
             //fighterComponentManager.FighterInputHandler.HoldBlock();
-            fighterComponentManager.Fighter.LastInput.block = true;
+            fighterComponentManager.FighterController.LastInput.block = true;
         }
         else if (context.canceled)
         {
             //fighterComponentManager.FighterInputHandler.ReleaseBlock();
-            fighterComponentManager.Fighter.LastInput.block = false;
+            fighterComponentManager.FighterController.LastInput.block = false;
         }
     }
 
@@ -146,7 +146,7 @@ public class InputManager : MonoBehaviour
 
         if (context.started) 
         {
-            fighterComponentManager.Fighter.LastInput.sidestep = context.ReadValue<Vector2>().x;
+            fighterComponentManager.FighterController.LastInput.sidestep = context.ReadValue<Vector2>().x;
             //fighterComponentManager.FighterInputHandler.OnRightStick(context.ReadValue<Vector2>());
         }
 
@@ -160,12 +160,12 @@ public class InputManager : MonoBehaviour
         }
         if (context.performed)
         {
-            fighterComponentManager.Fighter.LastInput.grab = true;
+            fighterComponentManager.FighterController.LastInput.grab = true;
             //fighterComponentManager.FighterInputHandler.PerformTryGrab();
         }
         else if (context.canceled)
         {
-            fighterComponentManager.Fighter.LastInput.grab = false;
+            fighterComponentManager.FighterController.LastInput.grab = false;
         }
     }
 

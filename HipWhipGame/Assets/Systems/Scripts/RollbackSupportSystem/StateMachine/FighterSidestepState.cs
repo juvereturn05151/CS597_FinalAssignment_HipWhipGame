@@ -1,10 +1,9 @@
 /*
-File Name:    FighterIdleState.cs
+File Name:    FighterSidestepState.cs
 Author(s):    Ju-ve Chankasemporn
 Copyright:    (c) 2025 DigiPen Institute of Technology. All rights reserved.
 */
 
-using UnityEngine;
 namespace RollbackSupport
 {
     public class FighterSidestepState : FighterBaseState
@@ -13,13 +12,11 @@ namespace RollbackSupport
 
         public override void OnEnter()
         {
-            // optional animation flag
-            //fighterComponentManager.Animator?.Play("Sidestep", 0, 0); 
+
         }
 
         public override void OnUpdate() { }
 
         public override void OnExit() { }
     }
-
 }

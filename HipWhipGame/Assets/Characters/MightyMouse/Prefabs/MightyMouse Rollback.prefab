@@ -88,7 +88,7 @@ MonoBehaviour:
   cam: {fileID: 3723754997958721306}
   moveExecutor: {fileID: 8003538907918242849}
   fighterGrabManager: {fileID: 1044645334956613487}
-  fighter: {fileID: 5060805126365526105}
+  fighterController: {fileID: 5060805126365526105}
 --- !u!114 &5060805126365526105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98,7 +98,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7400030421977495981}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38db1a1a9336d4a4285604083bb54ac6, type: 3}
+  m_Script: {fileID: 11500000, guid: 910080536a6f9d7489ef4b3bca3271ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerIndex: 0
@@ -122,6 +122,7 @@ MonoBehaviour:
     size: {x: 0.6, y: 2, z: 0.6}
     enabled: 1
   IsPushedThisFrame: 0
+  isBlocking: 0
   LastInput:
     frame: 0
     horiz: 0
@@ -131,7 +132,6 @@ MonoBehaviour:
     heavy: 0
     grab: 0
     block: 0
-  isBlocking: 0
 --- !u!114 &8003538907918242849
 MonoBehaviour:
   m_ObjectHideFlags: 0

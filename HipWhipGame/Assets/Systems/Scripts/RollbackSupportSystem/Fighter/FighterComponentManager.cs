@@ -5,6 +5,9 @@ namespace RollbackSupport
     public class FighterComponentManager : MonoBehaviour
     {
         [SerializeField]
+        private FighterController fighterController;
+        public FighterController FighterController => fighterController;
+        [SerializeField]
         private Animator animator;
         public Animator Animator => animator;
         [SerializeField]
@@ -23,18 +26,16 @@ namespace RollbackSupport
         private FighterGrabManager fighterGrabManager;
         public FighterGrabManager FighterGrabManager => fighterGrabManager;
 
-        [SerializeField]
-        private Fighter fighter;
-        public Fighter Fighter => fighter;
+
 
         void Awake()
         {
+            if (!fighterController) fighterController = GetComponent<FighterController>();
             if (!animator) animator = GetComponentInChildren<Animator>();
             if (!fighterStateMachine) fighterStateMachine = GetComponent<FighterStateMachine>();
             if (!cam) cam = GetComponentInChildren<Camera>();
             if (!moveExecutor) moveExecutor = GetComponent<MoveExecutor>();
             if (!fighterGrabManager) fighterGrabManager = GetComponent<FighterGrabManager>();
-            if (!fighter) fighter = GetComponent<Fighter>();
 
             foreach (var injectable in GetComponents<IFighterComponentInjectable>())
             {

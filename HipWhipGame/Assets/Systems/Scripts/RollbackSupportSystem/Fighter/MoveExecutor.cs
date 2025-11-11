@@ -7,7 +7,7 @@ namespace RollbackSupport
     public class MoveExecutor : MonoBehaviour, IFighterComponentInjectable
     {
         public FighterComponentManager FighterComponentManager { get; private set; }
-        private Fighter fighter;
+        private FighterController fighter;
         private MoveData currentMove;
         public MoveData CurrentMove => currentMove;
         private int frame;
@@ -22,7 +22,7 @@ namespace RollbackSupport
         private bool sfxPlayed;
         private bool vfxSpawned;
 
-        public void Bind(Fighter f) => fighter = f;
+        public void Bind(FighterController f) => fighter = f;
 
         public void Inject(FighterComponentManager fighterComponentManager)
         {
@@ -113,12 +113,12 @@ namespace RollbackSupport
 
         private void TryGrabOpponent()
         {
-            var opponent = FighterComponentManager.Fighter.lookAtTarget;
-            float dist = Vector3.Distance(fighter.body.position, opponent.GetComponent<Fighter>().body.position);
+            var opponent = FighterComponentManager.FighterController.lookAtTarget;
+            float dist = Vector3.Distance(fighter.body.position, opponent.GetComponent<FighterController>().body.position);
             if (dist <= currentMove.grabRange)
             {
                 executing = false;
-                Debug.Log($"[{fighter.fighterName}] grabbed [{FighterComponentManager.Fighter.fighterName}]!");
+                Debug.Log($"[{fighter.fighterName}] grabbed [{FighterComponentManager.FighterController.fighterName}]!");
                 fighter.FighterComponentManager.FighterGrabManager.SetUpGrabData(currentMove);
                 fighter.FighterComponentManager.FighterStateMachine.SwitchState(FighterState.Grabbing);
 

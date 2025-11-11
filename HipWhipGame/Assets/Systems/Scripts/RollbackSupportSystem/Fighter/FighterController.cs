@@ -7,9 +7,8 @@ namespace RollbackSupport
         BeingGrabbed,
     }
 
-    public class Fighter : MonoBehaviour, IFighterComponentInjectable
+    public class FighterController : MonoBehaviour, IFighterComponentInjectable
     {
-
         public int playerIndex;
         public string fighterName;
         public KinematicBody body = new KinematicBody();
@@ -17,7 +16,7 @@ namespace RollbackSupport
         public DeterministicAnimator AnimatorSync;
         public MoveDatabase moves;
         public Transform lookAtTarget;
-        public GameSimulation gameSimulation;
+
         public HurtboxComponent Hurtboxes = new HurtboxComponent();
         public CollisionBox pushbox = new CollisionBox
         {
@@ -32,16 +31,28 @@ namespace RollbackSupport
         private int hitstunTimer;
         public bool InHitstun => hitstunTimer > 0;
 
+        private Vector3 blockPushVel;
+        private int blockstunTimer;
+        public bool isBlocking;
+        public bool InBlockstun => blockstunTimer > 0;
+
         public InputFrame LastInput;
+
+        private bool isMovable = true;
+
+        public bool IsMovable
+        {
+            get => isMovable;
+            private set => isMovable = value;
+        }
 
         public FighterComponentManager FighterComponentManager { get; private set; }
 
-        public void Initialize(Vector3 start, GameSimulation gameSimulation)
+        public void Initialize()
         {
             MoveExec.Bind(this);
             AnimatorSync.Bind(this);
             Hurtboxes.AddBox(new Vector3(0, 1.0f, 0), new Vector3(0.6f, 2.0f, 0.6f));
-            this.gameSimulation = gameSimulation;
         }
 
         public void Inject(FighterComponentManager fighterComponentManager)
@@ -81,8 +92,6 @@ namespace RollbackSupport
 
         void ProcessMovement()
         {
-
-            // 2. Determine facing direction
             Vector3 forward = transform.forward;
             Vector3 right = transform.right;
 
@@ -90,24 +99,26 @@ namespace RollbackSupport
             {
                 Vector3 dir = lookAtTarget.position - transform.position;
                 dir.y = 0;
-                if (dir.sqrMagnitude > 0.0001f)
+                if (dir.sqrMagnitude > 0.0001f) 
+                {
                     forward = dir.normalized;
+                }
 
                 right = Quaternion.Euler(0, 90f, 0) * forward;
             }
 
-            // 3. Compute input direction
+            // Compute input direction
             Vector3 input = new Vector3(LastInput.horiz, 0f, LastInput.vert);
             if (input.sqrMagnitude > 1f)
                 input.Normalize();
 
             Vector3 moveDir = (forward * input.z + right * input.x).normalized;
 
-            // 4. Apply horizontal movement (fixed per frame, deterministic)
+            // Apply horizontal movement (fixed per frame, deterministic)
             const float movePerFrame = 0.08f;
             body.position += moveDir * movePerFrame;
 
-            // 8. Rotate toward target
+            // Rotate toward target
             if (lookAtTarget)
             {
                 Vector3 face = lookAtTarget.position - transform.position;
@@ -120,7 +131,7 @@ namespace RollbackSupport
                 transform.forward = moveDir;
             }
 
-            // 9. Apply visual transform from rollback body
+            // Apply visual transform from rollback body
             transform.position = body.position;
         }
 
@@ -149,7 +160,6 @@ namespace RollbackSupport
                 MoveExec.StartMove(moves.grab);
                 FighterComponentManager.FighterStateMachine.SwitchState(FighterState.TryGrab);
             }
-
             else if(LastInput.light)
             {
                 MoveExec.StartMove(moves.light);
@@ -198,15 +208,13 @@ namespace RollbackSupport
             }
         }
 
-        private Vector3 blockPushVel;
-        private int blockstunTimer;
-        public bool isBlocking;
+
         public bool IsBlocking()
         {
             return FighterComponentManager.FighterStateMachine.CurrentStateType == FighterState.Block ||
                    FighterComponentManager.FighterStateMachine.CurrentStateType == FighterState.BlockStun;
         }
-        public bool InBlockstun => blockstunTimer > 0;
+
 
         private void HandleBlocking()
         {
@@ -244,20 +252,7 @@ namespace RollbackSupport
             }
         }
 
-        // ================================================================
-        // MOVEMENT CONTROL
-        // ================================================================
-        private bool isMovable = true;
 
-        /// <summary>
-        /// Whether this fighter is currently allowed to move or act.
-        /// Deterministic flag — should only change during rollback-safe events.
-        /// </summary>
-        public bool IsMovable
-        {
-            get => isMovable;
-            private set => isMovable = value;
-        }
 
         /// <summary>
         /// Locks or unlocks the fighter's ability to move and perform actions.

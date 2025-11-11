@@ -13,7 +13,7 @@ namespace RollbackSupport
 
         private MoveData grabData;
 
-        private int grabTimer; // counts frames deterministically
+        private int grabTimer;
 
         public bool IsGrabbing => grabTimer > 0;
 
@@ -29,15 +29,13 @@ namespace RollbackSupport
 
         public void Grab()
         {
-
-
             if (grabbedOpponent == null) 
             {
-                grabbedOpponent = fighterComponentManager.Fighter.lookAtTarget.GetComponent<FighterComponentManager>();
+                grabbedOpponent = fighterComponentManager.FighterController.lookAtTarget.GetComponent<FighterComponentManager>();
             }
 
-            fighterComponentManager.Fighter.SetIsMovable(false);
-            grabbedOpponent.Fighter.SetIsMovable(false);
+            fighterComponentManager.FighterController.SetIsMovable(false);
+            grabbedOpponent.FighterController.SetIsMovable(false);
 
             grabbedOpponent.FighterStateMachine.SwitchState(FighterState.BeingGrabbed);
 
@@ -61,10 +59,10 @@ namespace RollbackSupport
         {
             if (grabbedOpponent != null) 
             {
-                fighterComponentManager.Fighter.SetIsMovable(true);
+                fighterComponentManager.FighterController.SetIsMovable(true);
                 fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Idle);
-                grabbedOpponent.Fighter.SetIsMovable(true);
-                grabbedOpponent.Fighter.TakeHit(grabData, grabData.knockback);
+                grabbedOpponent.FighterController.SetIsMovable(true);
+                grabbedOpponent.FighterController.TakeHit(grabData, grabData.knockback);
                 grabbedOpponent = null;
             }
         }

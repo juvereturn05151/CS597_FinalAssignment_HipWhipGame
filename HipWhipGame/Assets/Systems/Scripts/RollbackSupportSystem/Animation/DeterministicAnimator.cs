@@ -5,7 +5,7 @@ namespace RollbackSupport
     public class DeterministicAnimator : MonoBehaviour
     {
         public Animator animator;
-        private Fighter fighter;
+        private FighterController fighter;
 
         // cache for velocity
         private Vector3 lastFramePos;
@@ -16,7 +16,7 @@ namespace RollbackSupport
         private float hitstunTimer;
         private float blockstunTimer;
 
-        public void Bind(Fighter f)
+        public void Bind(FighterController f)
         {
             fighter = f;
             if (!animator) animator = GetComponentInChildren<Animator>();
@@ -47,8 +47,6 @@ namespace RollbackSupport
             {
                 UpdateBeingGrabbedVisual();
             }
-
-            // --- Block reaction (deterministic) ---
             else if (state == FighterState.BlockStun)
             {
                 UpdateBlockstunVisual();
@@ -57,12 +55,10 @@ namespace RollbackSupport
             {
                 PlayBlockHold();
             }
-            // --- Hit reaction ---
             else if (state == FighterState.Hitstun)
             {
                 UpdateHitstunVisual();
             }
-            // --- Movement and idle ---
             else
             {
                 UpdateMovementBlend();
@@ -183,8 +179,6 @@ namespace RollbackSupport
 
             animator.Play("BeingGrabbed", 0, norm);
         }
-
-        // Called when switching to these states
         public void ResetGrabTimers()
         {
             grabbingTimer = 0f;
