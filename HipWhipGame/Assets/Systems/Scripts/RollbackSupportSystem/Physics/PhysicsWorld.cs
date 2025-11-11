@@ -11,7 +11,10 @@ namespace RollbackSupport
 
         public void Register(KinematicBody body)
         {
-            if (!bodies.Contains(body)) bodies.Add(body);
+            if (!bodies.Contains(body)) 
+            {
+                bodies.Add(body);
+            } 
         }
 
         public void Step()

@@ -89,7 +89,7 @@ namespace RollbackSupport
             {
                 fcm.FighterController.lookAtTarget = activePlayers[0].transform;
                 activePlayers[0].GetComponent<FighterController>().lookAtTarget = fcm.FighterController.transform;
-                simulation.Initialize(activePlayers[0].GetComponent<FighterController>(), fcm.FighterController);
+                simulation.Initialize(activePlayers[0].GetComponent<FighterComponentManager>(), fcm);
             }
 
             activePlayers.Add(playerObj);

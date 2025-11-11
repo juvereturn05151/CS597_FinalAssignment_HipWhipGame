@@ -83,12 +83,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45671e50f0369dc469325a4fc4db1279, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 338579307594028477}
-  fighterStateMachine: {fileID: 2628868656523102296}
-  cam: {fileID: 3723754997958721306}
-  moveExecutor: {fileID: 8003538907918242849}
-  fighterGrabManager: {fileID: 1044645334956613487}
   fighterController: {fileID: 5060805126365526105}
+  fighterStateMachine: {fileID: 2628868656523102296}
+  moveExecutor: {fileID: 8003538907918242849}
+  animator: {fileID: 338579307594028477}
+  deterministicAnimator: {fileID: 7666988433601055934}
+  cam: {fileID: 3723754997958721306}
+  fighterGrabManager: {fileID: 1044645334956613487}
 --- !u!114 &5060805126365526105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,10 +112,8 @@ MonoBehaviour:
     useGravity: 1
     isKinematic: 0
   MoveExec: {fileID: 8003538907918242849}
-  AnimatorSync: {fileID: 7666988433601055934}
   moves: {fileID: 11400000, guid: 4b58da71a39a4a54f97c2aa8c6582ca3, type: 2}
   lookAtTarget: {fileID: 0}
-  gameSimulation: {fileID: 0}
   Hurtboxes:
     boxes: []
   pushbox:

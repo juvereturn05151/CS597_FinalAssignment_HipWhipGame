@@ -2,8 +2,11 @@ using UnityEngine;
 
 namespace RollbackSupport
 {
-    public class DeterministicAnimator : MonoBehaviour
+    [RequireComponent(typeof(FighterComponentManager))]
+    public class DeterministicAnimator : MonoBehaviour, IFighterComponentInjectable
     {
+        private FighterComponentManager fighterComponentManager;
+
         public Animator animator;
         private FighterController fighter;
 
@@ -16,10 +19,15 @@ namespace RollbackSupport
         private float hitstunTimer;
         private float blockstunTimer;
 
-        public void Bind(FighterController f)
+        private float grabbingTimer;
+        private float beingGrabbedTimer;
+
+        public void Inject(FighterComponentManager fighterComponentManager)
         {
-            fighter = f;
-            if (!animator) animator = GetComponentInChildren<Animator>();
+            this.fighterComponentManager = fighterComponentManager;
+
+            fighter = this.fighterComponentManager.FighterController;
+            animator = this.fighterComponentManager.Animator;
 
             animator.updateMode = AnimatorUpdateMode.Normal;
             animator.speed = 0f;
@@ -31,11 +39,11 @@ namespace RollbackSupport
         {
             if (!animator || fighter == null) return;
 
-            var fsm = fighter.FighterComponentManager?.FighterStateMachine;
+            var fsm = fighterComponentManager?.FighterStateMachine;
             var state = fsm?.CurrentStateType ?? FighterState.Idle;
 
             // --- Attack animation ---
-            if (fighter.MoveExec.IsExecuting)
+            if (fighterComponentManager.MoveExecutor.IsExecuting)
             {
                 PlayAttack();
             }
@@ -73,13 +81,17 @@ namespace RollbackSupport
         // ------------------------------------------------------------
         private void PlayAttack()
         {
-            var move = fighter.MoveExec.CurrentMoveName;
-            if (string.IsNullOrEmpty(move)) return;
+            var move = fighterComponentManager.MoveExecutor.CurrentMoveName;
+
+            if (string.IsNullOrEmpty(move)) 
+            {
+                return;
+            } 
 
             var data = fighter.moves.Get(move);
             if (data == null) return;
 
-            float norm = (float)fighter.MoveExec.CurrentFrame / data.totalFrames;
+            float norm = (float)fighterComponentManager.MoveExecutor.CurrentFrame / data.totalFrames;
             animator.Play(move, 0, norm);
         }
 
@@ -152,11 +164,8 @@ namespace RollbackSupport
             animator.Play("BlockStun", 0, norm);
         }
 
+
         public void ResetBlockstunTimer() => blockstunTimer = 0f;
-
-        private float grabbingTimer;
-        private float beingGrabbedTimer;
-
 
         private void UpdateGrabbingVisual()
         {

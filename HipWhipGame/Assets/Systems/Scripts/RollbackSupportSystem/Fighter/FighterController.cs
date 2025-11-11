@@ -9,11 +9,11 @@ namespace RollbackSupport
 
     public class FighterController : MonoBehaviour, IFighterComponentInjectable
     {
+        private FighterComponentManager fighterComponentManager;
+
         public int playerIndex;
         public string fighterName;
         public KinematicBody body = new KinematicBody();
-        public MoveExecutor MoveExec;
-        public DeterministicAnimator AnimatorSync;
         public MoveDatabase moves;
         public Transform lookAtTarget;
 
@@ -46,18 +46,14 @@ namespace RollbackSupport
             private set => isMovable = value;
         }
 
-        public FighterComponentManager FighterComponentManager { get; private set; }
-
         public void Initialize()
         {
-            MoveExec.Bind(this);
-            AnimatorSync.Bind(this);
             Hurtboxes.AddBox(new Vector3(0, 1.0f, 0), new Vector3(0.6f, 2.0f, 0.6f));
         }
 
         public void Inject(FighterComponentManager fighterComponentManager)
         {
-            FighterComponentManager = fighterComponentManager;
+            this.fighterComponentManager = fighterComponentManager;
         }
 
         public void SimulateFrame()
@@ -73,9 +69,9 @@ namespace RollbackSupport
             else if (!IsMovable)
             {
                 // skip movement and input handling if frozen
-                MoveExec.SimulateFrame();
+                fighterComponentManager.MoveExecutor.SimulateFrame();
             }
-            else if (!MoveExec.IsExecuting)
+            else if (!fighterComponentManager.MoveExecutor.IsExecuting)
             {
                 HandleBlocking();
                 HandleSidestep();
@@ -84,7 +80,7 @@ namespace RollbackSupport
             }
             else
             {
-                MoveExec.SimulateFrame();
+                fighterComponentManager.MoveExecutor.SimulateFrame();
             }
 
             transform.position = body.position;
@@ -141,13 +137,13 @@ namespace RollbackSupport
         {
             if (LastInput.sidestep < 0)
             {
-                MoveExec.StartMove(moves.sideStepLeft);
-                FighterComponentManager.FighterStateMachine.SwitchState(FighterState.Sidestep);
+                fighterComponentManager.MoveExecutor.StartMove(moves.sideStepLeft);
+                fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Sidestep);
             }
             else if (LastInput.sidestep > 0)
             {
-                MoveExec.StartMove(moves.sideStepRight);
-                FighterComponentManager.FighterStateMachine.SwitchState(FighterState.Sidestep);
+                fighterComponentManager.MoveExecutor.StartMove(moves.sideStepRight);
+                fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Sidestep);
             }
 
             LastInput.sidestep = 0;
@@ -157,18 +153,18 @@ namespace RollbackSupport
         {
             if (LastInput.grab)
             {
-                MoveExec.StartMove(moves.grab);
-                FighterComponentManager.FighterStateMachine.SwitchState(FighterState.TryGrab);
+                fighterComponentManager.MoveExecutor.StartMove(moves.grab);
+                fighterComponentManager.FighterStateMachine.SwitchState(FighterState.TryGrab);
             }
             else if(LastInput.light)
             {
-                MoveExec.StartMove(moves.light);
-                FighterComponentManager.FighterStateMachine.SwitchState(FighterState.Attack);
+                fighterComponentManager.MoveExecutor.StartMove(moves.light);
+                fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Attack);
             }
             else if (LastInput.heavy) 
             {
-                MoveExec.StartMove(moves.heavy);
-                FighterComponentManager.FighterStateMachine.SwitchState(FighterState.Attack);
+                fighterComponentManager.MoveExecutor.StartMove(moves.heavy);
+                fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Attack);
             } 
         }
 
@@ -187,7 +183,7 @@ namespace RollbackSupport
         {
             hitstunTimer = stunFrames;
             hitVelocity = knockback / stunFrames; // consistent knockback per frame
-            FighterComponentManager.FighterStateMachine.SwitchState(FighterState.Hitstun, stunFrames);
+            fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Hitstun, stunFrames);
         }
 
         public void ApplyRecoil(Vector3 recoil)
@@ -204,15 +200,15 @@ namespace RollbackSupport
             if (hitstunTimer <= 0)
             {
                 hitVelocity = Vector3.zero;
-                FighterComponentManager.FighterStateMachine.SwitchState(FighterState.Idle);
+                fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Idle);
             }
         }
 
 
         public bool IsBlocking()
         {
-            return FighterComponentManager.FighterStateMachine.CurrentStateType == FighterState.Block ||
-                   FighterComponentManager.FighterStateMachine.CurrentStateType == FighterState.BlockStun;
+            return fighterComponentManager.FighterStateMachine.CurrentStateType == FighterState.Block ||
+                   fighterComponentManager.FighterStateMachine.CurrentStateType == FighterState.BlockStun;
         }
 
 
@@ -220,11 +216,11 @@ namespace RollbackSupport
         {
             if (LastInput.block && !InBlockstun && !InHitstun)
             {
-                FighterComponentManager.FighterStateMachine.SwitchState(FighterState.Block);
+                fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Block);
             }
             else if (!LastInput.block)
             {
-                FighterComponentManager.FighterStateMachine.SwitchState(FighterState.Idle);
+                fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Idle);
             }
         }
 
@@ -236,7 +232,7 @@ namespace RollbackSupport
 
             blockstunTimer = move.blockstunFrames;
             //blockPushVel = worldKnock * 0.25f / blockstunTimer; // lighter knockback
-            FighterComponentManager.FighterStateMachine.SwitchState(FighterState.BlockStun, blockstunTimer);
+            fighterComponentManager.FighterStateMachine.SwitchState(FighterState.BlockStun, blockstunTimer);
         }
 
         private void SimulateBlockstun()
@@ -248,7 +244,7 @@ namespace RollbackSupport
             {
                 blockPushVel = Vector3.zero;
                 isBlocking = false;
-                FighterComponentManager.FighterStateMachine.SwitchState(FighterState.Idle);
+                fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Idle);
             }
         }
 

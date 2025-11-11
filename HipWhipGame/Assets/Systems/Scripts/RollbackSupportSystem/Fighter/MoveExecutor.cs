@@ -6,7 +6,7 @@ namespace RollbackSupport
 {
     public class MoveExecutor : MonoBehaviour, IFighterComponentInjectable
     {
-        public FighterComponentManager FighterComponentManager { get; private set; }
+        private FighterComponentManager fighterComponentManager;
         private FighterController fighter;
         private MoveData currentMove;
         public MoveData CurrentMove => currentMove;
@@ -22,11 +22,10 @@ namespace RollbackSupport
         private bool sfxPlayed;
         private bool vfxSpawned;
 
-        public void Bind(FighterController f) => fighter = f;
-
         public void Inject(FighterComponentManager fighterComponentManager)
         {
-            FighterComponentManager = fighterComponentManager;
+            this.fighterComponentManager = fighterComponentManager;
+            fighter = this.fighterComponentManager.FighterController;
         }
 
         public void StartMove(MoveData move)
@@ -107,20 +106,20 @@ namespace RollbackSupport
             if (frame >= currentMove.totalFrames)
             {
                 executing = false;
-                fighter.FighterComponentManager?.FighterStateMachine.SwitchState(FighterState.Idle);
+                fighterComponentManager?.FighterStateMachine.SwitchState(FighterState.Idle);
             }
         }
 
         private void TryGrabOpponent()
         {
-            var opponent = FighterComponentManager.FighterController.lookAtTarget;
+            var opponent = this.fighterComponentManager.FighterController.lookAtTarget;
             float dist = Vector3.Distance(fighter.body.position, opponent.GetComponent<FighterController>().body.position);
             if (dist <= currentMove.grabRange)
             {
                 executing = false;
-                Debug.Log($"[{fighter.fighterName}] grabbed [{FighterComponentManager.FighterController.fighterName}]!");
-                fighter.FighterComponentManager.FighterGrabManager.SetUpGrabData(currentMove);
-                fighter.FighterComponentManager.FighterStateMachine.SwitchState(FighterState.Grabbing);
+                Debug.Log($"[{fighter.fighterName}] grabbed [{this.fighterComponentManager.FighterController.fighterName}]!");
+                fighterComponentManager.FighterGrabManager.SetUpGrabData(currentMove);
+                fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Grabbing);
 
             }
         }

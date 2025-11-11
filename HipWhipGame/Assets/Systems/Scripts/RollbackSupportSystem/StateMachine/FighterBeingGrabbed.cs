@@ -15,7 +15,7 @@ namespace RollbackSupport
 
         public override void OnEnter()
         {
-            fighterComponentManager.FighterController.AnimatorSync.ResetGrabTimers();
+            fighterComponentManager.DeterministicAnimator.ResetGrabTimers();
         }
 
         public override void OnUpdate()

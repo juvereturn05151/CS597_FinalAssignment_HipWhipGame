@@ -32,17 +32,21 @@ namespace RollbackSupport
                 for (int j = i + 1; j < fighters.Count; j++)
                 {
                     var b = fighters[j];
-                    if (TryResolvePair(a, b))
+                    if (TryResolvePair(a, b)) 
+                    {
                         break;
+                    }
                 }
             }
         }
 
         private bool TryResolvePair(FighterController a, FighterController b)
         {
-            if (!a.pushbox.enabled || !b.pushbox.enabled)
+            if (!a.pushbox.enabled || !b.pushbox.enabled) 
+            {
                 return false;
-
+            }
+                
             Bounds A = a.pushbox.ToWorld(a.transform);
             Bounds B = b.pushbox.ToWorld(b.transform);
 

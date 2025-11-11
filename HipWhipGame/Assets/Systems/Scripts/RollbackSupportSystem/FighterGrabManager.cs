@@ -1,5 +1,9 @@
-using HipWhipGame;
-using UnityEditor.Experimental.GraphView;
+/*
+File Name:    FighterGrabManager.cs
+Author(s):    Ju-ve Chankasemporn
+Copyright:    (c) 2025 DigiPen Institute of Technology. All rights reserved.
+*/
+
 using UnityEngine;
 
 namespace RollbackSupport
@@ -14,8 +18,6 @@ namespace RollbackSupport
         private MoveData grabData;
 
         private int grabTimer;
-
-        public bool IsGrabbing => grabTimer > 0;
 
         public void Inject(FighterComponentManager fighterComponentManager)
         {
