@@ -7,9 +7,9 @@ namespace RollbackSupport
         [SerializeField]
         private Animator animator;
         public Animator Animator => animator;
-        //[SerializeField]
-        //private FighterStateMachine fighterStateMachine;
-        //public FighterStateMachine FighterStateMachine => fighterStateMachine;
+        [SerializeField]
+        private FighterStateMachine fighterStateMachine;
+        public FighterStateMachine FighterStateMachine => fighterStateMachine;
         //[SerializeField]
         //private FighterController fighterController;
         //public FighterController FighterController => fighterController;
@@ -36,7 +36,7 @@ namespace RollbackSupport
         void Awake()
         {
             if (!animator) animator = GetComponentInChildren<Animator>();
-            //if (!fighterStateMachine) fighterStateMachine = GetComponent<FighterStateMachine>();
+            if (!fighterStateMachine) fighterStateMachine = GetComponent<FighterStateMachine>();
             //if (!fighterController) fighterController = GetComponent<FighterController>();
             //if (!inputBuffer) inputBuffer = GetComponent<InputBuffer>();
             if (!cam) cam = GetComponentInChildren<Camera>();

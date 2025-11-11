@@ -33,8 +33,9 @@ namespace RollbackSupport
         {
             FrameNumber++;
             fighter1.SimulateFrame();
+            fighter1.FighterComponentManager.FighterStateMachine.Step();
             fighter2.SimulateFrame();
-
+            fighter2.FighterComponentManager.FighterStateMachine.Step();
 
             PhysicsWorld.Instance.Step();
             PushboxManager.Instance.ResolvePush();

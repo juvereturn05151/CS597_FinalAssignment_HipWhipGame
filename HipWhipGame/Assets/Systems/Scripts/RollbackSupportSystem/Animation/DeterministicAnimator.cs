@@ -26,22 +26,30 @@ namespace RollbackSupport
         {
             if (!animator || fighter == null) return;
 
-            // update movement blend only when not attacking
-            if (!fighter.MoveExec.IsExecuting)
+            var fsm = fighter.FighterComponentManager?.FighterStateMachine;
+            var state = fsm?.CurrentStateType ?? FighterState.Idle;
+
+            if (fighter.MoveExec.IsExecuting)
             {
-                UpdateMovementBlend();
-            }
-            else
-            {
-                // attack playback based on frame
+                // attack animation (deterministic frame)
                 var move = fighter.MoveExec.CurrentMoveName;
                 float norm = (float)fighter.MoveExec.CurrentFrame / fighter.moves.Get(move).totalFrames;
                 animator.Play(move, 0, norm);
+            }
+            else if (state == FighterState.Hitstun)
+            {
+                UpdateHitstunVisual();
+            }
+            else
+            {
+                UpdateMovementBlend();
             }
 
             animator.Update(0f);
             lastFramePos = fighter.body.position;
         }
+
+
 
         private float walkAnimTimer;
 
@@ -79,5 +87,21 @@ namespace RollbackSupport
                 animator.Play("Idle", 0, 0f);
             }
         }
+
+        private float hitstunTimer;
+
+        private void UpdateHitstunVisual()
+        {
+            // increment deterministic timer
+            hitstunTimer += 1f / 60f;
+
+            // assume your HitReact clip length is about 0.4s
+            float hitLength = 1.0f;
+            float norm = Mathf.Clamp01(hitstunTimer / hitLength);
+
+            animator.Play("HitStun", 0, norm);
+        }
+
+        public void ResetHitstunTimer() => hitstunTimer = 0f;
     }
 }

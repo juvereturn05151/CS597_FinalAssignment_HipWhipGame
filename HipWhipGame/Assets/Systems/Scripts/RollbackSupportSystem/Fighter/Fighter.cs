@@ -1,16 +1,14 @@
-using HipWhipGame;
 using UnityEngine;
-using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 namespace RollbackSupport
 {
-    public enum FighterState { Idle, Walk, Jump, Attack, Block, Hitstun }
+    public enum FighterState { Idle, Walk, Jump, Attack, Block, Hitstun, TryGrab, Disabled, Sidestep }
 
-    public class Fighter : MonoBehaviour
+    public class Fighter : MonoBehaviour, IFighterComponentInjectable
     {
+
         public int playerIndex;
         public string fighterName;
-        public FighterState State;
         public KinematicBody body = new KinematicBody();
         public MoveExecutor MoveExec;
         public DeterministicAnimator AnimatorSync;
@@ -29,12 +27,19 @@ namespace RollbackSupport
 
         public InputFrame LastInput;
 
+        public FighterComponentManager FighterComponentManager { get; private set; }
+
         public void Initialize(Vector3 start, GameSimulation gameSimulation)
         {
             MoveExec.Bind(this);
             AnimatorSync.Bind(this);
             Hurtboxes.AddBox(new Vector3(0, 1.0f, 0), new Vector3(0.6f, 2.0f, 0.6f));
             this.gameSimulation = gameSimulation;
+        }
+
+        public void Inject(FighterComponentManager fighterComponentManager)
+        {
+            FighterComponentManager = fighterComponentManager;
         }
 
         public void SimulateFrame()
@@ -55,11 +60,11 @@ namespace RollbackSupport
         void ProcessMovement()
         {
             // 1. Blocking logic
-            if (LastInput.block)
-            {
-                State = FighterState.Block;
-                return;
-            }
+            //if (LastInput.block)
+            //{
+            //    State = FighterState.Block;
+            //    return;
+            //}
 
             // 2. Determine facing direction
             Vector3 forward = transform.forward;
@@ -106,14 +111,19 @@ namespace RollbackSupport
 
         void HandleAttacks()
         {
-            if (LastInput.light) MoveExec.StartMove(moves.light);
+            if (LastInput.light) 
+            {
+                MoveExec.StartMove(moves.light); 
+                FighterComponentManager.FighterStateMachine.SwitchState(FighterState.Attack);
+            }
             else if (LastInput.heavy) MoveExec.StartMove(moves.heavy);
         }
 
         public void TakeHit()
         {
             Debug.Log($"[{playerIndex.ToString()}] Took hit!");
-            State = FighterState.Hitstun;
+            const int hitstunFrames = 30; // adjust per move later
+            FighterComponentManager.FighterStateMachine.SwitchState(FighterState.Hitstun, hitstunFrames);
         }
 
 #if UNITY_EDITOR

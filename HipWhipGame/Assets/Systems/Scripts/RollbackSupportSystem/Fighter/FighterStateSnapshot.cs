@@ -16,7 +16,7 @@ namespace RollbackSupport
             {
                 pos = f.body.position,
                 vel = f.body.velocity,
-                state = f.State,
+                state = f.FighterComponentManager.FighterStateMachine.CurrentStateType,
                 moveFrame = f.MoveExec.CurrentFrame,
                 moveName = f.MoveExec.CurrentMoveName
             };
@@ -26,7 +26,7 @@ namespace RollbackSupport
         {
             f.body.position = pos;
             f.body.velocity = vel;
-            f.State = state;
+            f.FighterComponentManager.FighterStateMachine.SwitchState(state);
             f.MoveExec.RestoreMove(moveName, moveFrame);
         }
     }

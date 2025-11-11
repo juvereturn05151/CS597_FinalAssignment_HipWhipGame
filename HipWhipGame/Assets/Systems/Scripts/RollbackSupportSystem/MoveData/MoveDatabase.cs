@@ -7,7 +7,6 @@ namespace RollbackSupport
     public class MoveDatabase : ScriptableObject
     {
         public MoveData light, heavy, grab;
-        public CollisionBox[] hurtboxes;
 
         public MoveData Get(string name)
         {

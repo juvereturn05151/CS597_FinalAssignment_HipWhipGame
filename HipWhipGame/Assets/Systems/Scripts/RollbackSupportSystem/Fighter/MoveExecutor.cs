@@ -24,7 +24,6 @@ namespace RollbackSupport
             currentMove = move;
             frame = 0;
             executing = true;
-            fighter.State = FighterState.Attack;
         }
 
         public void SimulateFrame()
@@ -42,7 +41,6 @@ namespace RollbackSupport
             if (frame >= currentMove.totalFrames)
             {
                 executing = false;
-                fighter.State = FighterState.Idle;
             }
         }
 
