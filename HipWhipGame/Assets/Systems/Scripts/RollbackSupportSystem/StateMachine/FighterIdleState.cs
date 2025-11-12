@@ -4,9 +4,6 @@ Author(s):    Ju-ve Chankasemporn
 Copyright:    (c) 2025 DigiPen Institute of Technology. All rights reserved.
 */
 
-using UnityEngine;
-using static HipWhipGame.Enums;
-
 namespace RollbackSupport
 {
     public class FighterIdleState : FighterBaseState

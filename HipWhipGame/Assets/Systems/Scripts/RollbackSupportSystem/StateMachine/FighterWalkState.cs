@@ -1,12 +1,10 @@
 /*
-File Name:    FighterIdleState.cs
+File Name:    FighterWalkState.cs
 Author(s):    Ju-ve Chankasemporn
 Copyright:    (c) 2025 DigiPen Institute of Technology. All rights reserved.
 */
 
 using UnityEngine;
-using UnityEngine.EventSystems;
-using static HipWhipGame.Enums;
 
 namespace RollbackSupport
 {
