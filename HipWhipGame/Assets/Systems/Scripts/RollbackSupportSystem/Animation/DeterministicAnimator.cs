@@ -67,13 +67,5 @@ namespace RollbackSupport
             float norm = (float)fighterComponentManager.MoveExecutor.CurrentFrame / data.totalFrames;
             animator.Play(move, 0, norm);
         }
-
-        // ------------------------------------------------------------
-        // BLOCK / BLOCKSTUN
-        // ------------------------------------------------------------
-
-
-        
-
     }
 }

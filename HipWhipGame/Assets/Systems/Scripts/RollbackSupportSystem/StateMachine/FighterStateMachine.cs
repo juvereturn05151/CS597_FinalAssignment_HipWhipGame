@@ -20,6 +20,29 @@ namespace RollbackSupport
         public FighterComponentManager FighterComponentManager { get; private set; }
         public FighterState CurrentStateType { get; private set; } = FighterState.Disabled;
 
+        private int maxDurationTimer;
+        public int MaxDurationTimer => maxDurationTimer;
+
+        public void SetMaxDurationTimer(int duration)
+        {
+            maxDurationTimer = duration;
+        }
+
+        public void DecreaseDurationTimer()
+        {
+            if (durationTimer > 0)
+            {
+                durationTimer--;
+            }
+        }
+
+        private int durationTimer;
+        public int DurationTimer => durationTimer;
+        public void SetDurationTimer(int duration)
+        {
+            durationTimer = duration;
+        }
+
         public void Inject(FighterComponentManager fighterComponentManager)
         {
             FighterComponentManager = fighterComponentManager;

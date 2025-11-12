@@ -10,47 +10,36 @@ namespace RollbackSupport
 {
     public class FighterHitstunState : FighterBaseState
     {
-        private int maxHitstunTimer;
-        private int hitstunTimer;
-        private float hitstunAnimTimer;
         public FighterHitstunState(FighterComponentManager fighterComponentManager) : base(fighterComponentManager) { }
 
         public override void OnEnter(int duration = 0)
         {
-            maxHitstunTimer = duration;
-            hitstunTimer = maxHitstunTimer;
-            hitstunAnimTimer = 0;
+            fighterComponentManager.FighterStateMachine.SetMaxDurationTimer(duration);
+            fighterComponentManager.FighterStateMachine.SetDurationTimer(duration);
         }
 
         public override void OnUpdate()
         {
-            //Debug.Log("Hitstun Timer: " + hitstunTimer);
-
-            hitstunTimer--;
-            if (hitstunTimer <= 0)
+            fighterComponentManager.FighterStateMachine.DecreaseDurationTimer();
+            if (fighterComponentManager.FighterStateMachine.DurationTimer <= 0)
             {
                 fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Idle);
             }
         }
 
-        public override void OnExit()
-        {
+        public override void OnExit() { }
 
-        }
-
-        public override void OnUpdateAnimation() 
+        public override void OnUpdateAnimation()
         {
             UpdateHitstunVisual();
         }
 
         private void UpdateHitstunVisual()
         {
-            hitstunAnimTimer += 1f / 60f;
-
-            float clipLength = 1.0f - (1.0f / (float)maxHitstunTimer);
-            float norm = Mathf.Clamp01(hitstunAnimTimer / clipLength);
-
+            // Deterministic frame-based interpolation
+            float norm = 1f - (float)fighterComponentManager.FighterStateMachine.DurationTimer / Mathf.Max(1, fighterComponentManager.FighterStateMachine.MaxDurationTimer);
             fighterComponentManager.Animator.Play("HitStun", 0, norm);
+            fighterComponentManager.Animator.Update(0f);
         }
     }
 }
