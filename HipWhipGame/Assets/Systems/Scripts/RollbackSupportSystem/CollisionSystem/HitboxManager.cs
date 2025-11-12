@@ -49,14 +49,17 @@ namespace RollbackSupport
                 {
                     if (CollisionBox.Overlaps(hitbox, attacker.transform, hurt, defender.transform))
                     {
-                        Debug.Log($"Hit detected! Attacker: {attacker.name}, Defender: {defender.name}, Move: {move.moveName}");
-
                         Vector3 worldKnock = attacker.transform.TransformDirection(move.knockback);
 
                         if (defender.FighterController.IsBlocking())
+                        {
                             defender.FighterController.TakeBlock(move, worldKnock);
-                        else
+                        }
+                        else 
+                        {
                             defender.FighterController.TakeHit(move, worldKnock);
+                        }
+                            
 
                         return;
                     }

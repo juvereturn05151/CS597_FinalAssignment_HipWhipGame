@@ -9,6 +9,17 @@ namespace RollbackSupport
         private readonly List<KinematicBody> bodies = new List<KinematicBody>();
         private const float GravityPerFrame = -0.016f;
 
+        private StageBounds bounds = new StageBounds
+        {
+            min = new Vector3(-12.5f, -0.125f, -12.5f),
+            max = new Vector3(12.5f, 5.375f, 12.5f)
+        };
+
+        public void SetStageBounds(StageBounds newBounds)
+        {
+            bounds = newBounds;
+        }
+
         public void Register(KinematicBody body)
         {
             if (!bodies.Contains(body)) 
@@ -21,19 +32,40 @@ namespace RollbackSupport
         {
             foreach (var b in bodies)
             {
-                if (b.isKinematic) continue;
-                if (b.useGravity) b.velocity.y += GravityPerFrame;
+
+
+                if (b.isKinematic) 
+                {
+                    continue;
+                }
+                if (b.useGravity) 
+                {
+                    b.velocity.y += GravityPerFrame;
+                }
+
                 b.position += b.velocity;
 
-                if (b.position.y < 0)
+                if (bounds.IsOutside(b.position))
                 {
-                    b.position.y = 0;
-                    b.velocity.y = 0;
-                    b.grounded = true;
+                    Debug.Log("Is Outside");
                 }
-                else b.grounded = false;
+                else 
+                {
+                    if (b.position.y < 0)
+                    {
+                        b.position.y = 0;
+                        b.velocity.y = 0;
+                        b.grounded = true;
+                    }
+                    else
+                    {
+                        b.grounded = false;
+                    }
+                }
             }
         }
+
+
     }
 
 }

@@ -1,5 +1,5 @@
 /*
-File Name:    FighterTryGrabState.cs
+File Name:    FighterGrabbing.cs
 Author(s):    Ju-ve Chankasemporn
 Copyright:    (c) 2025 DigiPen Institute of Technology. All rights reserved.
 */
