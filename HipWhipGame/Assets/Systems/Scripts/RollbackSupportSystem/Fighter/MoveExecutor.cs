@@ -43,8 +43,16 @@ namespace RollbackSupport
 
         public void SimulateFrame()
         {
-            if (!executing || currentMove == null)
+            if (!executing || currentMove == null) 
+            {
                 return;
+            }
+
+            if (fighterComponentManager.FighterStateMachine.CurrentStateType == FighterState.Grabbing ||
+                fighterComponentManager.FighterStateMachine.CurrentStateType == FighterState.BeingGrabbed)
+            {
+                return;
+            }
 
             frame++;
             ActiveHitboxes.Clear();
@@ -56,8 +64,10 @@ namespace RollbackSupport
             // Hitbox activation (deterministic frame by frame)
             foreach (var h in currentMove.hitboxes)
             {
-                if (frame >= h.start && frame < h.end)
+                if (frame >= h.start && frame < h.end) 
+                {
                     ActiveHitboxes.Add(h.box);
+                }
             }
 
             // Motion override

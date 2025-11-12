@@ -19,7 +19,7 @@ MonoBehaviour:
   recovery: 40
   hitstunFrames: 15
   blockstunFrames: 10
-  knockback: {x: 0, y: 0, z: 6}
+  knockback: {x: 0, y: 0, z: 3}
   pushbackOnHit: 1.5
   canCancelOnHit: 0
   canCancelOnBlock: 0

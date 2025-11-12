@@ -13,6 +13,7 @@ namespace RollbackSupport
         public override void OnEnter(int duration = 0)
         {
             fighterComponentManager.Animator.Play("Idle", 0, 0f);
+            fighterComponentManager.FighterController.SetIsMovable(true);
         }
 
         public override void OnUpdate()

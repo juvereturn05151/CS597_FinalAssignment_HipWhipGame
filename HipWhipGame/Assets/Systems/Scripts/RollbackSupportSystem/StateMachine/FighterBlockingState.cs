@@ -12,7 +12,7 @@ namespace RollbackSupport
 
         public override void OnEnter(int duration = 0)
         {
-
+            
         }
 
         public override void OnUpdate()

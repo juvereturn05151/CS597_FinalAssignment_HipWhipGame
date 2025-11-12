@@ -4,6 +4,7 @@ Author(s):    Ju-ve Chankasemporn
 Copyright:    (c) 2025 DigiPen Institute of Technology. All rights reserved.
 */
 
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 namespace RollbackSupport
@@ -64,7 +65,8 @@ namespace RollbackSupport
                 fighterComponentManager.FighterController.SetIsMovable(true);
                 fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Idle);
                 grabbedOpponent.FighterController.SetIsMovable(true);
-                grabbedOpponent.FighterController.TakeHit(grabData, grabData.knockback);
+                Vector3 worldKnock = fighterComponentManager.FighterController.transform.TransformDirection(grabData.knockback);
+                grabbedOpponent.FighterController.TakeHit(grabData, worldKnock);
                 grabbedOpponent = null;
             }
         }

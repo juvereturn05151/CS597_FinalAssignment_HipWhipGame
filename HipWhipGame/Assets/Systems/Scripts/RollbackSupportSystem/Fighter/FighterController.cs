@@ -63,8 +63,12 @@ namespace RollbackSupport
             {
                 HandleBlocking();
                 HandleSidestep();
-                ProcessMovement();
-                HandleAttacks();
+
+                if (!LastInput.block) 
+                {
+                    ProcessMovement();
+                    HandleAttacks();
+                }
             }
             else
             {
@@ -138,6 +142,11 @@ namespace RollbackSupport
         public void TakeHit(MoveData move, Vector3 worldKnock)
         {
             if (move == null) 
+            {
+                return;
+            }
+
+            if (fighterComponentManager.FighterStateMachine.CurrentStateType == FighterState.Grabbing) 
             {
                 return;
             }
