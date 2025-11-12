@@ -10,18 +10,22 @@ namespace RollbackSupport
 {
     public class FighterHitstunState : FighterBaseState
     {
+        private int maxHitstunTimer;
         private int hitstunTimer;
         private float hitstunAnimTimer;
         public FighterHitstunState(FighterComponentManager fighterComponentManager) : base(fighterComponentManager) { }
 
         public override void OnEnter(int duration = 0)
         {
-            hitstunTimer = duration;
+            maxHitstunTimer = duration;
+            hitstunTimer = maxHitstunTimer;
             hitstunAnimTimer = 0;
         }
 
         public override void OnUpdate()
         {
+            //Debug.Log("Hitstun Timer: " + hitstunTimer);
+
             hitstunTimer--;
             if (hitstunTimer <= 0)
             {
@@ -31,7 +35,7 @@ namespace RollbackSupport
 
         public override void OnExit()
         {
-            fighterComponentManager.FighterController.SetHitVelocity(Vector3.zero);
+            //fighterComponentManager.FighterController.SetHitVelocity(Vector3.zero);
         }
 
         public override void OnUpdateAnimation() 
@@ -43,7 +47,7 @@ namespace RollbackSupport
         {
             hitstunAnimTimer += 1f / 60f;
 
-            float clipLength = 1.0f;
+            float clipLength = 1.0f - (1.0f / (float)maxHitstunTimer);
             float norm = Mathf.Clamp01(hitstunAnimTimer / clipLength);
 
             fighterComponentManager.Animator.Play("HitStun", 0, norm);

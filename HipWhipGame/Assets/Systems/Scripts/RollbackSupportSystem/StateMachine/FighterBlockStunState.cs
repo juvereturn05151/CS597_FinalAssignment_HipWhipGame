@@ -18,6 +18,7 @@ namespace RollbackSupport
         public override void OnEnter(int duration = 0)
         {
             blockstunTimer = duration;
+            blockstunTimerAnim = 0f;
         }
 
         public override void OnUpdate()
@@ -45,7 +46,7 @@ namespace RollbackSupport
             blockstunTimerAnim += 1f / 60f;
 
             // adjust to match your BlockStun clip duration
-            float clipLength = 0.5f;
+            float clipLength = 1.0f;
             float norm = Mathf.Clamp01(blockstunTimer / clipLength);
 
             fighterComponentManager.Animator.Play("BlockStun", 0, norm);

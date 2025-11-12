@@ -140,14 +140,16 @@ namespace RollbackSupport
             if (move == null) 
             {
                 return;
-            } 
+            }
 
             hitVelocity = worldKnock / move.hitstunFrames;
+
             fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Hitstun, move.hitstunFrames);
         }
 
-        private void SimulateHitstun()
+        public void SimulateHitstun()
         {
+            Debug.Log("Applying Hit Velocity: " + hitVelocity);
             body.position += hitVelocity;
         }
 
