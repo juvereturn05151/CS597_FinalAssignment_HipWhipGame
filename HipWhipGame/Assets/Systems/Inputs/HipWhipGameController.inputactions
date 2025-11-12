@@ -34,27 +34,18 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "ButtonSouth",
-                    "type": "Button",
-                    "id": "66a24346-037c-4fd6-b51d-d2f5e1c6507c",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "ButtonNorth",
-                    "type": "Button",
-                    "id": "efdffab6-385e-46e6-bf68-cf66f26e4192",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "ButtonWest",
                     "type": "Button",
                     "id": "7ec544ed-05bd-4f51-a19e-efa955f56872",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ButtonSouth",
+                    "type": "Button",
+                    "id": "66a24346-037c-4fd6-b51d-d2f5e1c6507c",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -70,9 +61,27 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "ButtonNorth",
+                    "type": "Button",
+                    "id": "efdffab6-385e-46e6-bf68-cf66f26e4192",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "RightShoulder",
                     "type": "Button",
                     "id": "3279c734-d89b-4b04-85cd-817b792864ad",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RightTrigger",
+                    "type": "Button",
+                    "id": "6d8fd55d-78cb-44d1-bf6d-996b10b154cb",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -88,9 +97,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "RightTrigger",
+                    "name": "LeftTrigger",
                     "type": "Button",
-                    "id": "6d8fd55d-78cb-44d1-bf6d-996b10b154cb",
+                    "id": "8f307585-81b9-43f9-b109-f77bc533d403",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -178,7 +187,7 @@
                 {
                     "name": "",
                     "id": "2c783d90-46bc-4422-b34a-ea565a8b2f79",
-                    "path": "<Keyboard>/space",
+                    "path": "<Keyboard>/k",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gameplay;Keyboard&Mouse",
@@ -222,7 +231,7 @@
                 {
                     "name": "",
                     "id": "1c1e8d7e-b8da-41b7-8b67-aff8f28f3f29",
-                    "path": "<Keyboard>/shift",
+                    "path": "<Keyboard>/j",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gameplay;Keyboard&Mouse",
@@ -244,7 +253,7 @@
                 {
                     "name": "",
                     "id": "96ac2c1e-a336-4334-9574-3bc3e6c8383c",
-                    "path": "<Keyboard>/c",
+                    "path": "<Keyboard>/l",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gameplay;Keyboard&Mouse",
@@ -365,7 +374,7 @@
                 {
                     "name": "left",
                     "id": "5b7716a8-08eb-42fd-bf6c-3097b0b7b2bb",
-                    "path": "<Keyboard>/leftArrow",
+                    "path": "<Keyboard>/m",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
@@ -376,7 +385,7 @@
                 {
                     "name": "right",
                     "id": "b70f7d14-7337-4c6f-b9d5-628be3a0c078",
-                    "path": "<Keyboard>/rightArrow",
+                    "path": "<Keyboard>/comma",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
@@ -420,11 +429,33 @@
                 {
                     "name": "",
                     "id": "f34b152c-1f13-4a17-9991-a2ebd61f1ff6",
-                    "path": "<Keyboard>/v",
+                    "path": "<Keyboard>/shift",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gameplay;Keyboard&Mouse",
                     "action": "LeftShoulder",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cd4dfb23-2364-4fd5-a568-d79c3aab2d52",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gameplay;Gamepad",
+                    "action": "LeftTrigger",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3464934c-8ccb-45ba-ae26-1aac7988415a",
+                    "path": "<Keyboard>/ctrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gameplay;Keyboard&Mouse",
+                    "action": "LeftTrigger",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
