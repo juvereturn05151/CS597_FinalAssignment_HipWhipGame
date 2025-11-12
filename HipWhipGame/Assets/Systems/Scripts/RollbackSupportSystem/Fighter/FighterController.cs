@@ -18,13 +18,11 @@ namespace RollbackSupport
         public Transform lookAtTarget;
 
         private Vector3 hitVelocity;
-        private int hitstunTimer;
-        public bool InHitstun => hitstunTimer > 0;
 
-        private Vector3 blockPushVel;
-        private int blockstunTimer;
-        public bool isBlocking;
-        public bool InBlockstun => blockstunTimer > 0;
+        public void SetHitVelocity(Vector3 velocity) 
+        {
+            hitVelocity = velocity;
+        }
 
         public InputFrame LastInput;
 
@@ -48,11 +46,11 @@ namespace RollbackSupport
 
         public void SimulateFrame()
         {
-            if (InHitstun)
+            if (fighterComponentManager.FighterStateMachine.CurrentStateType == FighterState.Hitstun)
             {
                 SimulateHitstun();
             }
-            else if (InBlockstun)
+            else if (fighterComponentManager.FighterStateMachine.CurrentStateType == FighterState.BlockStun)
             {
                 SimulateBlockstun();
             }
@@ -139,34 +137,19 @@ namespace RollbackSupport
 
         public void TakeHit(MoveData move, Vector3 worldKnock)
         {
-            if (move == null) return;
+            if (move == null) 
+            {
+                return;
+            } 
 
-            Debug.Log($"[{fighterName}] Took hit from [{move.moveName}]!");
-
-            // Apply hit reaction
-            ApplyHitReaction(move.hitstunFrames, worldKnock);
-        }
-
-        public void ApplyHitReaction(int stunFrames, Vector3 knockback)
-        {
-            hitstunTimer = stunFrames;
-            hitVelocity = knockback / stunFrames; // consistent knockback per frame
-            fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Hitstun, stunFrames);
+            hitVelocity = worldKnock / move.hitstunFrames;
+            fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Hitstun, move.hitstunFrames);
         }
 
         private void SimulateHitstun()
         {
-            // Apply knockback motion deterministically
             body.position += hitVelocity;
-
-            hitstunTimer--;
-            if (hitstunTimer <= 0)
-            {
-                hitVelocity = Vector3.zero;
-                fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Idle);
-            }
         }
-
 
         public bool IsBlocking()
         {
@@ -174,10 +157,10 @@ namespace RollbackSupport
                    fighterComponentManager.FighterStateMachine.CurrentStateType == FighterState.BlockStun;
         }
 
-
         private void HandleBlocking()
         {
-            if (LastInput.block && !InBlockstun && !InHitstun)
+            if (LastInput.block && fighterComponentManager.FighterStateMachine.CurrentStateType != FighterState.BlockStun
+                && fighterComponentManager.FighterStateMachine.CurrentStateType != FighterState.Hitstun)
             {
                 fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Block);
             }
@@ -189,26 +172,17 @@ namespace RollbackSupport
 
         public void TakeBlock(MoveData move, Vector3 worldKnock)
         {
-            if (move == null) return;
+            if (move == null) 
+            {
+                return;
+            } 
 
-            Debug.Log($"[{fighterName}] Blocked {move.moveName}");
-
-            blockstunTimer = move.blockstunFrames;
-            fighterComponentManager.FighterStateMachine.SwitchState(FighterState.BlockStun, blockstunTimer);
+            fighterComponentManager.FighterStateMachine.SwitchState(FighterState.BlockStun, move.blockstunFrames);
         }
 
         private void SimulateBlockstun()
         {
-            body.position += blockPushVel;
-            blockstunTimer--;
 
-            if (blockstunTimer <= 0)
-            {
-                blockPushVel = Vector3.zero;
-                isBlocking = false;
-                fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Idle);
-            }
         }
-
     }
 }

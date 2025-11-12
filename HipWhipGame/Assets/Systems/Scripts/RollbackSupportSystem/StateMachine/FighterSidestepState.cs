@@ -15,13 +15,19 @@ namespace RollbackSupport
 
         }
 
-        public override void OnUpdate() { }
+        public override void OnUpdate() 
+        {
+        
+        }
 
-        public override void OnExit() { }
+        public override void OnExit() 
+        {
+        
+        }
 
         public override void OnUpdateAnimation()
         {
-
+            fighterComponentManager.DeterministicAnimator.PerformMove();
         }
     }
 }

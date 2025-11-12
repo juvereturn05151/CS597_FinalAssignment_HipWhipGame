@@ -4,6 +4,7 @@ Author(s):    Ju-ve Chankasemporn
 Copyright:    (c) 2025 DigiPen Institute of Technology. All rights reserved.
 */
 
+using UnityEngine;
 using static HipWhipGame.Enums;
 
 namespace RollbackSupport
@@ -20,10 +21,6 @@ namespace RollbackSupport
         public override void OnUpdate()
         {
             // Remain blocking if input held
-            //if (!fighterComponentManager.FighterController.IsBlocking)
-            //{
-            //    stateMachine.SwitchState(FighterState.Idle);
-            //}
         }
 
         public override void OnExit()
@@ -33,7 +30,12 @@ namespace RollbackSupport
 
         public override void OnUpdateAnimation()
         {
+            PlayBlockHold();
+        }
 
+        private void PlayBlockHold()
+        {
+            fighterComponentManager.Animator.Play("HighBlock", 0, 0f);
         }
     }
 }

@@ -5,39 +5,48 @@ Copyright:    (c) 2025 DigiPen Institute of Technology. All rights reserved.
 */
 
 using UnityEngine;
-using static HipWhipGame.Enums;
 
 namespace RollbackSupport
 {
     public class FighterHitstunState : FighterBaseState
     {
+        private int hitstunTimer;
+        private float hitstunAnimTimer;
         public FighterHitstunState(FighterComponentManager fighterComponentManager) : base(fighterComponentManager) { }
 
         public override void OnEnter(int duration = 0)
         {
-            //fighterComponentManager.Animator?.SetBool("Block", false);
-            //fighterComponentManager.Animator?.Play("HitStun", 0, 0f);
-            //fighterComponentManager.FighterController.SetIsInterrupted(true);
-
-            if (fighterComponentManager.DeterministicAnimator)
-                fighterComponentManager.DeterministicAnimator.ResetHitstunTimer();
-        
+            hitstunTimer = duration;
+            hitstunAnimTimer = 0;
         }
 
         public override void OnUpdate()
         {
-            // Wait for timer to expire
+            hitstunTimer--;
+            if (hitstunTimer <= 0)
+            {
+                fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Idle);
+            }
         }
 
         public override void OnExit()
         {
-            // Transition back to idle handled by StateMachine
-            //fighterComponentManager.FighterController.SetIsInterrupted(false);
+            fighterComponentManager.FighterController.SetHitVelocity(Vector3.zero);
         }
 
         public override void OnUpdateAnimation() 
         {
-        
+            UpdateHitstunVisual();
+        }
+
+        private void UpdateHitstunVisual()
+        {
+            hitstunAnimTimer += 1f / 60f;
+
+            float clipLength = 1.0f;
+            float norm = Mathf.Clamp01(hitstunAnimTimer / clipLength);
+
+            fighterComponentManager.Animator.Play("HitStun", 0, norm);
         }
     }
 }

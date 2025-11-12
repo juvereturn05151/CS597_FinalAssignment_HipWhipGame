@@ -17,13 +17,8 @@ namespace RollbackSupport
         private Animator animator;
         private FighterController fighter;
 
-        // cache for velocity
         private Vector3 lastFramePos;
         public Vector3 LastFramePos => lastFramePos;
-
-        // timers for deterministic animation phases
-        private float hitstunTimer;
-        private float blockstunTimer;
 
         public void Inject(FighterComponentManager fighterComponentManager)
         {
@@ -74,43 +69,11 @@ namespace RollbackSupport
         }
 
         // ------------------------------------------------------------
-        // HITSTUN
-        // ------------------------------------------------------------
-        private void UpdateHitstunVisual()
-        {
-            hitstunTimer += 1f / 60f;
-
-            float clipLength = 1.0f;
-            float norm = Mathf.Clamp01(hitstunTimer / clipLength);
-
-            animator.Play("HitStun", 0, norm);
-        }
-
-        public void ResetHitstunTimer() => hitstunTimer = 0f;
-
-        // ------------------------------------------------------------
         // BLOCK / BLOCKSTUN
         // ------------------------------------------------------------
-        private void PlayBlockHold()
-        {
-            // constant pose (doesn't advance)
-            animator.Play("HighBlock", 0, 0f);
-            blockstunTimer = 0f;
-        }
-
-        private void UpdateBlockstunVisual()
-        {
-            blockstunTimer += 1f / 60f;
-
-            // adjust to match your BlockStun clip duration
-            float clipLength = 0.5f;
-            float norm = Mathf.Clamp01(blockstunTimer / clipLength);
-
-            animator.Play("BlockStun", 0, norm);
-        }
 
 
-        public void ResetBlockstunTimer() => blockstunTimer = 0f;
+        
 
     }
 }
