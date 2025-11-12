@@ -27,7 +27,14 @@ namespace RollbackSupport
 
             if (blockstunTimer <= 0)
             {
-                fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Idle);
+                if (fighterComponentManager.FighterController.LastInput.block)
+                {
+                    fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Block);
+                }
+                else 
+                {
+                    fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Idle);
+                }
             }
         }
 
@@ -47,7 +54,7 @@ namespace RollbackSupport
 
             // adjust to match your BlockStun clip duration
             float clipLength = 1.0f;
-            float norm = Mathf.Clamp01(blockstunTimer / clipLength);
+            float norm = Mathf.Clamp01(blockstunTimerAnim / clipLength);
 
             fighterComponentManager.Animator.Play("BlockStun", 0, norm);
         }

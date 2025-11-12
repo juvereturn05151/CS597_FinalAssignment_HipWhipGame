@@ -149,7 +149,6 @@ namespace RollbackSupport
 
         public void SimulateHitstun()
         {
-            Debug.Log("Applying Hit Velocity: " + hitVelocity);
             body.position += hitVelocity;
         }
 

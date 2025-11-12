@@ -35,7 +35,7 @@ namespace RollbackSupport
 
         public override void OnExit()
         {
-            //fighterComponentManager.FighterController.SetHitVelocity(Vector3.zero);
+
         }
 
         public override void OnUpdateAnimation() 
