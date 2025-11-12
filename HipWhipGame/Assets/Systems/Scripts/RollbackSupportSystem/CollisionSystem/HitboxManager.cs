@@ -18,49 +18,51 @@ namespace RollbackSupport
 
         public void CheckHits()
         {
-            for (int i = 0; i < fighters.Count; i++) 
+            for (int i = 0; i < fighters.Count; i++)
             {
                 for (int j = i + 1; j < fighters.Count; j++)
                 {
-                    var attacker = fighters[i];
-                    var defender = fighters[j];
+                    var a = fighters[i];
+                    var b = fighters[j];
 
-                    if (!attacker.MoveExecutor.IsExecuting)
+                    // Check a attacking b
+                    CheckCollisionPair(a, b);
+                    // Check b attacking a
+                    CheckCollisionPair(b, a);
+                }
+            }
+
+        }
+
+        private void CheckCollisionPair(FighterComponentManager attacker, FighterComponentManager defender)
+        {
+            if (!attacker.MoveExecutor.IsExecuting)
+                return;
+
+            var move = attacker.MoveExecutor.CurrentMove;
+            if (move == null)
+                return;
+
+            foreach (var hitbox in attacker.MoveExecutor.ActiveHitboxes)
+            {
+                foreach (var hurt in defender.FighterCollisionComponent.Hurtboxes.ActiveBoxes)
+                {
+                    if (CollisionBox.Overlaps(hitbox, attacker.transform, hurt, defender.transform))
                     {
-                        continue;
-                    }
+                        Debug.Log($"Hit detected! Attacker: {attacker.name}, Defender: {defender.name}, Move: {move.moveName}");
 
+                        Vector3 worldKnock = attacker.transform.TransformDirection(move.knockback);
 
-                    var move = attacker.MoveExecutor.CurrentMove;
-                    if (move == null)
-                    {
-                        continue;
-                    }
+                        if (defender.FighterController.IsBlocking())
+                            defender.FighterController.TakeBlock(move, worldKnock);
+                        else
+                            defender.FighterController.TakeHit(move, worldKnock);
 
-                    foreach (var hitbox in attacker.MoveExecutor.ActiveHitboxes)
-                    {
-                        foreach (var hurt in defender.FighterCollisionComponent.Hurtboxes.ActiveBoxes)
-                        {
-                            if (CollisionBox.Overlaps(hitbox, attacker.transform, hurt, defender.transform))
-                            {
-                                Vector3 worldKnock = attacker.transform.TransformDirection(move.knockback);
-
-                                // --- BLOCK or HIT ---
-                                if (defender.FighterController.IsBlocking())
-                                {
-                                    defender.FighterController.TakeBlock(move, worldKnock);
-                                }
-                                else 
-                                {
-                                    defender.FighterController.TakeHit(move, worldKnock);
-                                }
-
-                                return;
-                            }
-                        }
+                        return;
                     }
                 }
             }
         }
+
     }
 }

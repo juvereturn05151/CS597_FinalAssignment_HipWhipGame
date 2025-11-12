@@ -15,17 +15,17 @@ namespace RollbackSupport
 
         public override void OnEnter(int duration = 0)
         {
-            //fighterComponentManager.Animator?.SetBool("Block", true);
+
         }
 
         public override void OnUpdate()
         {
-            // Remain blocking if input held
+
         }
 
         public override void OnExit()
         {
-            //fighterComponentManager.Animator?.SetBool("Block", false);
+
         }
 
         public override void OnUpdateAnimation()
