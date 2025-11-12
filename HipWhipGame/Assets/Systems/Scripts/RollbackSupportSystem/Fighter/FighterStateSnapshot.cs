@@ -12,6 +12,7 @@ namespace RollbackSupport
 
         public static FighterStateSnapshot From(FighterComponentManager f)
         {
+            //Debug.Log($"Captured {f.name} at {f.transform.position}");
             return new FighterStateSnapshot
             {
                 pos = f.FighterController.body.position,

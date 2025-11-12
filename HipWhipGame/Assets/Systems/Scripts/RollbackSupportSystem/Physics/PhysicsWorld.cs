@@ -47,7 +47,7 @@ namespace RollbackSupport
 
                 if (bounds.IsOutside(b.position))
                 {
-                    Debug.Log("Is Outside");
+                    //Debug.Log("Is Outside");
                 }
                 else 
                 {

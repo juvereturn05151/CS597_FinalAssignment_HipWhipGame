@@ -60,6 +60,7 @@ namespace RollbackSupport
         {
             fighterController.SimulateFrame();
             fighterStateMachine.Step();
+            //Debug.Log($"{fighterController.name} transform={fighterController.transform.position} body={fighterController.body.position}");
         }
 
         public T Require<T>() where T : Component

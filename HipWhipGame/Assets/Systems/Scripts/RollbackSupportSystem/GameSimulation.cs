@@ -12,6 +12,8 @@ namespace RollbackSupport
     {
         private FighterComponentManager fighter1;
         private FighterComponentManager fighter2;
+        public FighterComponentManager GetFighter1() => fighter1;
+        public FighterComponentManager GetFighter2() => fighter2;
         public RollbackManager rollback = new RollbackManager();
         public int FrameNumber { get; private set; }
 

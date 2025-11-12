@@ -1,16 +1,20 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace RollbackSupport
 {
     public class RollbackManager
     {
-        const int BUFFER_SIZE = 300;
+        const int BUFFER_SIZE = 1000000000;
         private readonly Queue<GameStateSnapshot> snapshots = new Queue<GameStateSnapshot>();
 
         public void Push(int frame, GameStateSnapshot snap)
         {
-            if (snapshots.Count >= BUFFER_SIZE)
+            if (snapshots.Count >= BUFFER_SIZE) 
+            {
                 snapshots.Dequeue();
+            }
+
             snapshots.Enqueue(snap);
         }
 
@@ -26,6 +30,12 @@ namespace RollbackSupport
             }
             snap = default;
             return false;
+        }
+
+        // Expose all snapshots for replay
+        public IEnumerable<GameStateSnapshot> GetAllSnapshots()
+        {
+            return snapshots;
         }
     }
 
