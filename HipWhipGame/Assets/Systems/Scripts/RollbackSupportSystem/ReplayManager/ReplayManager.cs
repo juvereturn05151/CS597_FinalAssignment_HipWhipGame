@@ -7,6 +7,7 @@ Copyright:    (c) 2025 DigiPen Institute of Technology. All rights reserved.
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace RollbackSupport
 {
@@ -21,7 +22,7 @@ namespace RollbackSupport
 
         public void PrepareReplay(RollbackManager rollback)
         {
-            // copy all snapshots
+            // Copy all snapshots
             replayFrames = new List<GameStateSnapshot>(rollback.GetAllSnapshots());
             Debug.Log($"Prepared {replayFrames.Count} replay frames");
         }
@@ -35,6 +36,7 @@ namespace RollbackSupport
             }
 
             isReplaying = true;
+            PlayerManager.Instance.SetInputManagersEnabled(false);
             StartCoroutine(PlayReplay());
         }
 
@@ -44,7 +46,19 @@ namespace RollbackSupport
 
             foreach (var snap in replayFrames)
             {
-                snap.Restore(simulation.GetFighter1(), simulation.GetFighter2());
+                var p1 = snap.P1.pos;
+                var p2 = snap.P2.pos;
+
+                Debug.Log(
+                    $"[Replay Dump] Frame {snap.FrameNumber} | " +
+                    $"P1=({p1.x:F2}, {p1.y:F2}, {p1.z:F2}) | " +
+                    $"P2=({p2.x:F2}, {p2.y:F2}, {p2.z:F2}) | " +
+                    $"Move={snap.P1.moveName} ({snap.P1.moveFrame}) / {snap.P2.moveName} ({snap.P2.moveFrame})"
+                );
+
+                simulation.RestoreToSnapshot(snap);
+
+
                 yield return new WaitForSeconds(playbackSpeed);
             }
 

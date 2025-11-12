@@ -6,6 +6,7 @@ namespace RollbackSupport
     public struct FighterStateSnapshot
     {
         public Vector3 pos, vel;
+        public InputFrame lastInput;
         public FighterState state;
         public int moveFrame;
         public string moveName;
@@ -18,6 +19,7 @@ namespace RollbackSupport
                 pos = f.FighterController.body.position,
                 vel = f.FighterController.body.velocity,
                 state = f.FighterStateMachine.CurrentStateType,
+                lastInput = f.FighterController.LastInput,
                 moveFrame = f.MoveExecutor.CurrentFrame,
                 moveName = f.MoveExecutor.CurrentMoveName
             };
@@ -27,8 +29,9 @@ namespace RollbackSupport
         {
             f.FighterController.body.position = pos;
             f.FighterController.body.velocity = vel;
-            f.FighterStateMachine.SwitchState(state);
-            f.MoveExecutor.RestoreMove(moveName, moveFrame);
+            f.FighterController.LastInput = lastInput;
+            //f.FighterStateMachine.SwitchState(state);
+            //f.MoveExecutor.RestoreMove(moveName, moveFrame);
         }
     }
 }

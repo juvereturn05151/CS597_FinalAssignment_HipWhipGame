@@ -114,4 +114,23 @@ public class PlayerManager : MonoBehaviour
     {
         players[i].GetComponent<InputManager>().OnShakeController();
     }
+
+    public void SetInputManagersEnabled(bool enabled)
+    {
+        foreach (var player in players)
+        {
+            if (player == null) continue;
+
+            var inputManager = player.GetComponent<InputManager>();
+            if (inputManager != null)
+            {
+                inputManager.enabled = enabled;
+                Debug.Log($"[InputManager] {(enabled ? "Enabled" : "Disabled")} for Player {player.playerIndex}");
+            }
+            else
+            {
+                Debug.LogWarning($"[InputManager] Missing on Player {player.playerIndex}");
+            }
+        }
+    }
 }

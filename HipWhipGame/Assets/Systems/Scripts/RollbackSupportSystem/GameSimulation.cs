@@ -46,6 +46,33 @@ namespace RollbackSupport
             rollback.Push(FrameNumber, GameStateSnapshot.Capture(FrameNumber, fighter1, fighter2));
         }
 
+        public void RestoreToSnapshot(GameStateSnapshot snap)
+        {
+            // Reset fighters
+            snap.Restore(fighter1, fighter2);
+
+            fighter1.OnUpdate();
+            fighter2.OnUpdate();
+
+            PhysicsWorld.Instance.Step();
+            PushboxManager.Instance.ResolvePush();
+            HitboxManager.Instance.CheckHits();
+
+            // Update visuals
+            fighter1.DeterministicAnimator.ApplyVisuals();
+            fighter2.DeterministicAnimator.ApplyVisuals();
+
+            // Reset frame number
+            FrameNumber = snap.FrameNumber;
+        }
+
+
+        //public void ApplyInput(int frame, FighterInput input1, FighterInput input2)
+        //{
+        //    fighter1.FighterController.SetInputForFrame(frame, input1);
+        //    fighter2.FighterController.SetInputForFrame(frame, input2);
+        //}
+
         public void RollbackTo(int frame)
         {
             if (rollback.TryGetSnapshot(frame, out var snap))
