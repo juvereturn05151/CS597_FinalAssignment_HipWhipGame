@@ -33,11 +33,11 @@ MonoBehaviour:
     frameEnd: 8
     forwardSpeed: 0
     verticalSpeed: 0
-    sideSpeed: -0.3
+    sideSpeed: -0.5
   plusOnHit: 7
   plusOnBlock: 2
   isGrab: 0
   grabRange: 1.2
-  grabDuration: 0.8
+  grabDuration: 0
   grabOffset: {x: 0, y: 0, z: 0}
   grabVictimAnim: 

@@ -37,7 +37,7 @@ MonoBehaviour:
   plusOnHit: -25
   plusOnBlock: -30
   isGrab: 1
-  grabRange: 1.2
+  grabRange: 1
   grabDuration: 60
   grabOffset: {x: 0, y: 0, z: 0}
   grabVictimAnim: 
