@@ -10,22 +10,19 @@ namespace RollbackSupport
 {
     public class FighterBlockStunState : FighterBaseState
     {
-        private int blockstunTimer;
-        private float blockstunTimerAnim;
-
         public FighterBlockStunState(FighterComponentManager fighterComponentManager) : base(fighterComponentManager) { }
 
         public override void OnEnter(int duration = 0)
         {
-            blockstunTimer = duration;
-            blockstunTimerAnim = 0f;
+            fighterComponentManager.FighterStateMachine.SetMaxDurationTimer(duration);
+            fighterComponentManager.FighterStateMachine.SetDurationTimer(duration);
         }
 
         public override void OnUpdate()
         {
-            blockstunTimer--;
+            fighterComponentManager.FighterStateMachine.DecreaseDurationTimer();
 
-            if (blockstunTimer <= 0)
+            if (fighterComponentManager.FighterStateMachine.DurationTimer <= 0)
             {
                 if (fighterComponentManager.FighterController.LastInput.block)
                 {
@@ -50,13 +47,10 @@ namespace RollbackSupport
 
         private void UpdateBlockstunVisual()
         {
-            blockstunTimerAnim += 1f / 60f;
-
-            // adjust to match your BlockStun clip duration
-            float clipLength = 1.0f;
-            float norm = Mathf.Clamp01(blockstunTimerAnim / clipLength);
+            float norm = 1f - (float)fighterComponentManager.FighterStateMachine.DurationTimer / Mathf.Max(1, fighterComponentManager.FighterStateMachine.MaxDurationTimer);
 
             fighterComponentManager.Animator.Play("BlockStun", 0, norm);
+            fighterComponentManager.Animator.Update(0f);
         }
     }
 }
