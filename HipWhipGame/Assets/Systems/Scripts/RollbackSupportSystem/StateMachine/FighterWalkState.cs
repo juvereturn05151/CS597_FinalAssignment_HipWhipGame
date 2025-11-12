@@ -92,6 +92,7 @@ namespace RollbackSupport
             }
             else
             {
+                Debug.Log("Not Move");
                 walkAnimTimer = 0f;
                 fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Idle);
             }

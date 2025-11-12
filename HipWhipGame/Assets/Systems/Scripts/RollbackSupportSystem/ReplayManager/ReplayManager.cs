@@ -49,12 +49,12 @@ namespace RollbackSupport
                 var p1 = snap.P1.pos;
                 var p2 = snap.P2.pos;
 
-                Debug.Log(
-                    $"[Replay Dump] Frame {snap.FrameNumber} | " +
-                    $"P1=({p1.x:F2}, {p1.y:F2}, {p1.z:F2}) | " +
-                    $"P2=({p2.x:F2}, {p2.y:F2}, {p2.z:F2}) | " +
-                    $"Move={snap.P1.moveName} ({snap.P1.moveFrame}) / {snap.P2.moveName} ({snap.P2.moveFrame})"
-                );
+                //Debug.Log(
+                //    $"[Replay Dump] Frame {snap.FrameNumber} | " +
+                //    $"P1=({p1.x:F2}, {p1.y:F2}, {p1.z:F2}) | " +
+                //    $"P2=({p2.x:F2}, {p2.y:F2}, {p2.z:F2}) | " +
+                //    $"Move={snap.P1.moveName} ({snap.P1.moveFrame}) / {snap.P2.moveName} ({snap.P2.moveFrame})"
+                //);
 
                 simulation.RestoreToSnapshot(snap);
 

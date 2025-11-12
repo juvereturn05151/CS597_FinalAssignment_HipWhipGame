@@ -14,6 +14,7 @@ namespace RollbackSupport
         public string animState;
         public int durationTimer;
         public int maxDurationTimer;
+        public bool moveExecuted;
 
         public static FighterStateSnapshot From(FighterComponentManager f)
         {
@@ -33,7 +34,8 @@ namespace RollbackSupport
                     ? f.MoveExecutor.CurrentMoveName
                     : stateInfo.shortNameHash.ToString(),
                 durationTimer = f.FighterStateMachine.DurationTimer,
-                maxDurationTimer = f.FighterStateMachine.MaxDurationTimer
+                maxDurationTimer = f.FighterStateMachine.MaxDurationTimer,
+                moveExecuted = f.MoveExecutor.IsExecuting
             };
 }
 
@@ -46,6 +48,7 @@ namespace RollbackSupport
             f.FighterStateMachine.SetDurationTimer(durationTimer);
             f.FighterStateMachine.SetMaxDurationTimer(maxDurationTimer);
             // Restore animation
+            f.MoveExecutor.SetExecuting(moveExecuted);
             var anim = f.Animator;
             if (!string.IsNullOrEmpty(moveName))
             {
