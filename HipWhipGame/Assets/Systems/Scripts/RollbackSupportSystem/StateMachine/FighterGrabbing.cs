@@ -14,15 +14,19 @@ namespace RollbackSupport
 
         public override void OnEnter(int duration = 0)
         {
-            fighterComponentManager.FighterStateMachine.SetMaxDurationTimer(300);
-            fighterComponentManager.FighterStateMachine.SetDurationTimer(300);
-            fighterComponentManager.FighterGrabManager.Grab();
+            fighterComponentManager.FighterStateMachine.SetMaxDurationTimer(duration);
+            fighterComponentManager.FighterStateMachine.SetDurationTimer(duration);
+            fighterComponentManager.FighterGrabManager.Grab(duration);
         }
 
         public override void OnUpdate()
         {
             fighterComponentManager.FighterStateMachine.DecreaseDurationTimer();
-            fighterComponentManager.FighterGrabManager.UpdateGrab();
+            //fighterComponentManager.FighterGrabManager.UpdateGrab();
+            if (fighterComponentManager.FighterStateMachine.DurationTimer <= 0)
+            {
+                fighterComponentManager.FighterGrabManager.ReleaseGrab();
+            }
         }
 
         public override void OnExit()

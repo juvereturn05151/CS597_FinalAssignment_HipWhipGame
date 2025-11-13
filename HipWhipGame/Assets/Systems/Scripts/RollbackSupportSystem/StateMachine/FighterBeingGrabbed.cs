@@ -14,8 +14,8 @@ namespace RollbackSupport
 
         public override void OnEnter(int duration = 0)
         {
-            fighterComponentManager.FighterStateMachine.SetMaxDurationTimer(300);
-            fighterComponentManager.FighterStateMachine.SetDurationTimer(300);
+            fighterComponentManager.FighterStateMachine.SetMaxDurationTimer(duration);
+            fighterComponentManager.FighterStateMachine.SetDurationTimer(duration);
         }
 
         public override void OnUpdate()

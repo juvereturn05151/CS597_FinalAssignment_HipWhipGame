@@ -30,7 +30,7 @@ namespace RollbackSupport
             this.grabData = grabData;
         }
 
-        public void Grab()
+        public void Grab(int duration)
         {
             if (grabbedOpponent == null) 
             {
@@ -40,9 +40,9 @@ namespace RollbackSupport
             fighterComponentManager.FighterController.SetIsMovable(false);
             grabbedOpponent.FighterController.SetIsMovable(false);
 
-            grabbedOpponent.FighterStateMachine.SwitchState(FighterState.BeingGrabbed);
+            grabbedOpponent.FighterStateMachine.SwitchState(FighterState.BeingGrabbed, duration);
 
-            grabTimer = grabData.grabDuration;
+            grabTimer = duration;
         }
 
         public void UpdateGrab() 

@@ -132,7 +132,7 @@ namespace RollbackSupport
                 executing = false;
                 Debug.Log($"[{fighter.fighterName}] grabbed [{this.fighterComponentManager.FighterController.fighterName}]!");
                 fighterComponentManager.FighterGrabManager.SetUpGrabData(currentMove);
-                fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Grabbing);
+                fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Grabbing, currentMove.grabDuration);
 
             }
         }
