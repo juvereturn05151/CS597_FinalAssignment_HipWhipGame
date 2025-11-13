@@ -70,11 +70,6 @@ namespace RollbackSupport
             {
                 anim.Play(moveName, 0, normalizedTime);
             }
-            else
-            {
-                // play correct idle/walk/block state
-                anim.Play(animState, 0, normalizedTime);
-            }
 
             anim.Update(0f);
         }
