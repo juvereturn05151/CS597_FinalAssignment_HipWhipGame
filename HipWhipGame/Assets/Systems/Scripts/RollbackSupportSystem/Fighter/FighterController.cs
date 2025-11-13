@@ -44,6 +44,12 @@ namespace RollbackSupport
             this.fighterComponentManager = fighterComponentManager;
         }
 
+
+        public void ResetStateForRespawn()
+        {
+            fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Idle);
+        }
+
         public void SimulateFrame()
         {
             if (fighterComponentManager.FighterStateMachine.CurrentStateType == FighterState.Hitstun)

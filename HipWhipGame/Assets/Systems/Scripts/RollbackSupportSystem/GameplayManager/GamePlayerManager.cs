@@ -76,6 +76,7 @@ namespace RollbackSupport
             GameObject playerObj = Instantiate(playerPrefab, spawn.position, spawn.rotation);
 
             FighterComponentManager fcm = playerObj.GetComponent<FighterComponentManager>();
+            fcm.SetSpawnPoint(spawnPoints[index].position);
             var inputManager = playerInput.GetComponent<InputManager>();
             if (inputManager != null)
             {
@@ -89,6 +90,7 @@ namespace RollbackSupport
             {
                 fcm.FighterController.lookAtTarget = activePlayers[0].transform;
                 activePlayers[0].GetComponent<FighterController>().lookAtTarget = fcm.FighterController.transform;
+
                 simulation.Initialize(activePlayers[0].GetComponent<FighterComponentManager>(), fcm);
             }
 

@@ -33,14 +33,13 @@ namespace RollbackSupport
         private Camera cam;
         public Camera Cam => cam;
         [SerializeField]
-        private InputBuffer inputBuffer;
-        public InputBuffer InputBuffer => inputBuffer;
-        [SerializeField]
         private FighterGrabManager fighterGrabManager;
         public FighterGrabManager FighterGrabManager => fighterGrabManager;
-
-
-
+        private Vector3 spawnPoint;
+        public void SetSpawnPoint(Vector3 spawnPoint) 
+        {
+            this.spawnPoint = spawnPoint;
+        }
 
         private void Awake()
         {
@@ -63,7 +62,13 @@ namespace RollbackSupport
         {
             fighterController.SimulateFrame();
             fighterStateMachine.Step();
-            //Debug.Log($"{fighterController.name} transform={fighterController.transform.position} body={fighterController.body.position}");
+        }
+
+        public void ResetStateForRespawn()
+        {
+            fighterController.body.velocity = Vector3.zero;
+            fighterController.body.position = spawnPoint;
+            fighterStateMachine.SwitchState(FighterState.Idle);
         }
 
         public T Require<T>() where T : Component

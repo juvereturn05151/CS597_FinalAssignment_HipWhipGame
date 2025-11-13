@@ -5,6 +5,9 @@ Copyright:    (c) 2025 DigiPen Institute of Technology. All rights reserved.
 */
 
 using UnityEngine;
+using UnityEngine.InputSystem;
+using static UnityEngine.InputSystem.HID.HID;
+using static UnityEngine.Rendering.DebugUI;
 
 namespace RollbackSupport
 {
@@ -47,6 +50,21 @@ namespace RollbackSupport
             if (simulation.matchState.isGameOver)
             {
                 matchUI.ShowGameOver(simulation.matchState.winnerIndex);
+
+                if (Keyboard.current != null && Keyboard.current.enterKey.isPressed)
+                {
+                    matchUI.Hide();
+                    simulation.Reset();
+                }
+
+                foreach (var gamepad in Gamepad.all)
+                {
+                    if (gamepad.startButton.wasPressedThisFrame)
+                    {
+                        matchUI.Hide();
+                        simulation.Reset();
+                    }
+                }
                 //isRunning = false;
             }
         }
