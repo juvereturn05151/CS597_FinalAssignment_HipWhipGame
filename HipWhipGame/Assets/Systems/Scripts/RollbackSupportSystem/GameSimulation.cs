@@ -19,12 +19,16 @@ namespace RollbackSupport
         public MatchState matchState = new MatchState();
         public int FrameNumber { get; private set; }
 
+        private bool roundOver = false;
+        public bool IsRoundOver() => roundOver;
+
+
         public void Initialize(FighterComponentManager fighter1, FighterComponentManager fighter2)
         {
             this.fighter1 = fighter1;
             this.fighter2 = fighter2;
 
-            matchState.Initialize(1);
+            matchState.Initialize(3);
 
             PhysicsWorld.Instance.Register(this.fighter1.FighterController.body);
             PhysicsWorld.Instance.Register(this.fighter2.FighterController.body);
@@ -69,7 +73,6 @@ namespace RollbackSupport
 
             if (PhysicsWorld.Instance.GetStageBounds().IsOutside(fighter1.FighterController.body.position)) 
             {
-                Debug.Log("Player 1 Fell");
                 OnPlayerFall(0);
             }
             else if (PhysicsWorld.Instance.GetStageBounds().IsOutside(fighter2.FighterController.body.position)) 
@@ -94,8 +97,24 @@ namespace RollbackSupport
 
             // Respawn logic
             //var f = (playerIndex == 0 ? fighter1 : fighter2);
-            fighter1.ResetStateForRespawn();
-            fighter2.ResetStateForRespawn();
+            SetRoundOver(true);
+        }
+
+        public void SetRoundOver(bool setter) 
+        {
+            roundOver = setter;
+            
+            if (!roundOver) 
+            {
+                fighter1.ResetStateForRespawn();
+                fighter2.ResetStateForRespawn();
+            }
+        }
+
+        public void ResetForReplay() 
+        {
+            fighter1.ResetForReplay();
+            fighter2.ResetForReplay();
         }
 
         public void RestoreToSnapshot(GameStateSnapshot snap)

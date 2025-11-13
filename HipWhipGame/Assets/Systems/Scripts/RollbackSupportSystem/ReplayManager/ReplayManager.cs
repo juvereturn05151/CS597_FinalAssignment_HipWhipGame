@@ -7,7 +7,6 @@ Copyright:    (c) 2025 DigiPen Institute of Technology. All rights reserved.
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace RollbackSupport
 {
@@ -19,6 +18,7 @@ namespace RollbackSupport
 
         private List<GameStateSnapshot> replayFrames;
         private bool isReplaying;
+        public bool IsReplaying => isReplaying;
 
         public void PrepareReplay(RollbackManager rollback)
         {
@@ -65,7 +65,5 @@ namespace RollbackSupport
             isReplaying = false;
             Debug.Log("Replay finished.");
         }
-
-        public bool IsReplaying() => isReplaying;
     }
 }

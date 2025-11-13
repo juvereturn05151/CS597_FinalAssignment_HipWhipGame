@@ -41,24 +41,44 @@ namespace RollbackSupport
 
         public void ApplyTo(FighterComponentManager f)
         {
+            // 1. Restore body
             f.FighterController.body.position = pos;
             f.FighterController.body.velocity = vel;
+
+            // 2. Restore inputs BEFORE logic
             f.FighterController.LastInput = lastInput;
+
+            // 3. Restore state machine (state + timers)
             f.FighterStateMachine.SwitchState(state);
             f.FighterStateMachine.SetDurationTimer(durationTimer);
             f.FighterStateMachine.SetMaxDurationTimer(maxDurationTimer);
-            // Restore animation
-            f.MoveExecutor.SetExecuting(moveExecuted);
-            var anim = f.Animator;
-            if (!string.IsNullOrEmpty(moveName))
+
+            // 4. Restore move executor START/STOP
+            if (!moveExecuted)
             {
-                anim.Play(moveName, 0, normalizedTime);
-                anim.Update(0f);
+                f.MoveExecutor.ForceStop();
+            }
+            else
+            {
+                f.MoveExecutor.ForceStart(moveName, moveFrame);
             }
 
-            // Restore move executor logical progress
-            f.MoveExecutor.RestoreMove(moveName, moveFrame);
+            // 5. Restore animation AFTER logical state
+            var anim = f.Animator;
+
+            if (moveExecuted && !string.IsNullOrEmpty(moveName))
+            {
+                anim.Play(moveName, 0, normalizedTime);
+            }
+            else
+            {
+                // play correct idle/walk/block state
+                anim.Play(animState, 0, normalizedTime);
+            }
+
+            anim.Update(0f);
         }
+
     }
 
 }

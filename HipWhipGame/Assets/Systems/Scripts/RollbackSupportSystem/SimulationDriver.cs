@@ -6,8 +6,6 @@ Copyright:    (c) 2025 DigiPen Institute of Technology. All rights reserved.
 
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static UnityEngine.InputSystem.HID.HID;
-using static UnityEngine.Rendering.DebugUI;
 
 namespace RollbackSupport
 {
@@ -29,11 +27,10 @@ namespace RollbackSupport
 
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.R))
+            if (!isRunning && !replayManager.IsReplaying) 
             {
-                isRunning = false;
-                replayManager.PrepareReplay(simulation.rollback);
-                replayManager.StartReplay();
+                isRunning = true;
+                simulation.SetRoundOver(false);
             }
 
             if (!isRunning)
@@ -66,6 +63,13 @@ namespace RollbackSupport
                     }
                 }
                 //isRunning = false;
+            } 
+            else if (simulation.IsRoundOver()) 
+            {
+                isRunning = false;
+                simulation.ResetForReplay();
+                replayManager.PrepareReplay(simulation.rollback);
+                replayManager.StartReplay();
             }
         }
     }

@@ -153,6 +153,29 @@ namespace RollbackSupport
             }
         }
 
+        public void ForceStart(string moveName, int frame)
+        {
+            if (string.IsNullOrEmpty(moveName))
+            {
+                executing = false;
+                currentMove = null;
+                this.frame = 0;
+                return;
+            }
+
+            currentMove = fighterComponentManager.FighterController.moves.Get(moveName);
+            this.frame = frame;
+            executing = true;
+        }
+
+        public void ForceStop()
+        {
+            executing = false;
+            currentMove = null;
+            frame = 0;
+        }
+
+
 #if UNITY_EDITOR
         void OnDrawGizmos()
         {

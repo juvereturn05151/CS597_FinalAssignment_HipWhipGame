@@ -71,6 +71,12 @@ namespace RollbackSupport
             fighterStateMachine.SwitchState(FighterState.Idle);
         }
 
+        public void ResetForReplay() 
+        {
+            fighterController.body.velocity = Vector3.zero;
+            fighterStateMachine.SwitchState(FighterState.Idle);
+        }
+
         public T Require<T>() where T : Component
         {
             var comp = GetComponent<T>();
