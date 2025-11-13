@@ -14,13 +14,17 @@ namespace RollbackSupport
         private FighterComponentManager fighter2;
         public FighterComponentManager GetFighter1() => fighter1;
         public FighterComponentManager GetFighter2() => fighter2;
+
         public RollbackManager rollback = new RollbackManager();
+        public MatchState matchState = new MatchState();
         public int FrameNumber { get; private set; }
 
         public void Initialize(FighterComponentManager fighter1, FighterComponentManager fighter2)
         {
             this.fighter1 = fighter1;
             this.fighter2 = fighter2;
+
+            matchState.Initialize(3);
 
             PhysicsWorld.Instance.Register(this.fighter1.FighterController.body);
             PhysicsWorld.Instance.Register(this.fighter2.FighterController.body);
@@ -33,6 +37,7 @@ namespace RollbackSupport
         public void Step()
         {
             FrameNumber++;
+
             fighter1.OnUpdate();
             fighter2.OnUpdate();
 
@@ -40,16 +45,55 @@ namespace RollbackSupport
             PushboxManager.Instance.ResolvePush();
             HitboxManager.Instance.CheckHits();
 
+            CheckFalls();
+
             fighter1.DeterministicAnimator.ApplyVisuals();
             fighter2.DeterministicAnimator.ApplyVisuals();
 
-            rollback.Push(FrameNumber, GameStateSnapshot.Capture(FrameNumber, fighter1, fighter2));
+            rollback.Push(FrameNumber, GameStateSnapshot.Capture(FrameNumber, fighter1, fighter2, matchState));
+        }
+
+        private void CheckFalls()
+        {
+            if (matchState.isGameOver)
+            {
+                return;
+            }
+
+            if (PhysicsWorld.Instance.GetStageBounds().IsOutside(fighter1.FighterController.body.position)) 
+            {
+                OnPlayerFall(0);
+            }
+            else if (PhysicsWorld.Instance.GetStageBounds().IsOutside(fighter2.FighterController.body.position)) 
+            {
+                OnPlayerFall(1);
+            }
+        }
+
+        private void OnPlayerFall(int playerIndex)
+        {
+            if (matchState.isGameOver)
+                return;
+
+            matchState.lives[playerIndex]--;
+
+            if (matchState.lives[playerIndex] <= 0)
+            {
+                matchState.isGameOver = true;
+                matchState.winnerIndex = (playerIndex == 0 ? 1 : 0);
+                return;
+            }
+
+            // Respawn logic
+            var f = (playerIndex == 0 ? fighter1 : fighter2);
+            f.FighterController.body.Teleport(new Vector3(0, 10, 0));
+            //f.ResetStateForRespawn();
         }
 
         public void RestoreToSnapshot(GameStateSnapshot snap)
         {
             // Reset fighters
-            snap.Restore(fighter1, fighter2);
+            snap.Restore(fighter1, fighter2, matchState);
 
             fighter1.OnUpdate();
             fighter2.OnUpdate();
@@ -66,19 +110,11 @@ namespace RollbackSupport
             FrameNumber = snap.FrameNumber;
         }
 
-
-        //public void ApplyInput(int frame, FighterInput input1, FighterInput input2)
-        //{
-        //    fighter1.FighterController.SetInputForFrame(frame, input1);
-        //    fighter2.FighterController.SetInputForFrame(frame, input2);
-        //}
-
         public void RollbackTo(int frame)
         {
             if (rollback.TryGetSnapshot(frame, out var snap))
             {
-                snap.Restore(fighter1, fighter2);
-                FrameNumber = frame;
+                RestoreToSnapshot(snap);
             }
         }
     }

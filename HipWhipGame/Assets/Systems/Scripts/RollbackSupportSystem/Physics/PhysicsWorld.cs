@@ -12,13 +12,15 @@ namespace RollbackSupport
         private StageBounds bounds = new StageBounds
         {
             min = new Vector3(-12.5f, -0.125f, -12.5f),
-            max = new Vector3(12.5f, 5.375f, 12.5f)
+            max = new Vector3(12.5f, 20.0f, 12.5f)
         };
 
         public void SetStageBounds(StageBounds newBounds)
         {
             bounds = newBounds;
         }
+
+        public StageBounds GetStageBounds() => bounds;
 
         public void Register(KinematicBody body)
         {

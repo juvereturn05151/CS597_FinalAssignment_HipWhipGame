@@ -62,10 +62,9 @@ public class ControllerAssignmentUI : MonoBehaviour
 
     private void LoadGameScene()
     {
-        Debug.Log("Loading game scene...");
-
         if (PlayerManager.Instance.PlayerCount == 2) 
         {
+            Debug.Log("Loading game scene...");
             SceneManager.LoadScene(gameSceneName);
         }
     }

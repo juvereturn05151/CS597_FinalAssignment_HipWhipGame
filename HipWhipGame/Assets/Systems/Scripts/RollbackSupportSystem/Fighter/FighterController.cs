@@ -72,7 +72,6 @@ namespace RollbackSupport
             }
             else
             {
-                Debug.Log("IsExecuting");
                 fighterComponentManager.MoveExecutor.SimulateFrame();
             }
 
@@ -99,7 +98,6 @@ namespace RollbackSupport
             Vector3 input = new Vector3(LastInput.horiz, 0f, LastInput.vert);
             if (input.sqrMagnitude > 0f)
             {
-                Debug.Log("Walking");
                 fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Walk);
             }
         }

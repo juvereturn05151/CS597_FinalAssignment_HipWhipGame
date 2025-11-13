@@ -12,6 +12,8 @@ namespace RollbackSupport
     {
         public GameSimulation simulation;
         public ReplayManager replayManager;
+        public MatchUI matchUI;
+
         const float FRAME_DURATION = 1f / 60f;
         float accumulator;
         bool isRunning = true;
@@ -24,7 +26,6 @@ namespace RollbackSupport
 
         void Update()
         {
-            // Start replay manually (for testing)
             if (Input.GetKeyDown(KeyCode.R))
             {
                 isRunning = false;
@@ -32,13 +33,21 @@ namespace RollbackSupport
                 replayManager.StartReplay();
             }
 
-            if (!isRunning) return;
+            if (!isRunning)
+                return;
 
             accumulator += Time.unscaledDeltaTime;
             while (accumulator >= FRAME_DURATION)
             {
                 simulation.Step();
                 accumulator -= FRAME_DURATION;
+            }
+
+            // NOT deterministic — UI logic
+            if (simulation.matchState.isGameOver)
+            {
+                matchUI.ShowGameOver(simulation.matchState.winnerIndex);
+                //isRunning = false;
             }
         }
     }
