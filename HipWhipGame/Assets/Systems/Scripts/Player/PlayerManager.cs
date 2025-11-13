@@ -53,7 +53,15 @@ public class PlayerManager : MonoBehaviour
 
     public void RegisterPlayer(PlayerInput playerInput)
     {
-        if (playerInput == null) return;
+        if (!CanRegisterMorePlayers()) 
+        {
+            return;
+        }
+
+        if (playerInput == null) 
+        {
+            return;
+        }
 
         playerInput.gameObject.transform.parent = this.transform;
         players.Add(playerInput);

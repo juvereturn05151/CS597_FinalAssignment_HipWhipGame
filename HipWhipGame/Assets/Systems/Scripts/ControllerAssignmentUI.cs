@@ -23,8 +23,10 @@ public class ControllerAssignmentUI : MonoBehaviour
         // Initialize slots
         for (int i = 0; i < playerSlots.Count; i++)
         {
-            if (playerSlots[i].status != null)
+            if (playerSlots[i].status != null) 
+            {
                 playerSlots[i].status.text = "Press Button to Join";
+            }   
         }
 
         PlayerManager.Instance.OnPlayerRegistered += OnPlayerJoined;
@@ -61,7 +63,11 @@ public class ControllerAssignmentUI : MonoBehaviour
     private void LoadGameScene()
     {
         Debug.Log("Loading game scene...");
-        SceneManager.LoadScene(gameSceneName);
+
+        if (PlayerManager.Instance.PlayerCount == 2) 
+        {
+            SceneManager.LoadScene(gameSceneName);
+        }
     }
 
     private void OnPlayerJoined(PlayerInput playerInput)

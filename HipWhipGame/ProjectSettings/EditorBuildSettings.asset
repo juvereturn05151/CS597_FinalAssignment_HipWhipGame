@@ -9,9 +9,6 @@ EditorBuildSettings:
     path: Assets/Systems/Scenes/ControllerAssignment.unity
     guid: ffe8722c9343375499d4d9182117a4a3
   - enabled: 1
-    path: Assets/Systems/Scenes/Playground.unity
-    guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
     path: Assets/Systems/Scenes/PlaygroundRollback.unity
     guid: d1ad205c09d27fc47b3bfaf0808594f0
   m_configObjects:
