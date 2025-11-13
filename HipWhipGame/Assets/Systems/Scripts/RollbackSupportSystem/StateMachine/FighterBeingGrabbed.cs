@@ -10,17 +10,17 @@ namespace RollbackSupport
 {
     public class FighterBeingGrabbed : FighterBaseState
     {
-        private float beingGrabbedTimer;
         public FighterBeingGrabbed(FighterComponentManager fighterComponentManager) : base(fighterComponentManager) { }
 
         public override void OnEnter(int duration = 0)
         {
-            beingGrabbedTimer = 0.0f;
+            fighterComponentManager.FighterStateMachine.SetMaxDurationTimer(300);
+            fighterComponentManager.FighterStateMachine.SetDurationTimer(300);
         }
 
         public override void OnUpdate()
         {
-
+            fighterComponentManager.FighterStateMachine.DecreaseDurationTimer();
         }
 
         public override void OnExit()
@@ -35,13 +35,9 @@ namespace RollbackSupport
 
         private void UpdateBeingGrabbedVisual()
         {
-            beingGrabbedTimer += 1f / 60f;
-
-            // assume your BeingGrabbed animation lasts about 1 second
-            float clipLength = 1.0f;
-            float norm = Mathf.Clamp01(beingGrabbedTimer / clipLength);
-
+            float norm = 1f - (float)fighterComponentManager.FighterStateMachine.DurationTimer / Mathf.Max(1, fighterComponentManager.FighterStateMachine.MaxDurationTimer);
             fighterComponentManager.Animator.Play("BeingGrabbed", 0, norm);
+            fighterComponentManager.Animator.Update(0f);
         }
     }
 }
