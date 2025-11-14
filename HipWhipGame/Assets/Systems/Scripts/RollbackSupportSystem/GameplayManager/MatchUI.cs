@@ -14,6 +14,9 @@ public class MatchUI : MonoBehaviour
 {
     public GameObject panel;
     public TextMeshProUGUI winnerText;
+    [SerializeField]
+    private GameObject replayPanel;
+    public GameObject ReplayPanel => replayPanel;
 
     public void ShowGameOver(int winner)
     {
@@ -25,4 +28,6 @@ public class MatchUI : MonoBehaviour
     {
         panel.SetActive(false);
     }
+
+
 }
