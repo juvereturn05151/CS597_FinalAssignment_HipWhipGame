@@ -32,6 +32,7 @@ namespace RollbackSupport
                 isRunning = true;
                 simulation.SetRoundOver(false);
                 matchUI.ReplayPanel.SetActive(false);
+                matchUI.GroupPlayerUI.SetActive(true);
             }
 
             if (!isRunning)
@@ -71,6 +72,7 @@ namespace RollbackSupport
                 replayManager.PrepareReplay(simulation.rollback);
                 replayManager.StartReplay();
                 matchUI.ReplayPanel.SetActive(true);
+                matchUI.GroupPlayerUI.SetActive(false);
             }
         }
     }

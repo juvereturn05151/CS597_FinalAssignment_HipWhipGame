@@ -27,6 +27,10 @@ public class MatchUI : MonoBehaviour
     private FighterUI fighterUI2;
     public FighterUI FighterUI2 => fighterUI2;
 
+    [SerializeField]
+    private GameObject groupPlayerUI;
+    public GameObject GroupPlayerUI => groupPlayerUI;
+
     public void ShowGameOver(int winner)
     {
         gameOverPanel.SetActive(true);
