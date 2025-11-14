@@ -130,7 +130,7 @@ public class InputManager : MonoBehaviour
         }
         else if (context.canceled)
         {
-            fighterComponentManager.FighterController.LastInput.block = false;
+            
         }
     }
 
@@ -180,13 +180,86 @@ public class InputManager : MonoBehaviour
         }
     }
 
+
+
+    #region ForMotionInput
+
+    private bool jab;
+    private bool buttAttack;
+    private bool wiggleLeft;
+    private bool wiggleRight;
+
     public void OnShakeController()
     {
-        //if (sumo == null)
-        //{
-        //    return;
-        //}
-
-        //sumo.TryAttack();
+        if (fighterComponentManager == null) return;
+        jab = true;
     }
+
+    public void OnWiggleYourButt()
+    {
+        if (fighterComponentManager == null) return;
+        buttAttack = true;
+    }
+
+    public void OnWiggleYourButtLeft()
+    {
+        if (fighterComponentManager == null) return;
+        wiggleLeft = true;
+    }
+
+    public void OnWiggleYourButtRight()
+    {
+        if (fighterComponentManager == null) return;
+        wiggleRight = true;
+    }
+
+    private void LateUpdate()
+    {
+        if (fighterComponentManager == null) return;
+
+
+        if (jab)
+        {
+            fighterComponentManager.FighterController.LastInput.light = true;
+            jab = false;
+        }
+        else
+        {
+            fighterComponentManager.FighterController.LastInput.light = false;
+        }
+
+        if (buttAttack)
+        {
+            fighterComponentManager.FighterController.LastInput.heavy = true;
+            buttAttack = false;
+        }
+        else
+        {
+            fighterComponentManager.FighterController.LastInput.heavy = false;
+        }
+
+        if (wiggleLeft)
+        {
+            fighterComponentManager.FighterController.LastInput.heavy = true;
+            fighterComponentManager.FighterController.LastInput.sidestep = -1f;
+        }
+        else
+        {
+            fighterComponentManager.FighterController.LastInput.heavy = false;
+        }
+
+        if (wiggleRight)
+        {
+            fighterComponentManager.FighterController.LastInput.heavy = true;
+            fighterComponentManager.FighterController.LastInput.sidestep = 1f;
+        }
+        else
+        {
+            fighterComponentManager.FighterController.LastInput.heavy = false;
+        }
+    }
+
+    #endregion
+
+
 }
