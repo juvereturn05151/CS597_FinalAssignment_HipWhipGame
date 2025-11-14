@@ -12,21 +12,24 @@ using static UnityEngine.InputSystem.HID.HID;
 
 public class MatchUI : MonoBehaviour
 {
-    public GameObject panel;
-    public TextMeshProUGUI winnerText;
+    [SerializeField]
+    private GameObject gameOverPanel;
+    public GameObject GameOverPanel => gameOverPanel;
+    [SerializeField]
+    private TextMeshProUGUI winnerText;
     [SerializeField]
     private GameObject replayPanel;
     public GameObject ReplayPanel => replayPanel;
 
     public void ShowGameOver(int winner)
     {
-        panel.SetActive(true);
+        gameOverPanel.SetActive(true);
         winnerText.text = $"Player {winner + 1} Wins!";
     }
 
     public void Hide()
     {
-        panel.SetActive(false);
+        gameOverPanel.SetActive(false);
     }
 
 
