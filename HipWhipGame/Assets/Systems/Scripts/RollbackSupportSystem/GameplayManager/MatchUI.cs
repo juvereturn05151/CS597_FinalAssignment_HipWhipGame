@@ -20,6 +20,12 @@ public class MatchUI : MonoBehaviour
     [SerializeField]
     private GameObject replayPanel;
     public GameObject ReplayPanel => replayPanel;
+    [SerializeField]
+    private FighterUI fighterUI1;
+    public FighterUI FighterUI1 => fighterUI1;
+    [SerializeField]
+    private FighterUI fighterUI2;
+    public FighterUI FighterUI2 => fighterUI2;
 
     public void ShowGameOver(int winner)
     {

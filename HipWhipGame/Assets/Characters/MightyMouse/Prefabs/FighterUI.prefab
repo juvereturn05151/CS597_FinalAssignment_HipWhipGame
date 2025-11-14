@@ -9,8 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3861862580051341459}
+  - component: {fileID: 7555082531373463423}
   m_Layer: 5
-  m_Name: PlayerUI
+  m_Name: FighterUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -38,6 +39,25 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &7555082531373463423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 836505414773364376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd1853d1a7d44f54c9eb57782f8eae2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heartIcons:
+  - {fileID: 6282339768960118033}
+  - {fileID: 4318473119825442075}
+  - {fileID: 5096591095199736037}
+  fullHeart: {fileID: 21300000, guid: ce7feea7547f60144a884817b604432c, type: 3}
+  emptyHeart: {fileID: 21300000, guid: dccaf3977e6598d458f4c662fba4986a, type: 3}
+  percentText: {fileID: 7158913935114494134}
 --- !u!1 &1287814652576445741
 GameObject:
   m_ObjectHideFlags: 0

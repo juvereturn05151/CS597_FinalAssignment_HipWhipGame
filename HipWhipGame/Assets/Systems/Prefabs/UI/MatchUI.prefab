@@ -157,6 +157,8 @@ MonoBehaviour:
   gameOverPanel: {fileID: 8982606859984826802}
   winnerText: {fileID: 9011712593409600279}
   replayPanel: {fileID: 1184660003125662186}
+  fighterUI1: {fileID: 2861274184637597943}
+  fighterUI2: {fileID: 2861274184637597943}
 --- !u!1 &5449213250989914676
 GameObject:
   m_ObjectHideFlags: 0
@@ -327,7 +329,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -52.9, y: 152.3}
+  m_AnchoredPosition: {x: -52.9, y: 448.3001}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7319534268867390304
@@ -402,7 +404,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 102}
+  m_AnchoredPosition: {x: 0, y: 398}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3216185337196315223
@@ -807,6 +809,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f27cb1f9fb6afc4fbf6a12c3431f972, type: 3}
+--- !u!114 &2861274184637597943 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7555082531373463423, guid: 8f27cb1f9fb6afc4fbf6a12c3431f972, type: 3}
+  m_PrefabInstance: {fileID: 5723022063608266632}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd1853d1a7d44f54c9eb57782f8eae2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &8859800583499058971 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3861862580051341459, guid: 8f27cb1f9fb6afc4fbf6a12c3431f972, type: 3}

@@ -13,6 +13,9 @@ namespace RollbackSupport
         private FighterComponentManager fighter1;
         private FighterComponentManager fighter2;
 
+        [SerializeField]
+        private MatchUI matchUI;
+
         public RollbackManager rollback = new RollbackManager();
         public MatchState matchState = new MatchState();
         public int FrameNumber { get; private set; }
@@ -27,6 +30,8 @@ namespace RollbackSupport
             this.fighter2 = fighter2;
 
             matchState.Initialize(3);
+            matchUI.FighterUI1.UpdateHearts(matchState.lives[0]);
+            matchUI.FighterUI2.UpdateHearts(matchState.lives[1]);
 
             PhysicsWorld.Instance.Register(this.fighter1.FighterController.body);
             PhysicsWorld.Instance.Register(this.fighter2.FighterController.body);
@@ -39,6 +44,9 @@ namespace RollbackSupport
         public void Reset()
         {
             matchState.Initialize(3);
+            matchUI.FighterUI1.UpdateHearts(matchState.lives[0]);
+            matchUI.FighterUI2.UpdateHearts(matchState.lives[1]);
+
             fighter1.ResetStateForRespawn();
             fighter2.ResetStateForRespawn();
         }
@@ -86,6 +94,15 @@ namespace RollbackSupport
 
             matchState.lives[playerIndex]--;
 
+            if (playerIndex == 0)
+            {
+                matchUI.FighterUI1.UpdateHearts(matchState.lives[0]);
+            }
+            else 
+            {
+                matchUI.FighterUI2.UpdateHearts(matchState.lives[1]);
+            }
+
             if (matchState.lives[playerIndex] <= 0)
             {
                 matchState.isGameOver = true;
@@ -94,7 +111,6 @@ namespace RollbackSupport
             }
 
             // Respawn logic
-            //var f = (playerIndex == 0 ? fighter1 : fighter2);
             SetRoundOver(true);
         }
 

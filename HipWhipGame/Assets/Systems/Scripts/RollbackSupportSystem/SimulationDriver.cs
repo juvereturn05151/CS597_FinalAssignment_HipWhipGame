@@ -63,7 +63,6 @@ namespace RollbackSupport
                         simulation.Reset();
                     }
                 }
-                //isRunning = false;
             } 
             else if (simulation.IsRoundOver()) 
             {
