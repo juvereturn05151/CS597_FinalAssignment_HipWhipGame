@@ -46,6 +46,12 @@ namespace RollbackSupport
         }
 
         private float damagePercent;
+
+        public void SetDamagePercent(float damagePercent) 
+        {
+            this.damagePercent = damagePercent;
+        }
+
         public float DamagePercent
         {
             get => damagePercent;

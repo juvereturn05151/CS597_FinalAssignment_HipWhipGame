@@ -10,6 +10,7 @@ namespace RollbackSupport
         public FighterState state;
         public int moveFrame;
         public string moveName;
+        public float damagePercent;
         public float normalizedTime;
         public string animState;
         public int durationTimer;
@@ -29,6 +30,7 @@ namespace RollbackSupport
                 lastInput = f.FighterController.LastInput,
                 moveFrame = f.MoveExecutor.CurrentFrame,
                 moveName = f.MoveExecutor.CurrentMoveName,
+                damagePercent = f.FighterController.DamagePercent,
                 normalizedTime = stateInfo.normalizedTime % 1f,
                 animState = stateInfo.IsName(f.MoveExecutor.CurrentMoveName)
                     ? f.MoveExecutor.CurrentMoveName
@@ -52,6 +54,7 @@ namespace RollbackSupport
             f.FighterStateMachine.SwitchState(state);
             f.FighterStateMachine.SetDurationTimer(durationTimer);
             f.FighterStateMachine.SetMaxDurationTimer(maxDurationTimer);
+            f.FighterController.SetDamagePercent(damagePercent);
 
             // 4. Restore move executor START/STOP
             if (!moveExecuted)
