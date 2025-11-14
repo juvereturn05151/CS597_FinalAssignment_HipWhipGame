@@ -17,9 +17,9 @@ MonoBehaviour:
   startup: 10
   active: 5
   recovery: 20
-  hitstunFrames: 27
-  blockstunFrames: 25
-  knockback: {x: 0, y: 0, z: 1}
+  hitstunFrames: 24
+  blockstunFrames: 20
+  knockback: {x: 0, y: 0, z: 0.25}
   pushbackOnHit: 1
   canCancelOnHit: 0
   canCancelOnBlock: 0
@@ -35,8 +35,8 @@ MonoBehaviour:
   vfxPrefab: {fileID: 0}
   overrideRootMotion: 1
   motionSegments: []
-  plusOnHit: 7
-  plusOnBlock: 5
+  plusOnHit: 4
+  plusOnBlock: 0
   isGrab: 0
   grabRange: 1.2
   grabDuration: 0

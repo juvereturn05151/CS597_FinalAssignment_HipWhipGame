@@ -49,6 +49,21 @@ namespace RollbackSupport
                 {
                     if (CollisionBox.Overlaps(hitbox, attacker.transform, hurt, defender.transform))
                     {
+                        // ---- FRAME ADVANTAGE CALC ----
+                        int totalFrames = move.startup + move.active + move.recovery;
+                        int currentFrame = attacker.MoveExecutor.CurrentFrame;
+                        int remainingRecovery = Mathf.Max(0, totalFrames - currentFrame);
+
+                        int advOnHit = move.hitstunFrames - remainingRecovery;
+                        int advOnBlock = move.blockstunFrames - remainingRecovery;
+
+                        Debug.Log(
+                            $"[Frame Advantage] Move: {move.name} | " +
+                            $"Hit: {(advOnHit >= 0 ? "+" : "")}{advOnHit} | " +
+                            $"Block: {(advOnBlock >= 0 ? "+" : "")}{advOnBlock}"
+                        );
+                        // --------------------------------
+
                         Vector3 worldKnock = attacker.transform.TransformDirection(move.knockback);
 
                         if (defender.FighterController.IsBlocking())

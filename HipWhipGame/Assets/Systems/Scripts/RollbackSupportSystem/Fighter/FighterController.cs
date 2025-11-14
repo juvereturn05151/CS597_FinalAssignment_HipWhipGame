@@ -44,7 +44,6 @@ namespace RollbackSupport
             this.fighterComponentManager = fighterComponentManager;
         }
 
-
         public void ResetStateForRespawn()
         {
             fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Idle);

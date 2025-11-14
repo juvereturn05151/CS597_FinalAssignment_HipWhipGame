@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveName: TryGrab
   animName: TryGrab
-  startup: 10
-  active: 10
+  startup: 15
+  active: 5
   recovery: 40
   hitstunFrames: 15
   blockstunFrames: 10
-  knockback: {x: 0, y: 0, z: 3}
+  knockback: {x: 0, y: 0, z: 1}
   pushbackOnHit: 1.5
   canCancelOnHit: 0
   canCancelOnBlock: 0
@@ -31,7 +31,7 @@ MonoBehaviour:
   motionSegments:
   - frameStart: 0
     frameEnd: 8
-    forwardSpeed: 0.15
+    forwardSpeed: 0.05
     verticalSpeed: 0
     sideSpeed: 0
   plusOnHit: -25
