@@ -45,6 +45,13 @@ namespace RollbackSupport
             isMovable = canMove;
         }
 
+        private float damagePercent;
+        public float DamagePercent
+        {
+            get => damagePercent;
+            private set => damagePercent = value;
+        }
+
         public void Inject(FighterComponentManager fighterComponentManager)
         {
             this.fighterComponentManager = fighterComponentManager;
@@ -52,7 +59,8 @@ namespace RollbackSupport
 
         public void ResetStateForRespawn()
         {
-            fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Idle);
+            damagePercent = 0.0f;
+            fighterComponentManager.FighterUI.UpdatePercentage(damagePercent);
         }
 
         public void SimulateFrame()
@@ -162,7 +170,17 @@ namespace RollbackSupport
                 return;
             }
 
-            hitVelocity = worldKnock / move.hitstunFrames;
+            damagePercent += move.damage;   // add to % like Smash
+            damagePercent = Mathf.Clamp(DamagePercent, 0, 999);
+            fighterComponentManager.FighterUI.UpdatePercentage(damagePercent);
+
+            Vector3 knockbackGrowth = new Vector3(1.0f, 1.0f, 1.0f);
+
+            // calculate knockback using percentage
+            Vector3 scaledKnock =
+                worldKnock + knockbackGrowth * (DamagePercent / 100f);
+
+            hitVelocity = scaledKnock / move.hitstunFrames;
 
             fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Hitstun, move.hitstunFrames);
         }

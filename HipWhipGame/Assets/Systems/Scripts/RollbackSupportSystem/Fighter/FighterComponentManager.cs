@@ -40,6 +40,12 @@ namespace RollbackSupport
         {
             this.spawnPoint = spawnPoint;
         }
+        private FighterUI fighterUI;
+        public FighterUI FighterUI => fighterUI;
+        public  void SetFighterUI(FighterUI fighterUI)
+        {
+            this.fighterUI = fighterUI;
+        }
 
         private void Awake()
         {
@@ -69,6 +75,7 @@ namespace RollbackSupport
             fighterController.body.velocity = Vector3.zero;
             fighterController.body.position = spawnPoint;
             fighterStateMachine.SwitchState(FighterState.Idle);
+            fighterController.ResetStateForRespawn();
         }
 
         public void ResetForReplay() 

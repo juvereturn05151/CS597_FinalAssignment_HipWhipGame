@@ -30,9 +30,9 @@ namespace RollbackSupport
             }
         }
 
-        public void UpdatePercentage()
+        public void UpdatePercentage(float percentage)
         {
-            float pct = 55f;//fighter.FighterController.DamagePercent;
+            float pct = percentage;
             percentText.text = $"{pct:0}%";
         }
     }

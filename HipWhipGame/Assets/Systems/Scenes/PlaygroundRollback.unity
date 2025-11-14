@@ -622,6 +622,28 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed9f960124b2fdc46a825ef5981d2a04, type: 3}
+--- !u!114 &3167085911537273545 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2861274184637597943, guid: ed9f960124b2fdc46a825ef5981d2a04, type: 3}
+  m_PrefabInstance: {fileID: 3167085911537273544}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd1853d1a7d44f54c9eb57782f8eae2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3167085911537273546 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9192644035758885931, guid: ed9f960124b2fdc46a825ef5981d2a04, type: 3}
+  m_PrefabInstance: {fileID: 3167085911537273544}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd1853d1a7d44f54c9eb57782f8eae2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3331359521766619059
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -678,6 +700,18 @@ PrefabInstance:
       propertyPath: simulation
       value: 
       objectReference: {fileID: 141767287}
+    - target: {fileID: 7649236154133796716, guid: f42cfd09ce1ba0f4496b021250979e49, type: 3}
+      propertyPath: fighterUIs.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7649236154133796716, guid: f42cfd09ce1ba0f4496b021250979e49, type: 3}
+      propertyPath: 'fighterUIs.Array.data[0]'
+      value: 
+      objectReference: {fileID: 3167085911537273546}
+    - target: {fileID: 7649236154133796716, guid: f42cfd09ce1ba0f4496b021250979e49, type: 3}
+      propertyPath: 'fighterUIs.Array.data[1]'
+      value: 
+      objectReference: {fileID: 3167085911537273545}
     - target: {fileID: 7649236154133796716, guid: f42cfd09ce1ba0f4496b021250979e49, type: 3}
       propertyPath: 'spawnPoints.Array.data[0]'
       value: 
@@ -820,9 +854,9 @@ SceneRoots:
   - {fileID: 410087041}
   - {fileID: 832575519}
   - {fileID: 3379508120940399200}
-  - {fileID: 3331359521766619059}
-  - {fileID: 1320106167}
   - {fileID: 1812308691}
+  - {fileID: 1320106167}
+  - {fileID: 3331359521766619059}
   - {fileID: 5742092496004237454}
   - {fileID: 3167085911537273544}
   - {fileID: 202646790}

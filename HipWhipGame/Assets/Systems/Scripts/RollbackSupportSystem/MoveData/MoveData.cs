@@ -35,6 +35,8 @@ namespace RollbackSupport
 
         public float pushbackOnHit = 1.5f;
 
+        public float damage = 1.0f;
+
         [Header("Cancel Rules")]
         [Tooltip("Can this move be canceled into another move on hit?")]
         public bool canCancelOnHit = false;

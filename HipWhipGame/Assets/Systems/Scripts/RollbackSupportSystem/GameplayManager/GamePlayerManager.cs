@@ -19,6 +19,8 @@ namespace RollbackSupport
         public GameObject dummyPrefab;
         public Transform[] spawnPoints;
         public GameSimulation simulation;
+        [SerializeField]
+        private FighterUI[] fighterUIs;
 
         private List<GameObject> activePlayers = new List<GameObject>();
         public List<GameObject> ActivePlayers => activePlayers;
@@ -77,6 +79,7 @@ namespace RollbackSupport
 
             FighterComponentManager fcm = playerObj.GetComponent<FighterComponentManager>();
             fcm.SetSpawnPoint(spawnPoints[index].position);
+            fcm.SetFighterUI(fighterUIs[index]);
             var inputManager = playerInput.GetComponent<InputManager>();
             if (inputManager != null)
             {
