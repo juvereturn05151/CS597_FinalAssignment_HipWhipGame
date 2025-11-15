@@ -7,8 +7,7 @@ Copyright:    (c) 2025 DigiPen Institute of Technology. All rights reserved.
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;   // <-- needed for scene loading
-using TMPro;
+using UnityEngine.SceneManagement;   
 
 public class ControllerAssignmentUI : MonoBehaviour
 {
@@ -16,8 +15,9 @@ public class ControllerAssignmentUI : MonoBehaviour
     [SerializeField] private List<PlayerSlotUI> playerSlots = new List<PlayerSlotUI>();
 
     [Header("Scene Settings")]
-    [SerializeField] private string gameSceneName = "GameScene";  // <-- change to your actual scene name
+    [SerializeField] private string gameSceneName = "GameScene";
 
+    [SerializeField] private GameObject startGamePrompt;
     private void Start()
     {
         // Initialize slots
@@ -44,6 +44,8 @@ public class ControllerAssignmentUI : MonoBehaviour
 
     private void Update()
     {
+        startGamePrompt.SetActive(PlayerManager.Instance.PlayerCount == 2);
+
         // Detect keyboard join (Enter or Space)
         if (Keyboard.current != null && (Keyboard.current.enterKey.wasPressedThisFrame))
         {
