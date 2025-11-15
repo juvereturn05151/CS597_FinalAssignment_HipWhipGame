@@ -150,7 +150,7 @@ GameObject:
   - component: {fileID: 7154751072266712458}
   - component: {fileID: 5810956115761655291}
   m_Layer: 5
-  m_Name: Text (TMP) (1)
+  m_Name: StatusText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -165,7 +165,7 @@ RectTransform:
   m_GameObject: {fileID: 2041231850161126035}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.46083, y: 0.46083, z: 0.46083}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3724433185402829357}
@@ -212,8 +212,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -230,8 +230,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 22.25
-  m_fontSizeBase: 22.25
+  m_fontSize: 10
+  m_fontSizeBase: 10
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
