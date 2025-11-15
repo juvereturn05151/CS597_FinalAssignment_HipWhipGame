@@ -14,7 +14,7 @@ public class InputManager : MonoBehaviour
 
     private FighterComponentManager fighterComponentManager;
 
-    public void SetFightingComponentManager(FighterComponentManager fighterComponentManager) 
+    public void SetFightingComponentManager(FighterComponentManager fighterComponentManager)
     {
         this.fighterComponentManager = fighterComponentManager;
         this.fighterComponentManager.FighterController.playerIndex = playerIndex;
@@ -91,11 +91,11 @@ public class InputManager : MonoBehaviour
 
         if (context.started)
         {
-            
+
         }
         else if (context.canceled)
         {
-            
+
         }
     }
 
@@ -126,11 +126,11 @@ public class InputManager : MonoBehaviour
 
         if (context.performed)
         {
-            
+
         }
         else if (context.canceled)
         {
-            
+
         }
     }
 
@@ -141,7 +141,7 @@ public class InputManager : MonoBehaviour
             return;
         }
 
-        if (context.started) 
+        if (context.started)
         {
             fighterComponentManager.FighterController.LastInput.sidestep = context.ReadValue<Vector2>().x;
         }
@@ -184,80 +184,50 @@ public class InputManager : MonoBehaviour
 
     #region ForMotionInput
 
-    private bool jab;
-    private bool buttAttack;
-    private bool wiggleLeft;
-    private bool wiggleRight;
-
     public void OnShakeController()
     {
         if (fighterComponentManager == null) return;
-        jab = true;
+        fighterComponentManager.FighterController.LastInput.light = true;
     }
 
-    public void OnWiggleYourButt()
+    public void OnStopShakeController()
     {
         if (fighterComponentManager == null) return;
-        buttAttack = true;
+        fighterComponentManager.FighterController.LastInput.light = false;
+    }
+
+    public void OnShakeYourButt()
+    {
+        if (fighterComponentManager == null) return;
+        fighterComponentManager.FighterController.LastInput.heavy = true;
+    }
+
+    public void OnStopShakeButt()
+    {
+        if (fighterComponentManager == null) return;
+        fighterComponentManager.FighterController.LastInput.heavy = false;
     }
 
     public void OnWiggleYourButtLeft()
     {
         if (fighterComponentManager == null) return;
-        wiggleLeft = true;
+        fighterComponentManager.FighterController.LastInput.sidestep = -1.0f;
     }
 
     public void OnWiggleYourButtRight()
     {
         if (fighterComponentManager == null) return;
-        wiggleRight = true;
+        fighterComponentManager.FighterController.LastInput.sidestep = 1.0f;
     }
 
-    private void LateUpdate()
+    public void OnStopWiggleYourButt()
     {
         if (fighterComponentManager == null) return;
-
-
-        if (jab)
-        {
-            fighterComponentManager.FighterController.LastInput.light = true;
-            jab = false;
-        }
-        else
-        {
-            fighterComponentManager.FighterController.LastInput.light = false;
-        }
-
-        if (buttAttack)
-        {
-            fighterComponentManager.FighterController.LastInput.heavy = true;
-            buttAttack = false;
-        }
-        else
-        {
-            fighterComponentManager.FighterController.LastInput.heavy = false;
-        }
-
-        if (wiggleLeft)
-        {
-            fighterComponentManager.FighterController.LastInput.heavy = true;
-            fighterComponentManager.FighterController.LastInput.sidestep = -1f;
-        }
-        else
-        {
-            fighterComponentManager.FighterController.LastInput.heavy = false;
-        }
-
-        if (wiggleRight)
-        {
-            fighterComponentManager.FighterController.LastInput.heavy = true;
-            fighterComponentManager.FighterController.LastInput.sidestep = 1f;
-        }
-        else
-        {
-            fighterComponentManager.FighterController.LastInput.heavy = false;
-        }
+        fighterComponentManager.FighterController.LastInput.sidestep = 0;
     }
+
+
+
 
     #endregion
 

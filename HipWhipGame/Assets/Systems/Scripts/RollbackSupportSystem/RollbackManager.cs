@@ -4,7 +4,7 @@ namespace RollbackSupport
 {
     public class RollbackManager
     {
-        const int BUFFER_SIZE = 300;
+        const int BUFFER_SIZE = 60;
         private readonly Queue<GameStateSnapshot> snapshots = new Queue<GameStateSnapshot>();
 
         public void Push(int frame, GameStateSnapshot snap)
