@@ -38,8 +38,12 @@ namespace ComicUI
 
         private void Update()
         {
-            if (ButtonShape.settings.fillType == FillType.None)
-                return;
+            if (ButtonShape != null) 
+            {
+                if (ButtonShape.settings.fillType == FillType.None)
+                    return;
+            }
+            
             if (_isHovering)
             {
                 OnHoverAction();

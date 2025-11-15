@@ -30,4 +30,10 @@ public class CustomUI : MonoBehaviour
     {
 
     }
+
+    public void StopAnimation() 
+    {
+        gradientShapeAnim.OnHoverLost();
+        gradientShapeAnim.ResetAnimation();
+    }
 }

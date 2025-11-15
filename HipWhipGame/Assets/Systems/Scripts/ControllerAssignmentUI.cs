@@ -23,9 +23,9 @@ public class ControllerAssignmentUI : MonoBehaviour
         // Initialize slots
         for (int i = 0; i < playerSlots.Count; i++)
         {
-            if (playerSlots[i].status != null) 
+            if (playerSlots[i].Status != null) 
             {
-                playerSlots[i].status.text = "Press Button to Join";
+                playerSlots[i].Status.text = "Press Button to Join";
             }   
         }
 
@@ -76,7 +76,8 @@ public class ControllerAssignmentUI : MonoBehaviour
         int index = PlayerManager.Instance.players.IndexOf(playerInput);
         if (index >= 0 && index < playerSlots.Count)
         {
-            playerSlots[index].status.text = $"Player {index + 1} Ready";
+            playerSlots[index].Status.GetComponent<CustomUI>().StopAnimation();
+            playerSlots[index].Status.text = $"Player {index + 1} Ready";
         }
     }
 
@@ -87,7 +88,7 @@ public class ControllerAssignmentUI : MonoBehaviour
         {
             if (i >= PlayerManager.Instance.PlayerCount)
             {
-                playerSlots[i].status.text = "Press Button to Join";
+                playerSlots[i].Status.text = "Press Button to Join";
             }
         }
     }

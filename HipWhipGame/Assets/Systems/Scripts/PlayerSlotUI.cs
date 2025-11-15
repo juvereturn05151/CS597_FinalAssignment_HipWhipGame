@@ -9,5 +9,8 @@ using UnityEngine;
 
 public class PlayerSlotUI: MonoBehaviour
 {
-    public TextMeshProUGUI status;   // "Press Button to Join" / "Player X Joined"
+    [SerializeField]
+    private TextMeshProUGUI status;   // "Press Button to Join" / "Player X Joined"
+    public TextMeshProUGUI Status => status;
+
 }

@@ -147,6 +147,8 @@ GameObject:
   - component: {fileID: 2895194665508109766}
   - component: {fileID: 8803390396976759960}
   - component: {fileID: 3488216124396609683}
+  - component: {fileID: 7154751072266712458}
+  - component: {fileID: 5810956115761655291}
   m_Layer: 5
   m_Name: Text (TMP) (1)
   m_TagString: Untagged
@@ -272,6 +274,41 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &7154751072266712458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2041231850161126035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43dd64e1bbe43014db20ad2e9334f944, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ButtonText: {fileID: 3488216124396609683}
+  ButtonShape: {fileID: 0}
+  ActiveColor: {r: 0, g: 0, b: 0, a: 0}
+  DisabledColor: {r: 0, g: 0, b: 0, a: 0}
+  MinValue: 0.5
+  MaxValue: 0
+  AnimationSpeed: 8
+  _isHovering: 0
+  _defaultFontSize: 0
+--- !u!114 &5810956115761655291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2041231850161126035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3705e1828bccc7e429381763b9c6068a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gradientShapeAnim: {fileID: 7154751072266712458}
+  isPlayingAnimationOnStart: 1
 --- !u!1 &2553934994153124299
 GameObject:
   m_ObjectHideFlags: 0
