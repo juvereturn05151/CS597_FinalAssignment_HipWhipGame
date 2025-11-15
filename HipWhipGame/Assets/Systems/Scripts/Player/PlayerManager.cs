@@ -53,12 +53,12 @@ public class PlayerManager : MonoBehaviour
 
     public void RegisterPlayer(PlayerInput playerInput)
     {
-        if (!CanRegisterMorePlayers()) 
+        if (!CanRegisterMorePlayers())
         {
             return;
         }
 
-        if (playerInput == null) 
+        if (playerInput == null)
         {
             return;
         }
@@ -118,9 +118,39 @@ public class PlayerManager : MonoBehaviour
         inputDevices.Clear();
     }
 
-    public void PlayerShakeController(int i) 
+    public void PlayerShakeController(int i)
     {
         players[i].GetComponent<InputManager>().OnShakeController();
+    }
+
+    public void PlayerStopShakeController(int i)
+    {
+        players[i].GetComponent<InputManager>().OnStopShakeController();
+    }
+
+    public void PlayerShakeButt(int i)
+    {
+        players[i].GetComponent<InputManager>().OnShakeYourButt();
+    }
+
+    public void PlayerStopShakeButt(int i)
+    {
+        players[i].GetComponent<InputManager>().OnStopShakeButt();
+    }
+
+    public void PlayerWiggleButtLeft(int i)
+    {
+        players[i].GetComponent<InputManager>().OnWiggleYourButtLeft();
+    }
+
+    public void PlayerWiggleButtRight(int i)
+    {
+        players[i].GetComponent<InputManager>().OnWiggleYourButtRight();
+    }
+
+    public void PlayerStopWiggleButt(int i)
+    {
+        players[i].GetComponent<InputManager>().OnStopWiggleYourButt();
     }
 
     public void SetInputManagersEnabled(bool enabled)
