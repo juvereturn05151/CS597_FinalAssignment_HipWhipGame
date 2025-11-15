@@ -92,5 +92,10 @@ namespace ComicUI
         {
             _isHovering = false;
         }
+
+        private void OnDestroy()
+        {
+            _sequence?.Kill();
+        }
     }
 }
