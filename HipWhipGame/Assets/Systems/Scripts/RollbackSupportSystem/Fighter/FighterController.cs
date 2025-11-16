@@ -180,11 +180,13 @@ namespace RollbackSupport
             damagePercent = Mathf.Clamp(DamagePercent, 0, 999);
             fighterComponentManager.FighterUI.UpdatePercentage(damagePercent);
 
-            Vector3 knockbackGrowth = new Vector3(1.0f, 1.0f, 1.0f);
+            float knockbackGrowth = 1.0f;
 
             // calculate knockback using percentage
             Vector3 scaledKnock =
-                worldKnock + knockbackGrowth * (DamagePercent / 100f);
+                worldKnock * (knockbackGrowth * (DamagePercent / 100f));
+
+            Debug.Log($"scaledKnock: {scaledKnock}");
 
             hitVelocity = scaledKnock / move.hitstunFrames;
 
