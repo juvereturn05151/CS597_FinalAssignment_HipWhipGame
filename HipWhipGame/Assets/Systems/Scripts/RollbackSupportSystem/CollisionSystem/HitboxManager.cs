@@ -64,15 +64,19 @@ namespace RollbackSupport
                         );
                         // --------------------------------
 
-                        Vector3 worldKnock = attacker.transform.TransformDirection(move.knockback);
+                        Debug.Log($"Actual Object {defender.name} with {defender.transform.rotation}");
+                        Debug.Log($"Global {defender.name} with {defender.Animator.transform.rotation}");
+                        Debug.Log($"Local {defender.name} with {defender.Animator.transform.localRotation}");
+
+                        Vector3 worldKnock = defender.transform.TransformDirection(move.knockback);
 
                         if (defender.FighterController.IsBlocking())
                         {
-                            defender.FighterController.TakeBlock(move, worldKnock);
+                            defender.FighterController.TakeBlock(move, -worldKnock);
                         }
                         else 
                         {
-                            defender.FighterController.TakeHit(move, worldKnock);
+                            defender.FighterController.TakeHit(move, -worldKnock);
                         }
                             
 

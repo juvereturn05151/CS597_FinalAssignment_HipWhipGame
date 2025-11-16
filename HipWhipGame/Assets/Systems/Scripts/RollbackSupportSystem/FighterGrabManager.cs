@@ -64,8 +64,8 @@ namespace RollbackSupport
                 fighterComponentManager.FighterController.SetIsMovable(true);
                 fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Idle);
                 grabbedOpponent.FighterController.SetIsMovable(true);
-                Vector3 worldKnock = fighterComponentManager.FighterController.transform.TransformDirection(grabData.knockback);
-                grabbedOpponent.FighterController.TakeHit(grabData, worldKnock);
+                Vector3 worldKnock = grabbedOpponent.transform.TransformDirection(grabData.knockback);
+                grabbedOpponent.FighterController.TakeHit(grabData, -worldKnock);
                 grabbedOpponent = null;
             }
         }
