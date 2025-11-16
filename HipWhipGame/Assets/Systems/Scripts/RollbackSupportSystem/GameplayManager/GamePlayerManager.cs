@@ -21,6 +21,9 @@ namespace RollbackSupport
         public GameSimulation simulation;
         [SerializeField]
         private FighterUI[] fighterUIs;
+        [SerializeField]
+        Material player2Material;
+
 
         private List<GameObject> activePlayers = new List<GameObject>();
         public List<GameObject> ActivePlayers => activePlayers;
@@ -92,6 +95,8 @@ namespace RollbackSupport
             if (fcm.FighterController.playerIndex == 2)
             {
                 fcm.FighterController.lookAtTarget = activePlayers[0].transform;
+                var skinnedRenderer = fcm.Animator.GetComponentInChildren<SkinnedMeshRenderer>();
+                skinnedRenderer.material = player2Material;
                 activePlayers[0].GetComponent<FighterController>().lookAtTarget = fcm.FighterController.transform;
 
                 simulation.Initialize(activePlayers[0].GetComponent<FighterComponentManager>(), fcm);
