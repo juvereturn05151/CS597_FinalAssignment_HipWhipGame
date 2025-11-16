@@ -115,14 +115,6 @@ MonoBehaviour:
     isKinematic: 0
   moves: {fileID: 11400000, guid: 4b58da71a39a4a54f97c2aa8c6582ca3, type: 2}
   lookAtTarget: {fileID: 0}
-  Hurtboxes:
-    boxes: []
-  pushbox:
-    localCenter: {x: 0, y: 1, z: 0}
-    size: {x: 0.6, y: 2, z: 0.6}
-    enabled: 1
-  IsPushedThisFrame: 0
-  isBlocking: 0
   LastInput:
     frame: 0
     horiz: 0
@@ -194,7 +186,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Hurtboxes:
     boxes: []
-  pushbox:
+  Pushbox:
     localCenter: {x: 0, y: 1, z: 0}
     size: {x: 0.6, y: 2, z: 0.6}
     enabled: 1
@@ -224,13 +216,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9202767699107768774}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.17586498, y: -0, z: -0, w: 0.98441434}
-  m_LocalPosition: {x: 0, y: 2.575, z: -3.17}
+  m_LocalRotation: {x: -0.03746759, y: -0.28174114, z: -0.0160063, w: 0.958625}
+  m_LocalPosition: {x: 2.19, y: 0.99, z: -2.04}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8614550981892037365}
-  m_LocalEulerAnglesHint: {x: 20.258, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -4.638, y: -32.734, z: -0.55}
 --- !u!20 &3723754997958721306
 Camera:
   m_ObjectHideFlags: 0
