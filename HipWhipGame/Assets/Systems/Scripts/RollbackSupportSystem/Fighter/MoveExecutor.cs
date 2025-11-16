@@ -86,7 +86,10 @@ namespace RollbackSupport
                         move += fighter.transform.up * seg.verticalSpeed;
 
                         // deterministic movement (no deltaTime)
-                        fighter.body.position += move;
+                        if (fighterComponentManager.FighterStateMachine.CurrentStateType != FighterState.Sidestep)
+                        {
+                            fighter.body.position += move;
+                        }
                     }
                 }
             }

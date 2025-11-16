@@ -48,6 +48,7 @@ namespace RollbackSupport
 
         private float damagePercent;
 
+
         public void SetDamagePercent(float damagePercent) 
         {
             this.damagePercent = damagePercent;
@@ -58,6 +59,10 @@ namespace RollbackSupport
             get => damagePercent;
             private set => damagePercent = value;
         }
+
+        bool isSideStepLeft;
+
+        public float sidestepAngleSpeed = 6f;
 
         public void Inject(FighterComponentManager fighterComponentManager)
         {
@@ -97,14 +102,20 @@ namespace RollbackSupport
                 HandleBlocking();
                 HandleSidestep();
 
-                if (!LastInput.block) 
+                if (!LastInput.block)
                 {
                     ProcessMovement();
                     HandleAttacks();
                 }
+                
             }
             else
             {
+                // SIDESTEP OVERRIDES NORMAL MOVEMENT
+                if (fighterComponentManager.FighterStateMachine.CurrentStateType == FighterState.Sidestep)
+                {
+                    SimulateSidestep();
+                }
                 fighterComponentManager.MoveExecutor.SimulateFrame();
             }
 
@@ -146,15 +157,15 @@ namespace RollbackSupport
             {
                 fighterComponentManager.MoveExecutor.StartMove(moves.sideStepLeft);
                 fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Sidestep);
+                isSideStepLeft = true;
             }
             else if (LastInput.sidestep > 0)
             {
                 fighterComponentManager.MoveExecutor.StartMove(moves.sideStepRight);
                 fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Sidestep);
+                isSideStepLeft = false;
             }
-
             LastInput.sidestep = 0;
-            transform.position = body.position;
         }
 
         void HandleAttacks()
@@ -244,5 +255,46 @@ namespace RollbackSupport
         {
 
         }
+
+        private void SimulateSidestep()
+        {
+            // The opponent we orbit around
+            Transform opponent = fighterComponentManager.FighterController.lookAtTarget;
+            if (!opponent)
+                return;
+
+            Vector3 center = opponent.position;
+            Vector3 pos = body.position;
+
+            // vector from opponent-> self
+            Vector3 offset = pos - center;
+            offset.y = 0f;
+
+            // direction of sidestep (left or right)
+            float angle;
+            if (isSideStepLeft)
+            {
+                angle = sidestepAngleSpeed;
+            }
+            else 
+            {
+                angle = -sidestepAngleSpeed;
+            }
+
+                
+
+            // rotate around opponent on the XZ plane
+            offset = Quaternion.Euler(0f, angle, 0f) * offset;
+
+            // update position
+            body.position = center + offset;
+
+            // keep grounded Y
+            body.position = new Vector3(body.position.x, pos.y, body.position.z);
+
+            // consume input (we only use it once per frame)
+            
+        }
+
     }
 }
