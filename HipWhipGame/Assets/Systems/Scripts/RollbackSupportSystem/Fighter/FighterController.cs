@@ -128,6 +128,11 @@ namespace RollbackSupport
 
         private void ProcessMovement()
         {
+            if (fighterComponentManager.FighterStateMachine.CurrentStateType == FighterState.Sidestep)
+            {
+                return;
+            }
+
             Vector3 input = new Vector3(LastInput.horiz, 0f, LastInput.vert);
             if (input.sqrMagnitude > 0f)
             {
