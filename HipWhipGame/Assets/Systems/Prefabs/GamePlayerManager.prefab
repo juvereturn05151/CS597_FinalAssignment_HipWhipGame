@@ -51,4 +51,4 @@ MonoBehaviour:
   - {fileID: 0}
   simulation: {fileID: 0}
   fighterUIs: []
-  player2Material: {fileID: 2100000, guid: 68e4d079461ecd245a4019dfdc20af6b, type: 2}
+  player2Material: {fileID: 2100000, guid: 81fdc7547fd12c34caaa4c90778544b3, type: 2}
