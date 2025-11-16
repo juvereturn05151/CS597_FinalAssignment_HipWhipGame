@@ -5,6 +5,7 @@ Copyright:    (c) 2025 DigiPen Institute of Technology. All rights reserved.
 */
 
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace RollbackSupport
 {
@@ -65,6 +66,13 @@ namespace RollbackSupport
 
         public void ResetStateForRespawn()
         {
+            LastInput.sidestep = 0;
+            LastInput.light = false;
+            LastInput.heavy = false;
+            LastInput.grab = false;
+            LastInput.block = false;
+            LastInput.horiz = 0f;
+            LastInput.vert = 0f;
             damagePercent = 0.0f;
             fighterComponentManager.FighterUI.UpdatePercentage(damagePercent);
         }
