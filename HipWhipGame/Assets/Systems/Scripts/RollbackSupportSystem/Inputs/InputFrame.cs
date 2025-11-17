@@ -10,6 +10,8 @@ namespace RollbackSupport
         public float vert;
         public float sidestep;
         public bool light, heavy, grab, block;
+        public bool special;  
+        public bool superButt;
     }
 
 }

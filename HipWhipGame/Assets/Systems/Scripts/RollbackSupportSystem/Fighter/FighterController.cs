@@ -170,6 +170,37 @@ namespace RollbackSupport
 
         void HandleAttacks()
         {
+            var input = fighterComponentManager.FighterController.LastInput;
+            var moves = fighterComponentManager.FighterController.moves;
+
+            // ============================================
+            // SPECIAL MOVE SYSTEM
+            // ============================================
+
+            // 1. SPECIAL + LIGHT  -> THROW
+            if (input.special && input.light)
+            {
+                fighterComponentManager.MoveExecutor.StartMove(moves.grab);
+                fighterComponentManager.FighterStateMachine.SwitchState(FighterState.TryGrab);
+                return;
+            }
+
+            // 2. SPECIAL + HEAVY -> FART (big hitstun)
+            if (input.special && input.heavy)
+            {
+                fighterComponentManager.MoveExecutor.StartMove(moves.specialFart);
+                fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Attack);
+                return;
+            }
+
+            // 3. SPECIAL + SUPER BUTT  -> ULTRA SUPER BUTT
+            if (input.special && input.superButt)
+            {
+                fighterComponentManager.MoveExecutor.StartMove(moves.ultimateButt);
+                fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Attack);
+                return;
+            }
+
             if (LastInput.grab)
             {
                 fighterComponentManager.MoveExecutor.StartMove(moves.grab);
@@ -180,11 +211,17 @@ namespace RollbackSupport
                 fighterComponentManager.MoveExecutor.StartMove(moves.light);
                 fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Attack);
             }
+            else if (LastInput.superButt)
+            {
+                fighterComponentManager.MoveExecutor.StartMove(moves.superButt);
+                fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Attack);
+            }
             else if (LastInput.heavy) 
             {
                 fighterComponentManager.MoveExecutor.StartMove(moves.heavy);
                 fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Attack);
-            } 
+            }
+
         }
 
 

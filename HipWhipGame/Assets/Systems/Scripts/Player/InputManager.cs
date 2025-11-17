@@ -91,11 +91,11 @@ public class InputManager : MonoBehaviour
 
         if (context.started)
         {
-
+            fighterComponentManager.FighterController.LastInput.superButt = true;
         }
         else if (context.canceled)
         {
-
+            fighterComponentManager.FighterController.LastInput.superButt = false;
         }
     }
 
@@ -172,11 +172,11 @@ public class InputManager : MonoBehaviour
         }
         if (context.performed)
         {
-            fighterComponentManager.FighterController.LastInput.grab = true;
+            fighterComponentManager.FighterController.LastInput.special = true;
         }
         else if (context.canceled)
         {
-            fighterComponentManager.FighterController.LastInput.grab = false;
+            fighterComponentManager.FighterController.LastInput.special = false;
         }
     }
 
