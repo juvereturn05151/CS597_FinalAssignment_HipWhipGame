@@ -17,3 +17,5 @@ MonoBehaviour:
   grab: {fileID: 11400000, guid: d394ceb2cdcd96f4b881019b4068e43b, type: 2}
   sideStepLeft: {fileID: 11400000, guid: 437cdac029e405440b31e89f45624f33, type: 2}
   sideStepRight: {fileID: 11400000, guid: 3a62d19c647af674abfea0954632b0e4, type: 2}
+  combo_light: {fileID: 11400000, guid: 098fafd1095b9c64bb844650f27400dc, type: 2}
+  combo_light_ender: {fileID: 11400000, guid: 5ba44dd642cd70a4ead89ec8ef934290, type: 2}

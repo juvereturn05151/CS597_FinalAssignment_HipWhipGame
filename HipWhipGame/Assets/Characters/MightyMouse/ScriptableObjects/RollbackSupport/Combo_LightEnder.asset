@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 303d8bb4016a3c040a60f6e7624fa1cb, type: 3}
-  m_Name: Light
+  m_Name: Combo_LightEnder
   m_EditorClassIdentifier: 
-  moveName: PunchFast
-  animName: PunchFast
+  moveName: ButtTornado
+  animName: ButtTornado
   startup: 10
   active: 5
   recovery: 20
@@ -22,10 +22,9 @@ MonoBehaviour:
   knockback: {x: 0, y: 0, z: 0.25}
   pushbackOnHit: 1
   damage: 1
-  canCancelOnHit: 1
-  canCancelOnBlock: 1
-  cancelInto:
-  - {fileID: 11400000, guid: 098fafd1095b9c64bb844650f27400dc, type: 2}
+  canCancelOnHit: 0
+  canCancelOnBlock: 0
+  cancelInto: []
   hitboxes:
   - start: 10
     end: 15

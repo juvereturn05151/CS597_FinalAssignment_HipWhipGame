@@ -6,11 +6,13 @@ namespace RollbackSupport
     [CreateAssetMenu(menuName = "Fighter/MoveDatabase")]
     public class MoveDatabase : ScriptableObject
     {
-        public MoveData light, heavy, grab, sideStepLeft, sideStepRight;
+        public MoveData light, heavy, grab, sideStepLeft, sideStepRight, combo_light, combo_light_ender;
 
         public MoveData Get(string name)
         {
             if (light && light.moveName == name) return light;
+            if (combo_light && combo_light.moveName == name) return combo_light;
+            if (combo_light_ender && combo_light_ender.moveName == name) return combo_light_ender;
             if (heavy && heavy.moveName == name) return heavy;
             if (grab && grab.moveName == name) return grab;
             if (sideStepLeft && sideStepLeft.moveName == name) return sideStepLeft;

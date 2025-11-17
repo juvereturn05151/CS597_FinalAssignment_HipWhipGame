@@ -118,6 +118,32 @@ namespace RollbackSupport
                 TryGrabOpponent();
             }
 
+            if (currentMove.canCancelOnHit)
+            {
+                Debug.Log($"[{fighter.fighterName}] checking for cancel on hit at frame {frame}.");
+                foreach (var nextMove in currentMove.cancelInto)
+                {
+                    if (frame >= currentMove.startup && frame <= currentMove.recovery) 
+                    {
+                        if (fighter.LastInput.light && nextMove == fighter.moves.combo_light)
+                        {
+                            executing = false;
+                            StartMove(nextMove);
+                            fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Attack);
+                            return;
+                        }
+
+                        if (fighter.LastInput.light && nextMove == fighter.moves.combo_light_ender)
+                        {
+                            executing = false;
+                            StartMove(nextMove);
+                            fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Attack);
+                            return;
+                        }
+                    }
+                }
+            }
+
             // End of move
             if (frame >= currentMove.totalFrames)
             {

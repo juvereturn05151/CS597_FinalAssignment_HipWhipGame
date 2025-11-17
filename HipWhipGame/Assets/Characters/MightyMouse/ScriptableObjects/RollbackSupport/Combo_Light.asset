@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 303d8bb4016a3c040a60f6e7624fa1cb, type: 3}
-  m_Name: Light
+  m_Name: Combo_Light
   m_EditorClassIdentifier: 
-  moveName: PunchFast
-  animName: PunchFast
+  moveName: ComboPunch2
+  animName: ComboPunch2
   startup: 10
   active: 5
   recovery: 20
@@ -25,7 +25,7 @@ MonoBehaviour:
   canCancelOnHit: 1
   canCancelOnBlock: 1
   cancelInto:
-  - {fileID: 11400000, guid: 098fafd1095b9c64bb844650f27400dc, type: 2}
+  - {fileID: 11400000, guid: 5ba44dd642cd70a4ead89ec8ef934290, type: 2}
   hitboxes:
   - start: 10
     end: 15
