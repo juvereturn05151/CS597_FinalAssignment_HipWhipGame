@@ -13,6 +13,8 @@ namespace RollbackSupport
     public class FighterStateMachine : MonoBehaviour, IFighterComponentInjectable
     {
         private FighterBaseState currentState;
+        private FighterBaseState previousState;
+        public FighterBaseState PreviousState => previousState;
         private Dictionary<FighterState, FighterBaseState> stateMap;
         private List<FighterState> uninterruptedList;
         public bool IsInUninterruptedState => uninterruptedList.Contains(CurrentStateType);
@@ -92,6 +94,7 @@ namespace RollbackSupport
         public void SwitchState(FighterState newState, int duration = 0)
         {
             currentState?.OnExit();
+            previousState = currentState;
             CurrentStateType = newState;
             currentState = stateMap[newState];
             currentState.OnEnter(duration);
