@@ -8,6 +8,7 @@ namespace RollbackSupport
         public Vector3 pos, vel;
         public InputFrame lastInput;
         public FighterState state;
+        public float meter;
         public int moveFrame;
         public string moveName;
         public float damagePercent;
@@ -16,6 +17,7 @@ namespace RollbackSupport
         public int durationTimer;
         public int maxDurationTimer;
         public bool moveExecuted;
+
 
         public static FighterStateSnapshot From(FighterComponentManager f)
         {
@@ -28,6 +30,7 @@ namespace RollbackSupport
                 vel = f.FighterController.body.velocity,
                 state = f.FighterStateMachine.CurrentStateType,
                 lastInput = f.FighterController.LastInput,
+                meter = f.FighterController.SuperMeter,
                 moveFrame = f.MoveExecutor.CurrentFrame,
                 moveName = f.MoveExecutor.CurrentMoveName,
                 damagePercent = f.FighterController.DamagePercent,
@@ -49,6 +52,8 @@ namespace RollbackSupport
 
             // 2. Restore inputs BEFORE logic
             f.FighterController.LastInput = lastInput;
+
+            f.FighterController.SetMeter(meter);
 
             // 3. Restore state machine (state + timers)
             f.FighterStateMachine.SwitchState(state);
