@@ -65,6 +65,7 @@ namespace RollbackSupport
                 { FighterState.TryGrab, new FighterTryGrabState(FighterComponentManager) },
                 { FighterState.Grabbing, new FighterGrabbing(FighterComponentManager) },
                 { FighterState.BeingGrabbed, new FighterBeingGrabbed(FighterComponentManager) },
+                {FighterState.Ultimate, new FighterUltimateState(FighterComponentManager) },
                 // Add more as needed
             };
 

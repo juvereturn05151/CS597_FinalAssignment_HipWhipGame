@@ -35,6 +35,9 @@ namespace RollbackSupport
         [SerializeField]
         private FighterGrabManager fighterGrabManager;
         public FighterGrabManager FighterGrabManager => fighterGrabManager;
+        [SerializeField]
+        private FighterCameraController fighterCameraController;
+        public FighterCameraController FighterCameraController => fighterCameraController;
         private Vector3 spawnPoint;
         public void SetSpawnPoint(Vector3 spawnPoint) 
         {
@@ -57,6 +60,7 @@ namespace RollbackSupport
             if (!deterministicAnimator) deterministicAnimator = GetComponent<DeterministicAnimator>();
             if (!cam) cam = GetComponentInChildren<Camera>();
             if (!fighterGrabManager) fighterGrabManager = GetComponent<FighterGrabManager>();
+            if (!fighterCameraController) fighterCameraController = GetComponent<FighterCameraController>();
 
             foreach (var injectable in GetComponents<IFighterComponentInjectable>())
             {

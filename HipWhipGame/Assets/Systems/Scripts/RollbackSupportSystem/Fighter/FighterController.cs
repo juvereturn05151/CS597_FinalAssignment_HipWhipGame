@@ -5,13 +5,13 @@ Copyright:    (c) 2025 DigiPen Institute of Technology. All rights reserved.
 */
 
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace RollbackSupport
 {
     public enum FighterState { Idle, Walk, Jump, Attack, Block, BlockStun, Hitstun, TryGrab, Disabled, Sidestep,     // startup frames of the grab
         Grabbing,    // holding the opponent
         BeingGrabbed,
+        Ultimate,
     }
 
     public class FighterController : MonoBehaviour, IFighterComponentInjectable
@@ -197,7 +197,7 @@ namespace RollbackSupport
             if (input.special && input.superButt)
             {
                 fighterComponentManager.MoveExecutor.StartMove(moves.ultimateButt);
-                fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Attack);
+                fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Ultimate);
                 return;
             }
 

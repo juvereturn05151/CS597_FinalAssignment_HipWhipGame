@@ -84,6 +84,9 @@ namespace RollbackSupport
         [Tooltip("Animation played on the victim when grabbed.")]
         public string grabVictimAnim;
 
+        [Header("Ultimate Settings")]
+        public bool isUltimate;
+        public int preSuperFreezeFrames = 20;
         private void OnValidate()
         {
             // Auto-fill totalFrames if not manually specified
