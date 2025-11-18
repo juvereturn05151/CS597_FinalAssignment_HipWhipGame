@@ -4,6 +4,7 @@ Author(s):    Ju-ve Chankasemporn
 Copyright:    (c) 2025 DigiPen Institute of Technology. All rights reserved.
 */
 
+using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEngine;
 
 namespace RollbackSupport
@@ -107,11 +108,20 @@ namespace RollbackSupport
             {
                 matchState.isGameOver = true;
                 matchState.winnerIndex = (playerIndex == 0 ? 1 : 0);
+                PlayVictoryAndDefeatAnimation();
                 return;
             }
 
             // Respawn logic
             SetRoundOver(true);
+        }
+
+        public void PlayVictoryAndDefeatAnimation() 
+        {
+            fighter1.ResetPosition();
+            fighter1.FighterStateMachine.SwitchState(FighterState.Victory);
+            fighter2.ResetPosition();
+            fighter2.FighterStateMachine.SwitchState(FighterState.Defeat);
         }
 
         public void SetRoundOver(bool setter) 

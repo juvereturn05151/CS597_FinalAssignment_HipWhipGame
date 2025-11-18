@@ -12,6 +12,8 @@ namespace RollbackSupport
         Grabbing,    // holding the opponent
         BeingGrabbed,
         Ultimate,
+        Victory,
+        Defeat
     }
 
     public class FighterController : MonoBehaviour, IFighterComponentInjectable

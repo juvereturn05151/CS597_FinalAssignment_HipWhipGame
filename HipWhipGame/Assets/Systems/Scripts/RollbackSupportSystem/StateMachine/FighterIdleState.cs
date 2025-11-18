@@ -14,8 +14,6 @@ namespace RollbackSupport
 
         public override void OnEnter(int duration = 0)
         {
-            
-
             // Deterministically start at normalizedTime = 0
             if (stateMachine.PreviousState != null) 
             {

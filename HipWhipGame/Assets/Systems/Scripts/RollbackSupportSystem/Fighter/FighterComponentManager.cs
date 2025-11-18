@@ -74,6 +74,12 @@ namespace RollbackSupport
             fighterStateMachine.Step();
         }
 
+        public void ResetPosition()
+        {
+            fighterController.body.velocity = Vector3.zero;
+            fighterController.body.position = spawnPoint;
+        }
+
         public void ResetStateForRespawn()
         {
             fighterController.body.velocity = Vector3.zero;
