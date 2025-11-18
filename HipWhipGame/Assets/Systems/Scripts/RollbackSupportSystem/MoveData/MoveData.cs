@@ -89,6 +89,11 @@ namespace RollbackSupport
         public bool animateDuringFreeze = false;
         public int preSuperFreezeFrames = 20;
 
+        [Header("Meter Gain Settings")]
+        public float meterGainOnHit = 0.2f;
+        public float meterGainOnBlock = 0.1f;
+        public float meterGainWhenBlocked = 0.3f;
+
         private void OnValidate()
         {
             // Auto-fill totalFrames if not manually specified

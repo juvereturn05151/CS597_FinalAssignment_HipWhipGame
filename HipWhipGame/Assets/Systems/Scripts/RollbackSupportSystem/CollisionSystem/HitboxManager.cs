@@ -72,10 +72,13 @@ namespace RollbackSupport
 
                         if (defender.FighterController.IsBlocking())
                         {
+                            attacker.FighterController.AddMeter(move.meterGainOnBlock);
                             defender.FighterController.TakeBlock(move, -worldKnock);
+                            defender.FighterController.AddMeter(move.meterGainWhenBlocked);
                         }
                         else 
                         {
+                            attacker.FighterController.AddMeter(move.meterGainOnHit);
                             defender.FighterController.TakeHit(move, -worldKnock);
                         }
                             

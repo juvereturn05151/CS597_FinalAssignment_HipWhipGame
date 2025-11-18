@@ -64,6 +64,36 @@ namespace RollbackSupport
 
         public float sidestepAngleSpeed = 6f;
 
+        private float superMeter;
+
+        public float SuperMeter
+        {
+            get => superMeter;
+            private set => superMeter = Mathf.Clamp(value, 0f, 5f);
+        }
+
+        public void AddMeter(float amount)
+        {
+            SuperMeter += amount;
+            fighterComponentManager.FighterUI.UpdateMeter(superMeter);
+        }
+
+        public bool SpendMeter(float amount)
+        {
+            if (superMeter < amount)
+                return false;
+
+            superMeter -= amount;
+            fighterComponentManager.FighterUI.UpdateMeter(superMeter);
+            return true;
+        }
+
+        public void SetMeter(float value)
+        {
+            superMeter = Mathf.Clamp(value, 0f, 5f);
+            fighterComponentManager.FighterUI.UpdateMeter(superMeter);
+        }
+
         public void Inject(FighterComponentManager fighterComponentManager)
         {
             this.fighterComponentManager = fighterComponentManager;
@@ -180,24 +210,33 @@ namespace RollbackSupport
             // 1. SPECIAL + LIGHT  -> THROW
             if (input.special && input.light)
             {
-                fighterComponentManager.MoveExecutor.StartMove(moves.grab);
-                fighterComponentManager.FighterStateMachine.SwitchState(FighterState.TryGrab);
+                if (SpendMeter(1f))
+                {
+                    fighterComponentManager.MoveExecutor.StartMove(moves.grab);
+                    fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Attack);
+                }
                 return;
             }
 
             // 2. SPECIAL + HEAVY -> FART (big hitstun)
             if (input.special && input.heavy)
             {
-                fighterComponentManager.MoveExecutor.StartMove(moves.specialFart);
-                fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Attack);
+                if (SpendMeter(2f))
+                {
+                    fighterComponentManager.MoveExecutor.StartMove(moves.specialFart);
+                    fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Attack);
+                }
                 return;
             }
 
             // 3. SPECIAL + SUPER BUTT  -> ULTRA SUPER BUTT
             if (input.special && input.superButt)
             {
-                fighterComponentManager.MoveExecutor.StartMove(moves.ultimateButt);
-                fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Ultimate);
+                if (SpendMeter(3f))
+                {
+                    fighterComponentManager.MoveExecutor.StartMove(moves.ultimateButt);
+                    fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Ultimate);
+                }
                 return;
             }
 
