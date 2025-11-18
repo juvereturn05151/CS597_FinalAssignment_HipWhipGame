@@ -26,6 +26,8 @@ namespace RollbackSupport
             // Disable all movement
             fighterComponentManager.FighterController.SetIsMovable(false);
 
+            fighterComponentManager.MoveExecutor.SetFrozen(true);
+
             // Camera cinematic start
             fighterComponentManager.FighterCameraController.StartUltimateZoom(move.preSuperFreezeFrames);
 
@@ -45,6 +47,11 @@ namespace RollbackSupport
             if (frameCounter <= freezeFrames)
             {
                 return;
+            }
+
+            if (frameCounter == freezeFrames + 1)
+            {
+                fighterComponentManager.MoveExecutor.SetFrozen(false);
             }
 
             // 2. Move Execution after freeze
@@ -68,8 +75,22 @@ namespace RollbackSupport
 
         public override void OnUpdateAnimation()
         {
-            float norm = (float)(frameCounter - freezeFrames) / totalFrames;
+            float norm;
+
+            if (move.animateDuringFreeze)
+            {
+                // Animation plays during freeze but DOES NOT affect startup.
+                // We use frameCounter directly but subtract freezeFrames AFTER.
+                norm = (float)frameCounter / (totalFrames + freezeFrames);
+            }
+            else
+            {
+                // Frozen animation (original behavior)
+                norm = (float)(frameCounter - freezeFrames) / totalFrames;
+            }
+
             norm = Mathf.Clamp01(norm);
+
 
             fighterComponentManager.Animator.Play(move.animName, 0, norm);
             fighterComponentManager.Animator.Update(0f);

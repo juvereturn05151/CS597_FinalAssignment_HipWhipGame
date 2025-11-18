@@ -86,7 +86,9 @@ namespace RollbackSupport
 
         [Header("Ultimate Settings")]
         public bool isUltimate;
+        public bool animateDuringFreeze = false;
         public int preSuperFreezeFrames = 20;
+
         private void OnValidate()
         {
             // Auto-fill totalFrames if not manually specified

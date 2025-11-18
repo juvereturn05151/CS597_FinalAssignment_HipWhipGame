@@ -25,6 +25,13 @@ namespace RollbackSupport
         private bool sfxPlayed;
         private bool vfxSpawned;
 
+        private bool isFrozen = false;
+
+        public void SetFrozen(bool frozen)
+        {
+            isFrozen = frozen;
+        }
+
         public void Inject(FighterComponentManager fighterComponentManager)
         {
             this.fighterComponentManager = fighterComponentManager;
@@ -50,6 +57,9 @@ namespace RollbackSupport
             {
                 return;
             }
+
+            if (isFrozen)
+                return;
 
             if (fighterComponentManager.FighterStateMachine.CurrentStateType == FighterState.Grabbing ||
                 fighterComponentManager.FighterStateMachine.CurrentStateType == FighterState.BeingGrabbed)
