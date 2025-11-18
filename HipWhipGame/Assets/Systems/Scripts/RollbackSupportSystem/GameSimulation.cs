@@ -108,7 +108,7 @@ namespace RollbackSupport
             {
                 matchState.isGameOver = true;
                 matchState.winnerIndex = (playerIndex == 0 ? 1 : 0);
-                PlayVictoryAndDefeatAnimation();
+                PlayVictoryAndDefeatAnimation(matchState.winnerIndex);
                 return;
             }
 
@@ -116,12 +116,22 @@ namespace RollbackSupport
             SetRoundOver(true);
         }
 
-        public void PlayVictoryAndDefeatAnimation() 
+        public void PlayVictoryAndDefeatAnimation(int winner) 
         {
             fighter1.ResetPosition();
-            fighter1.FighterStateMachine.SwitchState(FighterState.Victory);
             fighter2.ResetPosition();
-            fighter2.FighterStateMachine.SwitchState(FighterState.Defeat);
+
+            if (winner == 0)
+            {
+                fighter1.FighterStateMachine.SwitchState(FighterState.Victory);
+                fighter2.FighterStateMachine.SwitchState(FighterState.Defeat);
+            }
+            else 
+            {
+                fighter1.FighterStateMachine.SwitchState(FighterState.Defeat);
+                fighter2.FighterStateMachine.SwitchState(FighterState.Victory);
+            }
+                
         }
 
         public void SetRoundOver(bool setter) 

@@ -31,10 +31,26 @@ public class MatchUI : MonoBehaviour
     private GameObject groupPlayerUI;
     public GameObject GroupPlayerUI => groupPlayerUI;
 
+    [SerializeField]
+    private TextMeshProUGUI p1Status;
+
+    [SerializeField]
+    private TextMeshProUGUI p2Status;
+
     public void ShowGameOver(int winner)
     {
         gameOverPanel.SetActive(true);
-        winnerText.text = $"Player {winner + 1} Wins!";
+
+        if (winner == 0)
+        {
+            p1Status.text = "Winner!";
+            p2Status.text = "Loser!";
+        }
+        else 
+        {
+            p1Status.text = "Loser!";
+            p2Status.text = "Winner!";
+        }
     }
 
     public void Hide()
