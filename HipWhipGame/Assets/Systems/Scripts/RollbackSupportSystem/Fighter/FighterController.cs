@@ -66,6 +66,9 @@ namespace RollbackSupport
 
         public float sidestepAngleSpeed = 6f;
 
+        [SerializeField]
+        private GameObject pressingSpecialEffect;
+
         private float superMeter;
 
         public float SuperMeter
@@ -85,6 +88,7 @@ namespace RollbackSupport
             if (superMeter < amount)
                 return false;
 
+            pressingSpecialEffect.SetActive(false);
             superMeter -= amount;
             fighterComponentManager.FighterUI.UpdateMeter(superMeter);
             return true;
@@ -136,6 +140,7 @@ namespace RollbackSupport
 
                 if (!LastInput.block)
                 {
+                    HandleSpecialButtonEffect();
                     ProcessMovement();
                     HandleAttacks();
                 }
@@ -153,6 +158,11 @@ namespace RollbackSupport
 
             RotateToOpponent();
             transform.position = body.position;
+        }
+
+        private void HandleSpecialButtonEffect() 
+        {
+            pressingSpecialEffect.SetActive(LastInput.special && superMeter >= 1);
         }
 
         private void RotateToOpponent() 
