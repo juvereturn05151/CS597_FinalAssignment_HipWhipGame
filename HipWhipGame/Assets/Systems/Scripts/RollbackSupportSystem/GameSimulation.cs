@@ -77,11 +77,11 @@ namespace RollbackSupport
                 return;
             }
 
-            if (PhysicsWorld.Instance.GetStageBounds().IsOutside(fighter1.FighterController.body.position)) 
+            if (PhysicsWorld.Instance.GetStageBounds().IsFalling(fighter1.FighterController.body.position)) 
             {
                 OnPlayerFall(0);
             }
-            else if (PhysicsWorld.Instance.GetStageBounds().IsOutside(fighter2.FighterController.body.position)) 
+            else if (PhysicsWorld.Instance.GetStageBounds().IsFalling(fighter2.FighterController.body.position)) 
             {
                 OnPlayerFall(1);
             }

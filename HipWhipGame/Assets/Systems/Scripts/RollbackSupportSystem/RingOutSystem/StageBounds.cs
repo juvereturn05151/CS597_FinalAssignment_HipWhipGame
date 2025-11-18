@@ -5,6 +5,7 @@ Copyright:    (c) 2025 DigiPen Institute of Technology. All rights reserved.
 */
 
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 namespace RollbackSupport
 {
@@ -19,6 +20,11 @@ namespace RollbackSupport
             return pos.x < min.x || pos.x > max.x ||
                    pos.y < min.y || pos.y > max.y ||
                    pos.z < min.z || pos.z > max.z;
+        }
+
+        public bool IsFalling(Vector3 pos) 
+        {
+            return pos.y < (min.y - 5.0f); 
         }
     }
 }
