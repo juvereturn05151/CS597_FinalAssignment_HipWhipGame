@@ -78,6 +78,8 @@ namespace RollbackSupport
                         }
                         else 
                         {
+                            Vector3 hitPos = GetHitPosition(hitbox, attacker.transform, hurt, defender.transform);
+                            JuiceController.Instance.Play("Impact1", hitPos);
                             attacker.FighterController.AddMeter(move.meterGainOnHit);
                             defender.FighterController.TakeHit(move, -worldKnock);
                         }
@@ -87,6 +89,15 @@ namespace RollbackSupport
                     }
                 }
             }
+        }
+
+        public static Vector3 GetHitPosition(CollisionBox hit, Transform attackerT, CollisionBox hurt, Transform defenderT)
+        {
+            Bounds hb = hit.ToWorld(attackerT);
+            Bounds hburt = hurt.ToWorld(defenderT);
+
+            // midpoint between the two volumes
+            return (hb.center + hburt.center) * 0.5f;
         }
 
     }

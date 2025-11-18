@@ -57,6 +57,7 @@ namespace RollbackSupport
 
         [Tooltip("Visual effect spawned when the move hits or activates.")]
         public GameObject vfxPrefab;
+        public string vfxName;
 
         [Header("Movement During Animation (Frame-Range Based)")]
         [Tooltip("If true, disables Unity's root motion and applies manual motion instead.")]
