@@ -126,8 +126,8 @@ namespace RollbackSupport
                         if (input.heavy) return true;
                         break;
 
-                    case CancelInputType.Grab:
-                        if (input.grab) return true;
+                    case CancelInputType.SpecialPlusLight:
+                        if (input.special && input.light) return true;
                         break;
                 }
             }
@@ -164,7 +164,7 @@ namespace RollbackSupport
         public float sideSpeed;
     }
 
-    public enum CancelInputType { None, Light, Heavy, Grab, Special, Direction }
+    public enum CancelInputType { None, Light, Heavy, Grab, SpecialPlusLight, Direction }
 
     [System.Serializable]
     public class MoveCancelRule
