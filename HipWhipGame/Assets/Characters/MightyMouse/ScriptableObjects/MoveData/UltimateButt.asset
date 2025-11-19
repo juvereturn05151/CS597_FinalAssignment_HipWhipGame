@@ -20,7 +20,7 @@ MonoBehaviour:
   hitstunFrames: 90
   blockstunFrames: 0
   isKnockbackAttack: 1
-  knockback: {x: 0, y: 0, z: 5}
+  knockback: {x: 0, y: 0, z: 10}
   isTrackingSidestep: 0
   damage: 1
   canCancelOnHit: 0
@@ -39,28 +39,23 @@ MonoBehaviour:
   overrideRootMotion: 1
   motionSegments:
   - frameStart: 15
+    frameEnd: 15
+    forwardSpeed: 0.15
+    verticalSpeed: 0.22
+    sideSpeed: 0
+  - frameStart: 16
+    frameEnd: 16
+    forwardSpeed: 0.35
+    verticalSpeed: 0.25
+    sideSpeed: 0
+  - frameStart: 17
     frameEnd: 17
-    forwardSpeed: 0.3
-    verticalSpeed: 0.12
-    sideSpeed: 0
-  - frameStart: 18
-    frameEnd: 20
-    forwardSpeed: 0.45
-    verticalSpeed: 0.18
-    sideSpeed: 0
-  - frameStart: 21
-    frameEnd: 23
-    forwardSpeed: 0.6
+    forwardSpeed: 0.5
     verticalSpeed: 0.2
     sideSpeed: 0
-  - frameStart: 24
-    frameEnd: 26
-    forwardSpeed: 0.5
-    verticalSpeed: 0.15
-    sideSpeed: 0
-  - frameStart: 27
-    frameEnd: 30
-    forwardSpeed: 0.25
+  - frameStart: 18
+    frameEnd: 18
+    forwardSpeed: 0.3
     verticalSpeed: 0.1
     sideSpeed: 0
   plusOnHit: 61
