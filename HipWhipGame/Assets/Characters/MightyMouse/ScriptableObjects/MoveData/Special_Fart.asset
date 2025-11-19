@@ -21,7 +21,7 @@ MonoBehaviour:
   blockstunFrames: 25
   isKnockbackAttack: 0
   knockback: {x: 0, y: 0, z: 0.25}
-  pushbackOnHit: 1
+  isTrackingSidestep: 1
   damage: 1
   canCancelOnHit: 0
   canCancelOnBlock: 0

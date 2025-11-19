@@ -21,7 +21,7 @@ MonoBehaviour:
   blockstunFrames: 25
   isKnockbackAttack: 1
   knockback: {x: 0, y: 0, z: 2.5}
-  pushbackOnHit: 1
+  isTrackingSidestep: 0
   damage: 1
   canCancelOnHit: 0
   canCancelOnBlock: 0
@@ -67,6 +67,6 @@ MonoBehaviour:
   animateDuringFreeze: 0
   preSuperFreezeFrames: 20
   meterConsumption: 1
-  meterGainOnHit: 0.2
-  meterGainOnBlock: 0.1
-  meterGainWhenBlocked: 0.3
+  meterGainOnHit: 0
+  meterGainOnBlock: 0
+  meterGainWhenBlocked: 1

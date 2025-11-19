@@ -16,6 +16,7 @@ namespace RollbackSupport
         {
             fighterComponentManager.FighterStateMachine.SetMaxDurationTimer(duration);
             fighterComponentManager.FighterStateMachine.SetDurationTimer(duration);
+            fighterComponentManager.MoveExecutor.ForceStop();
         }
 
         public override void OnUpdate()
