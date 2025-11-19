@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 303d8bb4016a3c040a60f6e7624fa1cb, type: 3}
   m_Name: SuperButt
   m_EditorClassIdentifier: 
-  moveName: ButtAttackHopKick
-  animName: ButtAttackHopKick
+  moveName: SuperButt
+  animName: SuperButt
   startup: 15
   active: 15
   recovery: 29
@@ -66,6 +66,7 @@ MonoBehaviour:
   isUltimate: 0
   animateDuringFreeze: 0
   preSuperFreezeFrames: 20
+  meterConsumption: 1
   meterGainOnHit: 0.2
   meterGainOnBlock: 0.1
   meterGainWhenBlocked: 0.3

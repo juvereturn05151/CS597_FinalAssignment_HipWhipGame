@@ -26,6 +26,10 @@ MonoBehaviour:
   canCancelOnHit: 1
   canCancelOnBlock: 0
   cancelRules:
+  - nextMove: {fileID: 11400000, guid: 8d8e87341e6659e46b608a14f7d834fd, type: 2}
+    requiredInput: 5
+  - nextMove: {fileID: 11400000, guid: 1fdb1df0cfb4a8c4194c2c1f44978cbd, type: 2}
+    requiredInput: 4
   - nextMove: {fileID: 11400000, guid: 5ba44dd642cd70a4ead89ec8ef934290, type: 2}
     requiredInput: 1
   hitboxes:

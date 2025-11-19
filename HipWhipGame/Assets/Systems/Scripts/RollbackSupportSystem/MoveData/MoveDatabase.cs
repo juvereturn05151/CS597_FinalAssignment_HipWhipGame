@@ -19,6 +19,7 @@ namespace RollbackSupport
             if (grab && grab.moveName == name) return grab;
             if (sideStepLeft && sideStepLeft.moveName == name) return sideStepLeft;
             if (sideStepRight && sideStepRight.moveName == name) return sideStepRight;
+            if (superButt && superButt.moveName == name) return superButt;
             if (specialFart && specialFart.moveName == name) return specialFart;
             if (ultimateButt && ultimateButt.moveName == name) return ultimateButt;
             return null;

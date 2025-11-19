@@ -85,6 +85,7 @@ namespace RollbackSupport
         public int preSuperFreezeFrames = 20;
 
         [Header("Meter Gain Settings")]
+        public float meterConsumption = 0f;
         public float meterGainOnHit = 0.2f;
         public float meterGainOnBlock = 0.1f;
         public float meterGainWhenBlocked = 0.3f;
@@ -129,6 +130,10 @@ namespace RollbackSupport
                     case CancelInputType.SpecialPlusLight:
                         if (input.special && input.light) return true;
                         break;
+
+                    case CancelInputType.SpecialPlusHeavy:
+                        if (input.special && input.heavy) return true;
+                        break;
                 }
             }
 
@@ -164,7 +169,7 @@ namespace RollbackSupport
         public float sideSpeed;
     }
 
-    public enum CancelInputType { None, Light, Heavy, Grab, SpecialPlusLight, Direction }
+    public enum CancelInputType { None, Light, Heavy, Grab, SpecialPlusLight, SpecialPlusHeavy, SpecialPlusLightPlusHeavy }
 
     [System.Serializable]
     public class MoveCancelRule

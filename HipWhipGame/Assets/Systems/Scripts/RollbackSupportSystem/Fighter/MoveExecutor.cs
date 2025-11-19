@@ -132,9 +132,14 @@ namespace RollbackSupport
             {
                 if (currentMove.CanCancelInto(fighter.Opponent.IsBlocking(), rule.nextMove, frame, fighter.LastInput))
                 {
-                    executing = false;
-                    StartMove(rule.nextMove);
-                    fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Attack);
+                    if (fighter.SpendMeter(rule.nextMove.meterConsumption))
+                    {
+                        executing = false;
+                        StartMove(rule.nextMove);
+                        fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Attack);
+                    }
+
+
                     return;
                 }
             }

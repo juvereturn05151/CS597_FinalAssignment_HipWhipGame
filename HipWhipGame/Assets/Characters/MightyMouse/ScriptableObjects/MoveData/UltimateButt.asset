@@ -66,6 +66,7 @@ MonoBehaviour:
   isUltimate: 1
   animateDuringFreeze: 1
   preSuperFreezeFrames: 118
+  meterConsumption: 3
   meterGainOnHit: 0
   meterGainOnBlock: 0
   meterGainWhenBlocked: 0

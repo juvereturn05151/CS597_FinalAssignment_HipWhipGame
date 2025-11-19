@@ -228,17 +228,6 @@ namespace RollbackSupport
             // 1. SPECIAL + LIGHT  -> THROW
             if (input.special && input.light)
             {
-                if (SpendMeter(1f))
-                {
-                    fighterComponentManager.MoveExecutor.StartMove(moves.grab);
-                    fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Attack);
-                }
-                return;
-            }
-
-            // 2. SPECIAL + HEAVY -> FART (big hitstun)
-            if (input.special && input.heavy)
-            {
                 if (SpendMeter(2f))
                 {
                     fighterComponentManager.MoveExecutor.StartMove(moves.specialFart);
@@ -247,8 +236,19 @@ namespace RollbackSupport
                 return;
             }
 
+            // 2. SPECIAL + HEAVY -> FART (big hitstun)
+            if (input.special && input.heavy)
+            {
+                if (SpendMeter(1f))
+                {
+                    fighterComponentManager.MoveExecutor.StartMove(moves.superButt);
+                    fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Attack);
+                }
+                return;
+            }
+
             // 3. SPECIAL + SUPER BUTT  -> ULTRA SUPER BUTT
-            if (input.special && input.superButt)
+            if (input.special && input.light && input.heavy)
             {
                 if (SpendMeter(3f))
                 {
@@ -266,11 +266,6 @@ namespace RollbackSupport
             else if(LastInput.light)
             {
                 fighterComponentManager.MoveExecutor.StartMove(moves.light);
-                fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Attack);
-            }
-            else if (LastInput.superButt)
-            {
-                fighterComponentManager.MoveExecutor.StartMove(moves.superButt);
                 fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Attack);
             }
             else if (LastInput.heavy) 

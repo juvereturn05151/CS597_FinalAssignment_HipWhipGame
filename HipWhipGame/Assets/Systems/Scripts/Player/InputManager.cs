@@ -91,11 +91,11 @@ public class InputManager : MonoBehaviour
 
         if (context.started)
         {
-            fighterComponentManager.FighterController.LastInput.superButt = true;
+            
         }
         else if (context.canceled)
         {
-            fighterComponentManager.FighterController.LastInput.superButt = false;
+            
         }
     }
 
