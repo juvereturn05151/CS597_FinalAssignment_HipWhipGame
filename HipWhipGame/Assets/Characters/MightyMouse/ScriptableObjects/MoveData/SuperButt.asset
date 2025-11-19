@@ -38,24 +38,29 @@ MonoBehaviour:
   vfxName: 
   overrideRootMotion: 1
   motionSegments:
-  - frameStart: 22
-    frameEnd: 22
-    forwardSpeed: 0.8
-    verticalSpeed: 0.22
+  - frameStart: 15
+    frameEnd: 17
+    forwardSpeed: 0.3
+    verticalSpeed: 0.12
     sideSpeed: 0
-  - frameStart: 23
+  - frameStart: 18
+    frameEnd: 20
+    forwardSpeed: 0.45
+    verticalSpeed: 0.18
+    sideSpeed: 0
+  - frameStart: 21
     frameEnd: 23
-    forwardSpeed: 1
-    verticalSpeed: 0.25
-    sideSpeed: 0
-  - frameStart: 24
-    frameEnd: 24
-    forwardSpeed: 1.3
+    forwardSpeed: 0.6
     verticalSpeed: 0.2
     sideSpeed: 0
-  - frameStart: 25
-    frameEnd: 25
-    forwardSpeed: 1
+  - frameStart: 24
+    frameEnd: 26
+    forwardSpeed: 0.5
+    verticalSpeed: 0.15
+    sideSpeed: 0
+  - frameStart: 27
+    frameEnd: 30
+    forwardSpeed: 0.25
     verticalSpeed: 0.1
     sideSpeed: 0
   plusOnHit: 16
