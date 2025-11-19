@@ -10,22 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 303d8bb4016a3c040a60f6e7624fa1cb, type: 3}
-  m_Name: Combo_Light
+  m_Name: Combo_LightEnder
   m_EditorClassIdentifier: 
-  moveName: ComboPunch2
-  animName: ComboPunch2
-  startup: 10
-  active: 5
-  recovery: 20
-  hitstunFrames: 24
-  blockstunFrames: 20
+  moveName: ButtTornado
+  animName: ButtTornado
+  startup: 25
+  active: 20
+  recovery: 17
+  hitstunFrames: 17
+  blockstunFrames: 18
   knockback: {x: 0, y: 0, z: 0.25}
   pushbackOnHit: 1
   damage: 1
-  canCancelOnHit: 1
-  canCancelOnBlock: 1
-  cancelInto:
-  - {fileID: 11400000, guid: 5ba44dd642cd70a4ead89ec8ef934290, type: 2}
+  canCancelOnHit: 0
+  canCancelOnBlock: 0
+  cancelInto: []
   hitboxes:
   - start: 10
     end: 15
@@ -35,12 +34,19 @@ MonoBehaviour:
       enabled: 1
   sfx: {fileID: 0}
   vfxPrefab: {fileID: 0}
+  vfxName: 
   overrideRootMotion: 1
   motionSegments: []
-  plusOnHit: 4
-  plusOnBlock: 0
+  plusOnHit: 0
+  plusOnBlock: 1
   isGrab: 0
   grabRange: 1.2
   grabDuration: 0
   grabOffset: {x: 0, y: 0, z: 0}
   grabVictimAnim: 
+  isUltimate: 0
+  animateDuringFreeze: 0
+  preSuperFreezeFrames: 20
+  meterGainOnHit: 0.2
+  meterGainOnBlock: 0.1
+  meterGainWhenBlocked: 0.3
