@@ -22,3 +22,4 @@ MonoBehaviour:
   combo_light_ender: {fileID: 11400000, guid: 5ba44dd642cd70a4ead89ec8ef934290, type: 2}
   specialFart: {fileID: 11400000, guid: 1fdb1df0cfb4a8c4194c2c1f44978cbd, type: 2}
   ultimateButt: {fileID: 11400000, guid: 739b40b3d5a98e246977aa4d8bb891ba, type: 2}
+  spinButt: {fileID: 11400000, guid: f31724698d5261349a5be0f1bba947bd, type: 2}

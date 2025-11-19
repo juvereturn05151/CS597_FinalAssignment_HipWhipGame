@@ -9,7 +9,7 @@ namespace RollbackSupport
         public MoveData light, heavy, grab, superButt, sideStepLeft, sideStepRight, combo_light, combo_light_ender;
         public MoveData specialFart;     
         public MoveData ultimateButt;
-
+        public MoveData spinButt;
         public MoveData Get(string name)
         {
             if (light && light.moveName == name) return light;
@@ -22,6 +22,7 @@ namespace RollbackSupport
             if (superButt && superButt.moveName == name) return superButt;
             if (specialFart && specialFart.moveName == name) return specialFart;
             if (ultimateButt && ultimateButt.moveName == name) return ultimateButt;
+            if (spinButt && spinButt.moveName == name) return spinButt;
             return null;
         }
     }

@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 303d8bb4016a3c040a60f6e7624fa1cb, type: 3}
+  m_Name: SpinButt
+  m_EditorClassIdentifier: 
+  moveName: ButtTornadoBeatSidestep
+  animName: ButtTornadoBeatSidestep
+  startup: 20
+  active: 8
+  recovery: 34
+  hitstunFrames: 18
+  blockstunFrames: 8
+  isKnockbackAttack: 0
+  knockback: {x: 0, y: 0, z: 0.5}
+  isTrackingSidestep: 1
+  damage: 1
+  canCancelOnHit: 0
+  canCancelOnBlock: 0
+  cancelRules: []
+  hitboxes:
+  - start: 20
+    end: 28
+    box:
+      localCenter: {x: 0, y: 0.5, z: 1}
+      size: {x: 1, y: 0.45, z: 1}
+      enabled: 1
+  sfx: {fileID: 0}
+  vfxPrefab: {fileID: 0}
+  vfxName: 
+  overrideRootMotion: 1
+  motionSegments:
+  - frameStart: 25
+    frameEnd: 28
+    forwardSpeed: 0.1
+    verticalSpeed: 0
+    sideSpeed: 0
+  plusOnHit: -16
+  plusOnBlock: -26
+  isGrab: 0
+  grabRange: 1.2
+  grabDuration: 0
+  isUltimate: 0
+  animateDuringFreeze: 0
+  preSuperFreezeFrames: 20
+  meterConsumption: 0
+  meterGainOnHit: 0.00125
+  meterGainOnBlock: 0
+  meterGainWhenBlocked: 0.3

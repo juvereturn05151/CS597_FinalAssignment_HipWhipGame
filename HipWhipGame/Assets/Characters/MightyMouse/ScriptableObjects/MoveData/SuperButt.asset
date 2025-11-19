@@ -40,22 +40,22 @@ MonoBehaviour:
   motionSegments:
   - frameStart: 22
     frameEnd: 22
-    forwardSpeed: 0.2
+    forwardSpeed: 0.8
     verticalSpeed: 0.22
     sideSpeed: 0
   - frameStart: 23
     frameEnd: 23
-    forwardSpeed: 0.4
+    forwardSpeed: 1
     verticalSpeed: 0.25
     sideSpeed: 0
   - frameStart: 24
     frameEnd: 24
-    forwardSpeed: 0.6
+    forwardSpeed: 1.3
     verticalSpeed: 0.2
     sideSpeed: 0
   - frameStart: 25
     frameEnd: 25
-    forwardSpeed: 0.3
+    forwardSpeed: 1
     verticalSpeed: 0.1
     sideSpeed: 0
   plusOnHit: 16
