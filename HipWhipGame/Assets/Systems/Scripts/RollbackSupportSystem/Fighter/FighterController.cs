@@ -375,8 +375,6 @@ namespace RollbackSupport
                 angle = -sidestepAngleSpeed;
             }
 
-                
-
             // rotate around opponent on the XZ plane
             offset = Quaternion.Euler(0f, angle, 0f) * offset;
 
@@ -386,8 +384,6 @@ namespace RollbackSupport
             // keep grounded Y
             body.position = new Vector3(body.position.x, pos.y, body.position.z);
 
-            // consume input (we only use it once per frame)
-            
         }
 
     }

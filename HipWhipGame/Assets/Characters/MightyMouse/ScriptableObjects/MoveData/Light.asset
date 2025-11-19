@@ -23,9 +23,10 @@ MonoBehaviour:
   pushbackOnHit: 1
   damage: 1
   canCancelOnHit: 1
-  canCancelOnBlock: 1
-  cancelInto:
-  - {fileID: 11400000, guid: 098fafd1095b9c64bb844650f27400dc, type: 2}
+  canCancelOnBlock: 0
+  cancelRules:
+  - nextMove: {fileID: 11400000, guid: 098fafd1095b9c64bb844650f27400dc, type: 2}
+    requiredInput: 1
   hitboxes:
   - start: 10
     end: 15
@@ -43,8 +44,6 @@ MonoBehaviour:
   isGrab: 0
   grabRange: 1.2
   grabDuration: 0
-  grabOffset: {x: 0, y: 0, z: 0}
-  grabVictimAnim: 
   isUltimate: 0
   animateDuringFreeze: 0
   preSuperFreezeFrames: 20

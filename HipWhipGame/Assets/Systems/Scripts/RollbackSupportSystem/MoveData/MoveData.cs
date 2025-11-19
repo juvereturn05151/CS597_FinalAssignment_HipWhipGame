@@ -44,8 +44,7 @@ namespace RollbackSupport
         [Tooltip("Can this move be canceled into another move on block?")]
         public bool canCancelOnBlock = false;
 
-        [Tooltip("List of moves that this move can cancel into.")]
-        public MoveData[] cancelInto;
+        public List<MoveCancelRule> cancelRules = new List<MoveCancelRule>();
 
         [Header("Hitboxes")]
         [Tooltip("Per-frame hitboxes active during this move.")]
@@ -97,6 +96,45 @@ namespace RollbackSupport
             plusOnHit = hitstunFrames - recovery;
             plusOnBlock = blockstunFrames - recovery;
         }
+
+        public bool CanCancelInto(bool isOpponentBlocking, MoveData targetMove, int frame, InputFrame input)
+        {
+            if (!canCancelOnHit)
+                return false;
+
+            if (isOpponentBlocking && !canCancelOnBlock)
+            {
+                return false;
+            }
+
+            if (frame < startup || frame > recovery)
+                return false;
+
+            foreach (var rule in cancelRules)
+            {
+                if (rule.nextMove != targetMove)
+                    continue;
+
+                switch (rule.requiredInput)
+                {
+                    case CancelInputType.Light:
+                        if (input.light) return true;
+                        break;
+
+                    case CancelInputType.Heavy:
+                        if (input.heavy) return true;
+                        break;
+
+                    case CancelInputType.Grab:
+                        if (input.grab) return true;
+                        break;
+                }
+            }
+
+            return false;
+        }
+
+
     }
 
     [System.Serializable]
@@ -123,5 +161,14 @@ namespace RollbackSupport
         public float verticalSpeed = 0f;
 
         public float sideSpeed;
+    }
+
+    public enum CancelInputType { None, Light, Heavy, Grab, Special, Direction }
+
+    [System.Serializable]
+    public class MoveCancelRule
+    {
+        public MoveData nextMove;
+        public CancelInputType requiredInput;
     }
 }
