@@ -30,6 +30,7 @@ namespace RollbackSupport
         [Tooltip("Number of frames the opponent is stunned when blocking.")]
         public int blockstunFrames = 10;
 
+        public bool isKnockbackAttack = false;
         [Tooltip("Knockback direction and magnitude applied on hit.")]
         public Vector3 knockback = new Vector3(2f, 0.5f, 0f);
 

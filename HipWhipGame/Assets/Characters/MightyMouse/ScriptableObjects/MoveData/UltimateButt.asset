@@ -19,12 +19,13 @@ MonoBehaviour:
   recovery: 29
   hitstunFrames: 90
   blockstunFrames: 0
+  isKnockbackAttack: 1
   knockback: {x: 0, y: 0, z: 10}
   pushbackOnHit: 1
   damage: 1
   canCancelOnHit: 0
   canCancelOnBlock: 0
-  cancelInto: []
+  cancelRules: []
   hitboxes:
   - start: 15
     end: 30
@@ -62,8 +63,6 @@ MonoBehaviour:
   isGrab: 0
   grabRange: 1.2
   grabDuration: 0
-  grabOffset: {x: 0, y: 0, z: 0}
-  grabVictimAnim: 
   isUltimate: 1
   animateDuringFreeze: 1
   preSuperFreezeFrames: 118

@@ -301,10 +301,16 @@ namespace RollbackSupport
             float knockbackGrowth = 1.0f;
 
             // calculate knockback using percentage
-            Vector3 scaledKnock =
-                worldKnock * (knockbackGrowth * (DamagePercent / 100f));
+            Vector3 scaledKnock;
 
-            Debug.Log($"scaledKnock: {scaledKnock}");
+            if (move.isKnockbackAttack)
+            {
+                scaledKnock = worldKnock * (knockbackGrowth * (DamagePercent / 100f));
+            }
+            else 
+            {
+                scaledKnock = worldKnock;
+            }
 
             hitVelocity = scaledKnock / move.hitstunFrames;
 
