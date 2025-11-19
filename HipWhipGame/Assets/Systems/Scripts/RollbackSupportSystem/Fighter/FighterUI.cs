@@ -30,6 +30,10 @@ namespace RollbackSupport
         // internal animation state
         private float[] currentValues = new float[5];
 
+        [SerializeField]
+        private GameObject specialUI;
+        public GameObject SpecialUI => specialUI;
+
         private void Awake()
         {
             // initialize values

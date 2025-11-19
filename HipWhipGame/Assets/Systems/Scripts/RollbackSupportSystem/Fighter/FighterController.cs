@@ -94,7 +94,6 @@ namespace RollbackSupport
             if (superMeter < amount)
                 return false;
 
-            pressingSpecialEffect.SetActive(false);
             superMeter -= amount;
             fighterComponentManager.FighterUI.UpdateMeter(superMeter);
             return true;
@@ -121,7 +120,6 @@ namespace RollbackSupport
             LastInput.horiz = 0f;
             LastInput.vert = 0f;
             damagePercent = 0.0f;
-            pressingSpecialEffect.SetActive(false);
             fighterComponentManager.MoveExecutor.ForceStop();
             superMeter = 0.0f;
             fighterComponentManager.FighterUI.UpdatePercentage(damagePercent);
@@ -165,13 +163,14 @@ namespace RollbackSupport
                 fighterComponentManager.MoveExecutor.SimulateFrame();
             }
 
+            HandleSpecialButtonEffect();
             RotateToOpponent();
             transform.position = body.position;
         }
 
         private void HandleSpecialButtonEffect() 
         {
-            pressingSpecialEffect.SetActive(LastInput.special && superMeter >= 1);
+            fighterComponentManager.FighterUI.SpecialUI.SetActive(LastInput.special );
         }
 
         private void RotateToOpponent() 
