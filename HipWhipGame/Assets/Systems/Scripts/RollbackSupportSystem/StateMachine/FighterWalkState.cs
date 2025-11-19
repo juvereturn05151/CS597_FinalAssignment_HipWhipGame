@@ -39,9 +39,9 @@ namespace RollbackSupport
             Vector3 forward = fighterComponentManager.transform.forward;
             Vector3 right = fighterComponentManager.transform.right;
 
-            if (fighterComponentManager.FighterController.lookAtTarget)
+            if (fighterComponentManager.FighterController.Opponent)
             {
-                Vector3 dir = fighterComponentManager.FighterController.lookAtTarget.position - fighterComponentManager.FighterController.transform.position;
+                Vector3 dir = fighterComponentManager.FighterController.Opponent.transform.position - fighterComponentManager.FighterController.transform.position;
                 dir.y = 0;
                 if (dir.sqrMagnitude > 0.0001f)
                 {

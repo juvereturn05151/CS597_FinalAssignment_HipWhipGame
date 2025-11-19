@@ -24,7 +24,13 @@ namespace RollbackSupport
         public string fighterName;
         public KinematicBody body = new KinematicBody();
         public MoveDatabase moves;
-        public Transform lookAtTarget;
+        [SerializeField]
+        private FighterController opponent;
+        public FighterController Opponent => opponent;
+        public void SetOpponent(FighterController opponent) 
+        {
+            this.opponent = opponent;
+        }
 
         private Vector3 hitVelocity;
 
@@ -168,9 +174,9 @@ namespace RollbackSupport
         private void RotateToOpponent() 
         {
             // Rotate toward target
-            if (fighterComponentManager.FighterController.lookAtTarget)
+            if (fighterComponentManager.FighterController.opponent)
             {
-                Vector3 face = fighterComponentManager.FighterController.lookAtTarget.position - fighterComponentManager.FighterController.transform.position;
+                Vector3 face = fighterComponentManager.FighterController.opponent.transform.position - fighterComponentManager.FighterController.transform.position;
                 face.y = 0f;
                 if (face.sqrMagnitude > 0.0001f) 
                 {
@@ -347,7 +353,7 @@ namespace RollbackSupport
         private void SimulateSidestep()
         {
             // The opponent we orbit around
-            Transform opponent = fighterComponentManager.FighterController.lookAtTarget;
+            Transform opponent = fighterComponentManager.FighterController.Opponent.transform;
             if (!opponent)
                 return;
 

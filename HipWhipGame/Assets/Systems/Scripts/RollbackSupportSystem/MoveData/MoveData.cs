@@ -79,12 +79,6 @@ namespace RollbackSupport
         [Tooltip("Duration (seconds) the grab holds the opponent.")]
         public int grabDuration = 5;
 
-        [Tooltip("Where to reposition the opponent relative to attacker when grabbed.")]
-        public Vector3 grabOffset;
-
-        [Tooltip("Animation played on the victim when grabbed.")]
-        public string grabVictimAnim;
-
         [Header("Ultimate Settings")]
         public bool isUltimate;
         public bool animateDuringFreeze = false;

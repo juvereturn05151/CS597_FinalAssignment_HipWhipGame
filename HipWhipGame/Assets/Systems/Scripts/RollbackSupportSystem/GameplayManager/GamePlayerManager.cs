@@ -94,10 +94,10 @@ namespace RollbackSupport
             //Hack
             if (fcm.FighterController.playerIndex == 2)
             {
-                fcm.FighterController.lookAtTarget = activePlayers[0].transform;
+                fcm.FighterController.SetOpponent(activePlayers[0].GetComponent<FighterController>());
                 var skinnedRenderer = fcm.Animator.GetComponentInChildren<SkinnedMeshRenderer>();
                 skinnedRenderer.material = player2Material;
-                activePlayers[0].GetComponent<FighterController>().lookAtTarget = fcm.FighterController.transform;
+                activePlayers[0].GetComponent<FighterController>().SetOpponent(fcm.FighterController);
 
                 simulation.Initialize(activePlayers[0].GetComponent<FighterComponentManager>(), fcm);
             }

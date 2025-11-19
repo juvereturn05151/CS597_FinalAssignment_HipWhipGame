@@ -33,7 +33,7 @@ namespace RollbackSupport
         {
             if (grabbedOpponent == null) 
             {
-                grabbedOpponent = fighterComponentManager.FighterController.lookAtTarget.GetComponent<FighterComponentManager>();
+                grabbedOpponent = fighterComponentManager.FighterController.Opponent.GetComponent<FighterComponentManager>();
             }
 
             fighterComponentManager.FighterController.SetIsMovable(false);

@@ -164,8 +164,8 @@ namespace RollbackSupport
 
         private void TryGrabOpponent()
         {
-            var opponent = this.fighterComponentManager.FighterController.lookAtTarget;
-            float dist = Vector3.Distance(fighter.body.position, opponent.GetComponent<FighterController>().body.position);
+            var opponent = this.fighterComponentManager.FighterController.Opponent;
+            float dist = Vector3.Distance(fighter.body.position, opponent.body.position);
             if (dist <= currentMove.grabRange)
             {
                 executing = false;
