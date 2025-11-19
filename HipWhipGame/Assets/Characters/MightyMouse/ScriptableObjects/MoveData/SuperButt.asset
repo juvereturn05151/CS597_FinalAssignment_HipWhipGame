@@ -15,39 +15,41 @@ MonoBehaviour:
   moveName: ButtAttackHopKick
   animName: ButtAttackHopKick
   startup: 15
-  active: 22
-  recovery: 83
-  hitstunFrames: 90
-  blockstunFrames: 0
+  active: 15
+  recovery: 29
+  hitstunFrames: 45
+  blockstunFrames: 25
   knockback: {x: 0, y: 0, z: 5}
   pushbackOnHit: 1
+  damage: 1
   canCancelOnHit: 0
   canCancelOnBlock: 0
   cancelInto: []
   hitboxes:
-  - start: 22
-    end: 44
+  - start: 15
+    end: 30
     box:
       localCenter: {x: 0, y: 0.5, z: 0.25}
       size: {x: 0.5, y: 0.45, z: 0.5}
       enabled: 1
   sfx: {fileID: 0}
   vfxPrefab: {fileID: 0}
+  vfxName: 
   overrideRootMotion: 1
   motionSegments:
   - frameStart: 22
     frameEnd: 22
-    forwardSpeed: 0.15
+    forwardSpeed: 0.2
     verticalSpeed: 0.22
     sideSpeed: 0
   - frameStart: 23
     frameEnd: 23
-    forwardSpeed: 0.35
+    forwardSpeed: 0.4
     verticalSpeed: 0.25
     sideSpeed: 0
   - frameStart: 24
     frameEnd: 24
-    forwardSpeed: 0.5
+    forwardSpeed: 0.6
     verticalSpeed: 0.2
     sideSpeed: 0
   - frameStart: 25
@@ -55,10 +57,16 @@ MonoBehaviour:
     forwardSpeed: 0.3
     verticalSpeed: 0.1
     sideSpeed: 0
-  plusOnHit: 7
-  plusOnBlock: -83
+  plusOnHit: 16
+  plusOnBlock: -4
   isGrab: 0
   grabRange: 1.2
   grabDuration: 0
   grabOffset: {x: 0, y: 0, z: 0}
   grabVictimAnim: 
+  isUltimate: 0
+  animateDuringFreeze: 0
+  preSuperFreezeFrames: 20
+  meterGainOnHit: 0.2
+  meterGainOnBlock: 0.1
+  meterGainWhenBlocked: 0.3

@@ -19,7 +19,7 @@ MonoBehaviour:
   recovery: 29
   hitstunFrames: 90
   blockstunFrames: 0
-  knockback: {x: 0, y: 0, z: 5}
+  knockback: {x: 0, y: 0, z: 10}
   pushbackOnHit: 1
   damage: 1
   canCancelOnHit: 0
@@ -34,6 +34,7 @@ MonoBehaviour:
       enabled: 1
   sfx: {fileID: 0}
   vfxPrefab: {fileID: 0}
+  vfxName: 
   overrideRootMotion: 1
   motionSegments:
   - frameStart: 15
@@ -66,3 +67,6 @@ MonoBehaviour:
   isUltimate: 1
   animateDuringFreeze: 1
   preSuperFreezeFrames: 118
+  meterGainOnHit: 0
+  meterGainOnBlock: 0
+  meterGainWhenBlocked: 0

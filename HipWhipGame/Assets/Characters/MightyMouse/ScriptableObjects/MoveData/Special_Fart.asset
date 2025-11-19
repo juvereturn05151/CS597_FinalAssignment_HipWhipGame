@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveName: ButtLowAttack
   animName: ButtLowAttack
-  startup: 10
+  startup: 20
   active: 5
-  recovery: 20
-  hitstunFrames: 24
-  blockstunFrames: 20
+  recovery: 31
+  hitstunFrames: 180
+  blockstunFrames: 25
   knockback: {x: 0, y: 0, z: 0.25}
   pushbackOnHit: 1
   damage: 1
@@ -26,20 +26,27 @@ MonoBehaviour:
   canCancelOnBlock: 0
   cancelInto: []
   hitboxes:
-  - start: 10
-    end: 15
+  - start: 20
+    end: 25
     box:
-      localCenter: {x: 0, y: 0.5, z: 0.72}
-      size: {x: 0.5, y: 0.45, z: 0.5}
+      localCenter: {x: 0, y: 0.5, z: 1.25}
+      size: {x: 1, y: 0.45, z: 1}
       enabled: 1
   sfx: {fileID: 0}
   vfxPrefab: {fileID: 0}
+  vfxName: 
   overrideRootMotion: 1
   motionSegments: []
-  plusOnHit: 4
-  plusOnBlock: 0
+  plusOnHit: 149
+  plusOnBlock: -6
   isGrab: 0
   grabRange: 1.2
   grabDuration: 0
   grabOffset: {x: 0, y: 0, z: 0}
   grabVictimAnim: 
+  isUltimate: 0
+  animateDuringFreeze: 0
+  preSuperFreezeFrames: 20
+  meterGainOnHit: 0
+  meterGainOnBlock: 0
+  meterGainWhenBlocked: 1

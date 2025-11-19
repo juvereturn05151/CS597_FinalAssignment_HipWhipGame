@@ -66,6 +66,8 @@ namespace RollbackSupport
 
         public override void OnExit()
         {
+            fighterComponentManager.MoveExecutor.SetFrozen(false);
+
             // restore movement
             fighterComponentManager.FighterController.SetIsMovable(true);
 

@@ -15,19 +15,19 @@ MonoBehaviour:
   moveName: ButtTornado
   animName: ButtTornado
   startup: 25
-  active: 20
-  recovery: 17
-  hitstunFrames: 17
-  blockstunFrames: 18
-  knockback: {x: 0, y: 0, z: 0.25}
+  active: 3
+  recovery: 34
+  hitstunFrames: 18
+  blockstunFrames: 8
+  knockback: {x: 0, y: 0, z: 1.5}
   pushbackOnHit: 1
   damage: 1
   canCancelOnHit: 0
   canCancelOnBlock: 0
   cancelInto: []
   hitboxes:
-  - start: 10
-    end: 15
+  - start: 25
+    end: 28
     box:
       localCenter: {x: 0, y: 0.5, z: 0.72}
       size: {x: 0.5, y: 0.45, z: 0.5}
@@ -36,9 +36,14 @@ MonoBehaviour:
   vfxPrefab: {fileID: 0}
   vfxName: 
   overrideRootMotion: 1
-  motionSegments: []
-  plusOnHit: 0
-  plusOnBlock: 1
+  motionSegments:
+  - frameStart: 25
+    frameEnd: 28
+    forwardSpeed: 0.1
+    verticalSpeed: 0
+    sideSpeed: 0
+  plusOnHit: -16
+  plusOnBlock: -26
   isGrab: 0
   grabRange: 1.2
   grabDuration: 0
@@ -47,6 +52,6 @@ MonoBehaviour:
   isUltimate: 0
   animateDuringFreeze: 0
   preSuperFreezeFrames: 20
-  meterGainOnHit: 0.2
-  meterGainOnBlock: 0.1
+  meterGainOnHit: 0.05
+  meterGainOnBlock: 0.025
   meterGainWhenBlocked: 0.3
