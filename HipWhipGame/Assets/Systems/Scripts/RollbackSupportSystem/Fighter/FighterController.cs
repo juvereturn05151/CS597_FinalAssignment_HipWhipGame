@@ -121,6 +121,8 @@ namespace RollbackSupport
             LastInput.horiz = 0f;
             LastInput.vert = 0f;
             damagePercent = 0.0f;
+            pressingSpecialEffect.SetActive(false);
+            superMeter = 0.0f;
             fighterComponentManager.FighterUI.UpdatePercentage(damagePercent);
         }
 
