@@ -20,7 +20,7 @@ MonoBehaviour:
   hitstunFrames: 90
   blockstunFrames: 0
   isKnockbackAttack: 1
-  knockback: {x: 0, y: 0, z: 10}
+  knockback: {x: 0, y: 0, z: 5}
   isTrackingSidestep: 0
   damage: 1
   canCancelOnHit: 0
