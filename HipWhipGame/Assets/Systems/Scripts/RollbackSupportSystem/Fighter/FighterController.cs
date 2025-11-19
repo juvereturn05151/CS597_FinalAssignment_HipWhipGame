@@ -173,6 +173,11 @@ namespace RollbackSupport
 
         private void RotateToOpponent() 
         {
+            if (fighterComponentManager.MoveExecutor.IsExecuting && fighterComponentManager.MoveExecutor.CurrentMove.isTrackingSidestep == false) 
+            {
+                return;
+            }
+
             // Rotate toward target
             if (fighterComponentManager.FighterController.opponent)
             {
@@ -225,6 +230,17 @@ namespace RollbackSupport
             // SPECIAL MOVE SYSTEM
             // ============================================
 
+            // 3. SPECIAL + SUPER BUTT  -> ULTRA SUPER BUTT
+            if (input.special && input.light && input.heavy)
+            {
+                if (SpendMeter(3f))
+                {
+                    fighterComponentManager.MoveExecutor.StartMove(moves.ultimateButt);
+                    fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Ultimate);
+                }
+                return;
+            }
+
             // 1. SPECIAL + LIGHT  -> THROW
             if (input.special && input.light)
             {
@@ -247,16 +263,7 @@ namespace RollbackSupport
                 return;
             }
 
-            // 3. SPECIAL + SUPER BUTT  -> ULTRA SUPER BUTT
-            if (input.special && input.light && input.heavy)
-            {
-                if (SpendMeter(3f))
-                {
-                    fighterComponentManager.MoveExecutor.StartMove(moves.ultimateButt);
-                    fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Ultimate);
-                }
-                return;
-            }
+
 
             if (LastInput.grab)
             {

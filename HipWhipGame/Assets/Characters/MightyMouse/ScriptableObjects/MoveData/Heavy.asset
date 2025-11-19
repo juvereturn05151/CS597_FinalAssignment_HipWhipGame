@@ -20,7 +20,7 @@ MonoBehaviour:
   hitstunFrames: 45
   blockstunFrames: 0
   isKnockbackAttack: 1
-  knockback: {x: 0, y: 0, z: 2.5}
+  knockback: {x: 0, y: 0, z: 1.25}
   pushbackOnHit: 1
   damage: 1
   canCancelOnHit: 0
@@ -66,6 +66,7 @@ MonoBehaviour:
   isUltimate: 0
   animateDuringFreeze: 0
   preSuperFreezeFrames: 20
+  meterConsumption: 0
   meterGainOnHit: 0.025
   meterGainOnBlock: 0.0125
   meterGainWhenBlocked: 0.3

@@ -34,7 +34,7 @@ namespace RollbackSupport
         [Tooltip("Knockback direction and magnitude applied on hit.")]
         public Vector3 knockback = new Vector3(2f, 0.5f, 0f);
 
-        public float pushbackOnHit = 1.5f;
+        public bool isTrackingSidestep = true;
 
         public float damage = 1.0f;
 
