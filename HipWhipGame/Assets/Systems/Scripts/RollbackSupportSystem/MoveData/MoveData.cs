@@ -90,6 +90,12 @@ namespace RollbackSupport
         public float meterGainOnBlock = 0.1f;
         public float meterGainWhenBlocked = 0.3f;
 
+        [Header("Audio")]
+        public AudioClip startupSFX;   // play when move begins
+        public AudioClip activeSFX;    // play when hitbox first becomes active
+        public AudioClip hitSFX;       // play on hit confirm
+        public AudioClip blockSFX;     // play on block
+        public AudioClip whiffSFX;     // optional: play on whiff end
         private void OnValidate()
         {
             // Auto-fill totalFrames if not manually specified

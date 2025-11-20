@@ -49,6 +49,9 @@ namespace RollbackSupport
         {
             this.fighterUI = fighterUI;
         }
+        [SerializeField]
+        private FighterAudioComponent fighterAudioComponent;
+        public FighterAudioComponent FighterAudioComponent => fighterAudioComponent;
 
         private void Awake()
         {
@@ -61,6 +64,7 @@ namespace RollbackSupport
             if (!cam) cam = GetComponentInChildren<Camera>();
             if (!fighterGrabManager) fighterGrabManager = GetComponent<FighterGrabManager>();
             if (!fighterCameraController) fighterCameraController = GetComponent<FighterCameraController>();
+            if(!fighterAudioComponent) fighterAudioComponent = GetComponent<FighterAudioComponent>();
 
             foreach (var injectable in GetComponents<IFighterComponentInjectable>())
             {

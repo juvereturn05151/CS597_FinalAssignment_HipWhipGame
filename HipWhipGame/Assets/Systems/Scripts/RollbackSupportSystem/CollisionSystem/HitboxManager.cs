@@ -80,6 +80,12 @@ namespace RollbackSupport
                         {
                             Vector3 hitPos = GetHitPosition(hitbox, attacker.transform, hurt, defender.transform);
                             JuiceController.Instance.Play("Impact1", hitPos);
+
+                            if (attacker.FighterAudioComponent != null && move.hitSFX != null)
+                            {
+                                attacker.FighterAudioComponent.PlaySFX(move.hitSFX);
+                            }
+
                             attacker.FighterController.AddMeter(move.meterGainOnHit);
                             defender.FighterController.TakeHit(move, -worldKnock);
                         }

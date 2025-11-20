@@ -49,6 +49,11 @@ namespace RollbackSupport
 
             sfxPlayed = false;
             vfxSpawned = false;
+
+            if (fighterComponentManager.FighterAudioComponent != null && currentMove.startupSFX != null)
+            {
+                fighterComponentManager.FighterAudioComponent.PlaySFX(currentMove.startupSFX);
+            }
         }
 
         public void SimulateFrame()

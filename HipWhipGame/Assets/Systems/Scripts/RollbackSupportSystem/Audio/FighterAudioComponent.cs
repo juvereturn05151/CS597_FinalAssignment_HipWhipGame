@@ -30,6 +30,7 @@ namespace RollbackSupport
 
         [Header("Voice Lines (Optional)")]
         public AudioClip attackVoice;
+        public AudioClip grabVoice;
         public AudioClip hurtVoice;
         public AudioClip superVoice;
 
@@ -118,6 +119,11 @@ namespace RollbackSupport
         public void PlayAttackVoice()
         {
             PlayVoice(attackVoice);
+        }
+
+        public void PlayGrabVoice()
+        {
+            PlayVoice(grabVoice);
         }
 
         public void PlayHurtVoice()

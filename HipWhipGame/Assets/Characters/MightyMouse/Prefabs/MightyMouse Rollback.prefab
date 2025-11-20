@@ -49,6 +49,7 @@ GameObject:
   - component: {fileID: 1044645334956613487}
   - component: {fileID: 5150551955394687577}
   - component: {fileID: 815409288317653298}
+  - component: {fileID: 5594198144273078580}
   m_Layer: 0
   m_Name: MightyMouse Rollback
   m_TagString: Player
@@ -94,6 +95,7 @@ MonoBehaviour:
   cam: {fileID: 3723754997958721306}
   fighterGrabManager: {fileID: 1044645334956613487}
   fighterCameraController: {fileID: 815409288317653298}
+  fighterAudioComponent: {fileID: 5594198144273078580}
 --- !u!114 &5060805126365526105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -209,6 +211,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 3723754997958721306}
+--- !u!114 &5594198144273078580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7400030421977495981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6823b3e1433a5be4b9dca44950549bf8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpSFX: {fileID: 0}
+  dashSFX: {fileID: 0}
+  landSFX: {fileID: 0}
+  lightAttackSFX: {fileID: 0}
+  heavyAttackSFX: {fileID: 0}
+  specialAttackSFX: {fileID: 0}
+  grabSFX: {fileID: 0}
+  hitConfirmSFX: {fileID: 0}
+  blockSFX: {fileID: 0}
+  KO_SFX: {fileID: 0}
+  attackVoice: {fileID: 0}
+  hurtVoice: {fileID: 0}
+  superVoice: {fileID: 0}
 --- !u!1 &9202767699107768774
 GameObject:
   m_ObjectHideFlags: 0
