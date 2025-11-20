@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7e51c6dd124091f4db3441d61ea4addd, type: 3}
-  m_Name: StageData
+  m_Name: Character_Select
   m_EditorClassIdentifier: 
   stageBGM: {fileID: 8300000, guid: 530e36c32ad256740823bbf80b41edcd, type: 3}
   stageName: 

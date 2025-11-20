@@ -14,20 +14,26 @@ namespace RollbackSupport
     public class FighterUI : MonoBehaviour
     {
         [Header("Hearts UI")]
-        public Image[] heartIcons;   // size = 3
-        public Sprite fullHeart;
-        public Sprite emptyHeart;
+        [SerializeField]
+        private Image[] heartIcons;   // size = 3
+        [SerializeField]
+        private Sprite fullHeart;
+        [SerializeField]
+        private Sprite emptyHeart;
 
         [Header("Percentage UI")]
-        public TextMeshProUGUI percentText;
+        [SerializeField]
+        private TextMeshProUGUI percentText;
 
         [Header("Super Meter (5 Bars)")]
-        public List<Slider> superBars;  // Assign 5 sliders in Inspector
+        [SerializeField]
+        private List<Slider> superBars;  // Assign 5 sliders in Inspector
 
         // Smooth fill speed
-        public float fillSpeed = 10f;
+        [SerializeField]
+        private float fillSpeed = 10f;
 
-        // internal animation state
+        // Internal animation state
         private float[] currentValues = new float[5];
 
         [SerializeField]
@@ -36,9 +42,11 @@ namespace RollbackSupport
 
         private void Awake()
         {
-            // initialize values
-            for (int i = 0; i < currentValues.Length; i++)
+            // Initialize values
+            for (int i = 0; i < currentValues.Length; i++) 
+            {
                 currentValues[i] = 0f;
+            }
         }
 
         private void Update()

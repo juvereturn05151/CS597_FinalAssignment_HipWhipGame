@@ -51,7 +51,7 @@ GameObject:
   - component: {fileID: 815409288317653298}
   - component: {fileID: 5594198144273078580}
   m_Layer: 0
-  m_Name: MightyMouse Rollback
+  m_Name: MightyMouse
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
