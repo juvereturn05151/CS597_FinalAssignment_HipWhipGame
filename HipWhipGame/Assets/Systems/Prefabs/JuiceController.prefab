@@ -48,3 +48,6 @@ MonoBehaviour:
   - name: Impact1
     prefab: {fileID: 2708598583397607910, guid: 6398d43fe79ea0140913dc5530c646af, type: 3}
     preloadAmount: 10
+  - name: GrabEffect
+    prefab: {fileID: 6300717128283190289, guid: 90375796f996bff4cabed66da5e558cb, type: 3}
+    preloadAmount: 2
