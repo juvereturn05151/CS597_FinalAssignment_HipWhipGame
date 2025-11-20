@@ -52,6 +52,12 @@ namespace RollbackSupport
         [SerializeField]
         private FighterAudioComponent fighterAudioComponent;
         public FighterAudioComponent FighterAudioComponent => fighterAudioComponent;
+        private GameSimulation currentGameSimulation;
+        public GameSimulation CurrentGameSimulation => currentGameSimulation;
+        public void SetCurrentGameSimulation(GameSimulation currentGameSimulation)
+        {
+            this.currentGameSimulation = currentGameSimulation;
+        }
 
         private void Awake()
         {

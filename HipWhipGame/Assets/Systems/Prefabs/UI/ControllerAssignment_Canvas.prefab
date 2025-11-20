@@ -1720,9 +1720,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hoverSFX: {fileID: 0}
-  clickSFX: {fileID: 8300000, guid: 19f89c6e740e7447f9e12a8310d3e973, type: 3}
+  clickSFX: {fileID: 8300000, guid: c5cb2ac29e89dbf43a9b644caaad45e6, type: 3}
   cancelSFX: {fileID: 0}
-  confirmSFX: {fileID: 8300000, guid: fe0b1f9aeb45b41b089175aeeabd5d95, type: 3}
+  confirmSFX: {fileID: 8300000, guid: 7bd6b897eb5ca4b7d88a205c4a51640c, type: 3}
   navigateSFX: {fileID: 0}
 --- !u!1 &7647097409758096006
 GameObject:

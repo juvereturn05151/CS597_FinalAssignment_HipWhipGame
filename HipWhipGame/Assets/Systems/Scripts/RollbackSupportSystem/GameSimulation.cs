@@ -33,6 +33,8 @@ namespace RollbackSupport
             matchState.Initialize(3);
             matchUI.FighterUI1.UpdateHearts(matchState.lives[0]);
             matchUI.FighterUI2.UpdateHearts(matchState.lives[1]);
+            this.fighter1.SetCurrentGameSimulation(this);
+            this.fighter2.SetCurrentGameSimulation(this);
 
             PhysicsWorld.Instance.Register(this.fighter1.FighterController.body);
             PhysicsWorld.Instance.Register(this.fighter2.FighterController.body);

@@ -88,6 +88,8 @@ namespace RollbackSupport
                 }
             }
 
+
+
             // Motion override
             if (currentMove.overrideRootMotion && currentMove.motionSegments != null)
             {
@@ -109,22 +111,12 @@ namespace RollbackSupport
                 }
             }
 
-            // SFX trigger (on first startup frame)
-            if (!sfxPlayed && frame == 1 && currentMove.sfx)
+            if (frame == currentMove.active)
             {
-                AudioSource.PlayClipAtPoint(currentMove.sfx, fighter.body.position);
-                sfxPlayed = true;
-            }
-
-            // 5VFX trigger (when move becomes active)
-            if (!vfxSpawned && frame == activeStart && currentMove.vfxPrefab)
-            {
-                Object.Instantiate(
-                    currentMove.vfxPrefab,
-                    fighter.body.position + fighter.transform.forward * 0.5f,
-                    fighter.transform.rotation
-                );
-                vfxSpawned = true;
+                if (fighterComponentManager.FighterAudioComponent != null && currentMove.activeSFX != null)
+                {
+                    fighterComponentManager.FighterAudioComponent.PlaySFX(currentMove.activeSFX);
+                }
             }
 
             // Grab detection

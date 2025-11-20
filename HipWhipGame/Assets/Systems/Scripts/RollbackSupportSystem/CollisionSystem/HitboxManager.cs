@@ -72,6 +72,11 @@ namespace RollbackSupport
 
                         if (defender.FighterController.IsBlocking())
                         {
+                            if (attacker.FighterAudioComponent != null && move.blockSFX != null)
+                            {
+                                attacker.FighterAudioComponent.PlaySFX(move.blockSFX);
+                            }
+
                             attacker.FighterController.AddMeter(move.meterGainOnBlock);
                             defender.FighterController.TakeBlock(move, -worldKnock);
                             defender.FighterController.AddMeter(move.meterGainWhenBlocked);

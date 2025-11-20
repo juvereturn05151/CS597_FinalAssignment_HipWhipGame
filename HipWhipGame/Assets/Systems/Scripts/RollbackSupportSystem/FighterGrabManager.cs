@@ -38,6 +38,7 @@ namespace RollbackSupport
 
             fighterComponentManager.FighterController.SetIsMovable(false);
             grabbedOpponent.FighterController.SetIsMovable(false);
+            fighterComponentManager.FighterAudioComponent.PlayGrabVoice();
             JuiceController.Instance.Play("GrabEffect", grabbedOpponent.transform.position);
             grabbedOpponent.FighterStateMachine.SwitchState(FighterState.BeingGrabbed, duration);
 

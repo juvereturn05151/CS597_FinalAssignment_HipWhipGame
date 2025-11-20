@@ -236,6 +236,7 @@ namespace RollbackSupport
             {
                 if (SpendMeter(3f))
                 {
+                    fighterComponentManager.FighterAudioComponent.PlaySuperVoice();
                     fighterComponentManager.MoveExecutor.StartMove(moves.ultimateButt);
                     fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Ultimate);
                 }

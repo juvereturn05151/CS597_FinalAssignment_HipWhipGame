@@ -234,8 +234,9 @@ MonoBehaviour:
   blockSFX: {fileID: 0}
   KO_SFX: {fileID: 0}
   attackVoice: {fileID: 0}
+  grabVoice: {fileID: 8300000, guid: 9f6573f093ce33d4aabd7527d72153d6, type: 3}
   hurtVoice: {fileID: 0}
-  superVoice: {fileID: 0}
+  superVoice: {fileID: 8300000, guid: 7b52654f644516841ae0073c01497792, type: 3}
 --- !u!1 &9202767699107768774
 GameObject:
   m_ObjectHideFlags: 0

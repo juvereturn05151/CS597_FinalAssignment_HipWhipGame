@@ -23,10 +23,13 @@ namespace RollbackSupport
         private FighterUI[] fighterUIs;
         [SerializeField]
         Material player2Material;
+        [SerializeField]
+        AudioFollowCenter audioFollowCenter;
 
 
         private List<GameObject> activePlayers = new List<GameObject>();
         public List<GameObject> ActivePlayers => activePlayers;
+
 
         private void Awake()
         {
@@ -94,6 +97,8 @@ namespace RollbackSupport
             //Hack
             if (fcm.FighterController.playerIndex == 2)
             {
+                audioFollowCenter.SetPlayers(activePlayers[0].transform, fcm.transform);
+
                 fcm.FighterController.SetOpponent(activePlayers[0].GetComponent<FighterController>());
                 var skinnedRenderer = fcm.Animator.GetComponentInChildren<SkinnedMeshRenderer>();
                 skinnedRenderer.material = player2Material;

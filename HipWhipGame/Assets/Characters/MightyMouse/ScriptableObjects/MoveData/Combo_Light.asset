@@ -56,8 +56,8 @@ MonoBehaviour:
   meterGainOnHit: 0.05
   meterGainOnBlock: 0.025
   meterGainWhenBlocked: 0.3
-  startupSFX: {fileID: 0}
+  startupSFX: {fileID: 8300000, guid: c266e86e5ec11e344bf66dede26cbc46, type: 3}
   activeSFX: {fileID: 0}
-  hitSFX: {fileID: 8300000, guid: faf53b5b59d41a14e97c8858f4664122, type: 3}
-  blockSFX: {fileID: 0}
+  hitSFX: {fileID: 8300000, guid: a37f44cbf8c2a7443a3c361efa2f233a, type: 3}
+  blockSFX: {fileID: 8300000, guid: a37109c51cd477548ad1c882be3971d5, type: 3}
   whiffSFX: {fileID: 0}
