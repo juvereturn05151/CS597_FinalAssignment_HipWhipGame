@@ -8,59 +8,29 @@ using UnityEngine;
 
 namespace RollbackSupport
 {
-    public enum FighterState { Idle, Walk, Jump, Attack, Block, BlockStun, Hitstun, TryGrab, Disabled, Sidestep,     // startup frames of the grab
-        Grabbing,    // holding the opponent
-        BeingGrabbed,
-        Ultimate,
-        Victory,
-        Defeat
-    }
-
     public class FighterController : MonoBehaviour, IFighterComponentInjectable
     {
         private FighterComponentManager fighterComponentManager;
 
-        public int playerIndex;
-        public string fighterName;
-        public KinematicBody body = new KinematicBody();
-        public MoveDatabase moves;
+        [SerializeField]
+        private int playerIndex;
+        public int PlayerIndex => playerIndex;
+
         [SerializeField]
         private FighterController opponent;
         public FighterController Opponent => opponent;
-        public void SetOpponent(FighterController opponent) 
-        {
-            this.opponent = opponent;
-        }
 
-        private Vector3 hitVelocity;
+        [SerializeField]
+        private MoveDatabase moves;
+        public MoveDatabase Moves => moves;
 
-        public void SetHitVelocity(Vector3 velocity) 
-        {
-            hitVelocity = velocity;
-        }
+        public KinematicBody body = new KinematicBody();
 
         public InputFrame LastInput;
 
-        private bool isMovable = true;
-
-        public bool IsMovable
-        {
-            get => isMovable;
-            private set => isMovable = value;
-        }
-
-        public void SetIsMovable(bool canMove)
-        {
-            isMovable = canMove;
-        }
+        private Vector3 hitVelocity;
 
         private float damagePercent;
-
-
-        public void SetDamagePercent(float damagePercent) 
-        {
-            this.damagePercent = damagePercent;
-        }
 
         public float DamagePercent
         {
@@ -68,35 +38,46 @@ namespace RollbackSupport
             private set => damagePercent = value;
         }
 
-        bool isSideStepLeft;
-
-        public float sidestepAngleSpeed = 6f;
-
-        [SerializeField]
-        private GameObject pressingSpecialEffect;
+        private float sidestepAngleSpeed = 6f;
 
         private float superMeter;
-
         public float SuperMeter
         {
             get => superMeter;
             private set => superMeter = Mathf.Clamp(value, 0f, 5f);
         }
 
-        public void AddMeter(float amount)
+        private bool isMovable = true;
+        public bool IsMovable
         {
-            SuperMeter += amount;
-            fighterComponentManager.FighterUI.UpdateMeter(superMeter);
+            get => isMovable;
+            private set => isMovable = value;
         }
 
-        public bool SpendMeter(float amount)
-        {
-            if (superMeter < amount)
-                return false;
+        private bool isSideStepLeft;
 
-            superMeter -= amount;
-            fighterComponentManager.FighterUI.UpdateMeter(superMeter);
-            return true;
+        public void Inject(FighterComponentManager fighterComponentManager)
+        {
+            this.fighterComponentManager = fighterComponentManager;
+        }
+
+        #region Setters
+        public void SetPlayerIndex(int index)
+        {
+            playerIndex = index;
+        }
+        public void SetOpponent(FighterController opponent)
+        {
+            this.opponent = opponent;
+        }
+        public void SetIsMovable(bool canMove)
+        {
+            isMovable = canMove;
+        }
+
+        public void SetDamagePercent(float damagePercent)
+        {
+            this.damagePercent = damagePercent;
         }
 
         public void SetMeter(float value)
@@ -105,10 +86,7 @@ namespace RollbackSupport
             fighterComponentManager.FighterUI.UpdateMeter(superMeter);
         }
 
-        public void Inject(FighterComponentManager fighterComponentManager)
-        {
-            this.fighterComponentManager = fighterComponentManager;
-        }
+        #endregion
 
         public void ResetStateForRespawn()
         {
@@ -125,6 +103,7 @@ namespace RollbackSupport
             fighterComponentManager.FighterUI.UpdatePercentage(damagePercent);
         }
 
+        #region Update
         public void SimulateFrame()
         {
             if (fighterComponentManager.FighterStateMachine.CurrentStateType == FighterState.Hitstun)
@@ -151,7 +130,6 @@ namespace RollbackSupport
                     ProcessMovement();
                     HandleAttacks();
                 }
-                
             }
             else
             {
@@ -168,14 +146,14 @@ namespace RollbackSupport
             transform.position = body.position;
         }
 
-        private void HandleSpecialButtonEffect() 
+        private void HandleSpecialButtonEffect()
         {
-            fighterComponentManager.FighterUI.SpecialUI.SetActive(LastInput.special );
+            fighterComponentManager.FighterUI.SpecialUI.SetActive(LastInput.special);
         }
 
-        private void RotateToOpponent() 
+        private void RotateToOpponent()
         {
-            if (fighterComponentManager.MoveExecutor.IsExecuting && fighterComponentManager.MoveExecutor.CurrentMove.isTrackingSidestep == false) 
+            if (fighterComponentManager.MoveExecutor.IsExecuting && fighterComponentManager.MoveExecutor.CurrentMove.isTrackingSidestep == false)
             {
                 return;
             }
@@ -185,7 +163,7 @@ namespace RollbackSupport
             {
                 Vector3 face = fighterComponentManager.FighterController.opponent.transform.position - fighterComponentManager.FighterController.transform.position;
                 face.y = 0f;
-                if (face.sqrMagnitude > 0.0001f) 
+                if (face.sqrMagnitude > 0.0001f)
                 {
                     fighterComponentManager.transform.rotation = Quaternion.LookRotation(face);
                 }
@@ -263,8 +241,6 @@ namespace RollbackSupport
                 return;
             }
 
-
-
             if (LastInput.grab)
             {
                 fighterComponentManager.MoveExecutor.StartMove(moves.grab);
@@ -275,12 +251,12 @@ namespace RollbackSupport
                 fighterComponentManager.MoveExecutor.StartMove(moves.spinButt);
                 fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Attack);
             }
-            else if(LastInput.light)
+            else if (LastInput.light)
             {
                 fighterComponentManager.MoveExecutor.StartMove(moves.light);
                 fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Attack);
             }
-            else if (LastInput.heavy) 
+            else if (LastInput.heavy)
             {
                 fighterComponentManager.MoveExecutor.StartMove(moves.heavy);
                 fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Attack);
@@ -288,51 +264,9 @@ namespace RollbackSupport
 
         }
 
-
-        public void TakeHit(MoveData move, Vector3 worldKnock)
-        {
-            if (move == null) 
-            {
-                return;
-            }
-
-            if (fighterComponentManager.FighterStateMachine.CurrentStateType == FighterState.Grabbing) 
-            {
-                return;
-            }
-
-            damagePercent += move.damage;   // add to % like Smash
-            damagePercent = Mathf.Clamp(DamagePercent, 0, 999);
-            fighterComponentManager.FighterUI.UpdatePercentage(damagePercent);
-
-            float knockbackGrowth = 1.0f;
-
-            // calculate knockback using percentage
-            Vector3 scaledKnock;
-
-            if (move.isKnockbackAttack)
-            {
-                scaledKnock = worldKnock * (knockbackGrowth * (DamagePercent / 100f));
-            }
-            else 
-            {
-                scaledKnock = worldKnock;
-            }
-
-            hitVelocity = scaledKnock / move.hitstunFrames;
-
-            fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Hitstun, move.hitstunFrames);
-        }
-
         public void SimulateHitstun()
         {
             body.position += hitVelocity;
-        }
-
-        public bool IsBlocking()
-        {
-            return fighterComponentManager.FighterStateMachine.CurrentStateType == FighterState.Block ||
-                   fighterComponentManager.FighterStateMachine.CurrentStateType == FighterState.BlockStun;
         }
 
         private void HandleBlocking()
@@ -346,16 +280,6 @@ namespace RollbackSupport
             {
                 fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Idle);
             }
-        }
-
-        public void TakeBlock(MoveData move, Vector3 worldKnock)
-        {
-            if (move == null) 
-            {
-                return;
-            } 
-
-            fighterComponentManager.FighterStateMachine.SwitchState(FighterState.BlockStun, move.blockstunFrames);
         }
 
         private void SimulateBlockstun()
@@ -383,7 +307,7 @@ namespace RollbackSupport
             {
                 angle = sidestepAngleSpeed;
             }
-            else 
+            else
             {
                 angle = -sidestepAngleSpeed;
             }
@@ -398,6 +322,81 @@ namespace RollbackSupport
             body.position = new Vector3(body.position.x, pos.y, body.position.z);
 
         }
+        #endregion
 
+        #region Collision
+
+        public void TakeHit(MoveData move, Vector3 worldKnock)
+        {
+            if (move == null)
+            {
+                return;
+            }
+
+            if (fighterComponentManager.FighterStateMachine.CurrentStateType == FighterState.Grabbing)
+            {
+                return;
+            }
+
+            damagePercent += move.damage;   // add to % like Smash
+            damagePercent = Mathf.Clamp(DamagePercent, 0, 999);
+            fighterComponentManager.FighterUI.UpdatePercentage(damagePercent);
+
+            float knockbackGrowth = 1.0f;
+
+            // calculate knockback using percentage
+            Vector3 scaledKnock;
+
+            if (move.isKnockbackAttack)
+            {
+                scaledKnock = worldKnock * (knockbackGrowth * (DamagePercent / 100f));
+            }
+            else
+            {
+                scaledKnock = worldKnock;
+            }
+
+            hitVelocity = scaledKnock / move.hitstunFrames;
+
+            fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Hitstun, move.hitstunFrames);
+        }
+
+        public void TakeBlock(MoveData move, Vector3 worldKnock)
+        {
+            if (move == null)
+            {
+                return;
+            }
+
+            fighterComponentManager.FighterStateMachine.SwitchState(FighterState.BlockStun, move.blockstunFrames);
+        }
+
+        #endregion
+
+        public bool IsBlocking()
+        {
+            return fighterComponentManager.FighterStateMachine.CurrentStateType == FighterState.Block ||
+                   fighterComponentManager.FighterStateMachine.CurrentStateType == FighterState.BlockStun;
+        }
+
+        #region Meter Management
+
+        public void AddMeter(float amount)
+        {
+            SuperMeter += amount;
+            fighterComponentManager.FighterUI.UpdateMeter(superMeter);
+        }
+
+        public bool SpendMeter(float amount)
+        {
+            if (superMeter < amount)
+                return false;
+
+            superMeter -= amount;
+            fighterComponentManager.FighterUI.UpdateMeter(superMeter);
+            return true;
+        }
+
+        #endregion
     }
 }

@@ -180,7 +180,7 @@ namespace RollbackSupport
                 return;
             }
 
-            currentMove = fighterComponentManager.FighterController.moves.Get(moveName);
+            currentMove = fighterComponentManager.FighterController.Moves.Get(moveName);
             this.frame = frame;
             executing = true;
         }

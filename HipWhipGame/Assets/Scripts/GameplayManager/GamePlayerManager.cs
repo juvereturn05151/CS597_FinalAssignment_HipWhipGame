@@ -95,7 +95,7 @@ namespace RollbackSupport
             fcm.FighterController.body.Teleport(spawn.position);
 
             //Hack
-            if (fcm.FighterController.playerIndex == 2)
+            if (fcm.FighterController.PlayerIndex == 2)
             {
                 audioFollowCenter.SetPlayers(activePlayers[0].transform, fcm.transform);
 

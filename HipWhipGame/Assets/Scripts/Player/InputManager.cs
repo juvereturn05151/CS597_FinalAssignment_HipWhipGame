@@ -4,9 +4,9 @@ Author(s):    Ju-ve Chankasemporn
 Copyright:    (c) 2025 DigiPen Institute of Technology. All rights reserved.
 */
 
+using RollbackSupport;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using RollbackSupport;
 
 public class InputManager : MonoBehaviour
 {
@@ -17,7 +17,7 @@ public class InputManager : MonoBehaviour
     public void SetFightingComponentManager(FighterComponentManager fighterComponentManager)
     {
         this.fighterComponentManager = fighterComponentManager;
-        this.fighterComponentManager.FighterController.playerIndex = playerIndex;
+        this.fighterComponentManager.FighterController.SetPlayerIndex(playerIndex);
     }
 
     public void OnMove(InputAction.CallbackContext context)

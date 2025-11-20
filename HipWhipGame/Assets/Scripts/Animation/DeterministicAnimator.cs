@@ -61,7 +61,7 @@ namespace RollbackSupport
                 return;
             } 
 
-            var data = fighter.moves.Get(move);
+            var data = fighter.Moves.Get(move);
             if (data == null) return;
 
             float norm = (float)fighterComponentManager.MoveExecutor.CurrentFrame / data.totalFrames;
