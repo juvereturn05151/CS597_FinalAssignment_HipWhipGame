@@ -12,7 +12,7 @@ namespace RollbackSupport
 {
     public class FighterAudioComponent : MonoBehaviour, IFighterComponentInjectable
     {
-        private FighterComponentManager _fighterComponentManager;
+        private FighterComponentManager fighterComponentManager;
 
         // --- Anti-spam tracking ---
         // Per-clip last played frame (prevents consecutive-frame spam)
@@ -23,31 +23,44 @@ namespace RollbackSupport
         private int _lastVoiceFrame = -999;
 
         [Header("General Movement")]
-        public AudioClip jumpSFX;
-        public AudioClip dashSFX;
-        public AudioClip landSFX;
+        [SerializeField] 
+        private AudioClip jumpSFX;
+        [SerializeField]
+        private AudioClip dashSFX;
+        [SerializeField]
+        private AudioClip landSFX;
 
         [Header("Attacks")]
-        public AudioClip lightAttackSFX;
-        public AudioClip heavyAttackSFX;
-        public AudioClip specialAttackSFX;
-        public AudioClip grabSFX;
+        [SerializeField]
+        private AudioClip lightAttackSFX;
+        [SerializeField]
+        private AudioClip heavyAttackSFX;
+        [SerializeField]
+        private AudioClip specialAttackSFX;
+        [SerializeField]
+        private AudioClip grabSFX;
 
         [Header("On Hit / Block / KO")]
-        public AudioClip hitConfirmSFX;
-        public AudioClip blockSFX;
-        public AudioClip KO_SFX;
+        [SerializeField]
+        private AudioClip hitConfirmSFX;
+        [SerializeField]
+        private AudioClip blockSFX;
+        [SerializeField]
+        private AudioClip KO_SFX;
 
         [Header("Voice Lines (Optional)")]
-        public AudioClip attackVoice;
-        public AudioClip grabVoice;
-        public AudioClip hurtVoice;
-        public AudioClip superVoice;
-
+        [SerializeField]
+        private AudioClip attackVoice;
+        [SerializeField]
+        private AudioClip grabVoice;
+        [SerializeField]
+        private AudioClip hurtVoice;
+        [SerializeField]
+        private AudioClip superVoice;
 
         public void Inject(FighterComponentManager fighterComponentManager)
         {
-            _fighterComponentManager = fighterComponentManager;
+            this.fighterComponentManager = fighterComponentManager;
         }
 
         private Vector3 GetAudioPosition()
@@ -55,11 +68,9 @@ namespace RollbackSupport
             return transform.position;
         }
 
-
         // Get deterministic frame from Rollback/Simulation
         private int CurrentFrame =>
-            _fighterComponentManager.CurrentGameSimulation.FrameNumber;
-
+            fighterComponentManager.CurrentGameSimulation.FrameNumber;
 
         #region Generic Helpers (Now Anti-Spam + Rollback-safe)
 
