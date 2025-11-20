@@ -4,7 +4,6 @@ Author(s):    Ju-ve Chankasemporn
 Copyright:    (c) 2025 DigiPen Institute of Technology. All rights reserved.
 */
 
-using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEngine;
 
 namespace RollbackSupport
@@ -82,35 +81,36 @@ namespace RollbackSupport
 
             if (PhysicsWorld.Instance.GetStageBounds().IsFalling(fighter1.FighterController.body.position)) 
             {
-                OnPlayerFall(0);
+                OnPlayerFall(fighter1.FighterController.PlayerIndex - 1, fighter1);
             }
             else if (PhysicsWorld.Instance.GetStageBounds().IsFalling(fighter2.FighterController.body.position)) 
             {
-                OnPlayerFall(1);
+                OnPlayerFall(fighter2.FighterController.PlayerIndex - 1, fighter2);
             }
         }
 
-        private void OnPlayerFall(int playerIndex)
+        private void OnPlayerFall(int playerIndex, FighterComponentManager loser)
         {
             if (matchState.isGameOver)
                 return;
 
             matchState.lives[playerIndex]--;
 
-            if (playerIndex == 0)
+            if (playerIndex == 0) 
             {
-                matchUI.FighterUI1.UpdateHearts(matchState.lives[0]);
+                matchUI.FighterUI1.UpdateHearts(matchState.lives[playerIndex]);
             }
             else 
             {
-                matchUI.FighterUI2.UpdateHearts(matchState.lives[1]);
+                matchUI.FighterUI2.UpdateHearts(matchState.lives[playerIndex]);
             }
+
 
             if (matchState.lives[playerIndex] <= 0)
             {
                 matchState.isGameOver = true;
-                matchState.winnerIndex = (playerIndex == 0 ? 1 : 0);
-                PlayVictoryAndDefeatAnimation(matchState.winnerIndex);
+                matchState.winnerIndex = loser.FighterController.Opponent.PlayerIndex - 1;
+                PlayVictoryAndDefeatAnimation(loser.FighterController.Opponent.GetComponent<FighterComponentManager>(), loser);
                 return;
             }
 
@@ -118,22 +118,14 @@ namespace RollbackSupport
             SetRoundOver(true);
         }
 
-        public void PlayVictoryAndDefeatAnimation(int winner) 
+        public void PlayVictoryAndDefeatAnimation(FighterComponentManager winner, FighterComponentManager loser) 
         {
-            fighter1.ResetPosition();
-            fighter2.ResetPosition();
+            winner.ResetPosition();
+            loser.ResetPosition();
 
-            if (winner == 0)
-            {
-                fighter1.FighterStateMachine.SwitchState(FighterState.Victory);
-                fighter2.FighterStateMachine.SwitchState(FighterState.Defeat);
-            }
-            else 
-            {
-                fighter1.FighterStateMachine.SwitchState(FighterState.Defeat);
-                fighter2.FighterStateMachine.SwitchState(FighterState.Victory);
-            }
-                
+            winner.FighterStateMachine.SwitchState(FighterState.Victory);
+            loser.FighterStateMachine.SwitchState(FighterState.Defeat);
+
         }
 
         public void SetRoundOver(bool setter) 

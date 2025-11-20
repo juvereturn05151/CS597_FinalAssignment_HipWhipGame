@@ -7,8 +7,6 @@ Copyright:    (c) 2025 DigiPen Institute of Technology. All rights reserved.
 using RollbackSupport;
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using static UnityEngine.InputSystem.HID.HID;
 
 public class MatchUI : MonoBehaviour
 {
