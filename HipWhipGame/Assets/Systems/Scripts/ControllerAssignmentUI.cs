@@ -4,6 +4,7 @@ Author(s):    Ju-ve Chankasemporn
 Copyright:    (c) 2025 DigiPen Institute of Technology. All rights reserved.
 */
 
+using RollbackSupport;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -18,6 +19,8 @@ public class ControllerAssignmentUI : MonoBehaviour
     [SerializeField] private string gameSceneName = "GameScene";
 
     [SerializeField] private GameObject startGamePrompt;
+
+    [SerializeField] private UIAudioComponent UIAudioComponent;
     private void Start()
     {
         // Initialize slots
@@ -66,6 +69,7 @@ public class ControllerAssignmentUI : MonoBehaviour
     {
         if (PlayerManager.Instance.PlayerCount == 2) 
         {
+            UIAudioComponent.PlayConfirm();
             Debug.Log("Loading game scene...");
             SceneManager.LoadScene(gameSceneName);
         }
@@ -79,6 +83,7 @@ public class ControllerAssignmentUI : MonoBehaviour
             playerSlots[index].Status.GetComponent<CustomUI>().StopAnimation();
             playerSlots[index].Status.text = $"Player {index + 1} Ready";
         }
+        UIAudioComponent.PlayClick();   
     }
 
     private void OnPlayerLeft(PlayerInput playerInput)

@@ -1597,6 +1597,7 @@ GameObject:
   - component: {fileID: 7301402835829217124}
   - component: {fileID: 8290098575287184029}
   - component: {fileID: 5118240307216961922}
+  - component: {fileID: 5292487944870441099}
   m_Layer: 5
   m_Name: ControllerAssignment_Canvas
   m_TagString: Untagged
@@ -1705,6 +1706,24 @@ MonoBehaviour:
   - {fileID: 9169603826732626504}
   gameSceneName: PlaygroundRollback
   startGamePrompt: {fileID: 9032641267565448030}
+  UIAudioComponent: {fileID: 5292487944870441099}
+--- !u!114 &5292487944870441099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7580240645858409247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28986123878347449be4512723eac6cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSFX: {fileID: 0}
+  clickSFX: {fileID: 8300000, guid: 19f89c6e740e7447f9e12a8310d3e973, type: 3}
+  cancelSFX: {fileID: 0}
+  confirmSFX: {fileID: 8300000, guid: fe0b1f9aeb45b41b089175aeeabd5d95, type: 3}
+  navigateSFX: {fileID: 0}
 --- !u!1 &7647097409758096006
 GameObject:
   m_ObjectHideFlags: 0
