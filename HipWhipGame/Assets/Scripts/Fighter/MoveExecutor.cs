@@ -11,10 +11,6 @@ namespace RollbackSupport
         public MoveData CurrentMove => currentMove;
         private int frame;
         private bool executing;
-        public void SetExecuting(bool execute) 
-        {
-            executing = execute;
-        }
         public bool IsExecuting => executing;
         public int CurrentFrame => frame;
         public string CurrentMoveName => currentMove ? currentMove.moveName : null;
@@ -79,8 +75,6 @@ namespace RollbackSupport
                     ActiveHitboxes.Add(h.box);
                 }
             }
-
-
 
             // Motion override
             if (currentMove.overrideRootMotion && currentMove.motionSegments != null)
