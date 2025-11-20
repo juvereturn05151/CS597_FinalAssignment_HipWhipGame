@@ -1,4 +1,3 @@
-using HipWhipGame;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,10 +20,6 @@ namespace RollbackSupport
         public string CurrentMoveName => currentMove ? currentMove.moveName : null;
         public List<CollisionBox> ActiveHitboxes { get; } = new List<CollisionBox>();
 
-        // One shot triggers (ensures SFX/VFX fire exactly once per simulation)
-        private bool sfxPlayed;
-        private bool vfxSpawned;
-
         private bool isFrozen = false;
 
         public void SetFrozen(bool frozen)
@@ -46,9 +41,6 @@ namespace RollbackSupport
             currentMove = move;
             frame = 0;
             executing = true;
-
-            sfxPlayed = false;
-            vfxSpawned = false;
 
             if (fighterComponentManager.FighterAudioComponent != null && currentMove.startupSFX != null)
             {
