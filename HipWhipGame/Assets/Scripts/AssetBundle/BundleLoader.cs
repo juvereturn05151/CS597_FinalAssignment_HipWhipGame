@@ -28,7 +28,7 @@ public class BundleLoader : MonoBehaviour
 
     private void LoadControllerAssignmentScene()
     {
-        SceneManager.LoadScene("ControllerAssignment");
+        SceneManager.LoadScene("MenuScene");
     }
 
 
