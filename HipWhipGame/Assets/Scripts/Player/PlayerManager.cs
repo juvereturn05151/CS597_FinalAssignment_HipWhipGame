@@ -118,14 +118,34 @@ public class PlayerManager : MonoBehaviour
         inputDevices.Clear();
     }
 
-    public void PlayerShakeController(int i)
+    public void PlayerDoesStraightPunchController(int i)
     {
         players[i].GetComponent<InputManager>().OnShakeController();
     }
 
-    public void PlayerStopShakeController(int i)
+    public void PlayerStopStraightPunchController(int i)
     {
         players[i].GetComponent<InputManager>().OnStopShakeController();
+    }
+
+    public void PlayerSwingController(int i)
+    {
+        players[i].GetComponent<InputManager>().OnSwingController();
+    }
+
+    public void PlayerStopSwingController(int i)
+    {
+        players[i].GetComponent<InputManager>().OnStopSwingController();
+    }
+
+    public void PlayerJumpController(int i)
+    {
+        players[i].GetComponent<InputManager>().OnJumpController();
+    }
+
+    public void PlayerStopJumpController(int i)
+    {
+        players[i].GetComponent<InputManager>().OnStopJumpController();
     }
 
     public void PlayerShakeButt(int i)

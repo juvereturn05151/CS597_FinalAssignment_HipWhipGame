@@ -196,6 +196,31 @@ public class InputManager : MonoBehaviour
         fighterComponentManager.FighterController.LastInput.light = false;
     }
 
+    public void OnSwingController()
+    {
+        if (fighterComponentManager == null) return;
+        fighterComponentManager.FighterController.LastInput.grab = true;
+    }
+
+    public void OnStopSwingController()
+    {
+        if (fighterComponentManager == null) return;
+        fighterComponentManager.FighterController.LastInput.grab = false;
+    }
+
+    public void OnJumpController()
+    {
+        if (fighterComponentManager == null) return;
+        fighterComponentManager.FighterController.LastInput.swingAttack = true;
+    }
+
+    public void OnStopJumpController()
+    {
+        if (fighterComponentManager == null) return;
+        fighterComponentManager.FighterController.LastInput.swingAttack = false;
+    }
+
+
     public void OnShakeYourButt()
     {
         if (fighterComponentManager == null) return;
