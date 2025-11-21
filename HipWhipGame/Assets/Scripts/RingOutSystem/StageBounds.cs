@@ -5,7 +5,6 @@ Copyright:    (c) 2025 DigiPen Institute of Technology. All rights reserved.
 */
 
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 namespace RollbackSupport
 {
