@@ -9,7 +9,7 @@ namespace RollbackSupport
         public float horiz;
         public float vert;
         public float sidestep;
-        public bool light, heavy, grab, block;
+        public bool light, heavy, grab, block, swingAttack;
         public bool special;  
     }
 

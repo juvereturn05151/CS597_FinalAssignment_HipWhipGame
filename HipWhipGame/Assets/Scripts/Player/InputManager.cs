@@ -91,11 +91,11 @@ public class InputManager : MonoBehaviour
 
         if (context.started)
         {
-            
+            fighterComponentManager.FighterController.LastInput.swingAttack = true;
         }
         else if (context.canceled)
         {
-            
+            fighterComponentManager.FighterController.LastInput.swingAttack = false;
         }
     }
 
@@ -206,6 +206,18 @@ public class InputManager : MonoBehaviour
     {
         if (fighterComponentManager == null) return;
         fighterComponentManager.FighterController.LastInput.heavy = false;
+    }
+
+    public void OnJump()
+    {
+        if (fighterComponentManager == null) return;
+        fighterComponentManager.FighterController.LastInput.swingAttack = true;
+    }
+
+    public void OnStopJump()
+    {
+        if (fighterComponentManager == null) return;
+        fighterComponentManager.FighterController.LastInput.swingAttack = false;
     }
 
     public void OnWiggleYourButtLeft()

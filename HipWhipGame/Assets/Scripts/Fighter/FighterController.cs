@@ -210,7 +210,7 @@ namespace RollbackSupport
             // SPECIAL MOVE SYSTEM
             // ============================================
 
-            if (input.special && input.light && input.heavy)
+            if ((input.special && input.light && input.heavy )|| (input.special && input.swingAttack))
             {
                 if (SpendMeter(3f))
                 {
@@ -246,7 +246,7 @@ namespace RollbackSupport
                 fighterComponentManager.MoveExecutor.StartMove(moves.grab);
                 fighterComponentManager.FighterStateMachine.SwitchState(FighterState.TryGrab);
             }
-            else if (LastInput.light && LastInput.heavy)
+            else if ((LastInput.light && LastInput.heavy )|| input.swingAttack)
             {
                 fighterComponentManager.MoveExecutor.StartMove(moves.spinButt);
                 fighterComponentManager.FighterStateMachine.SwitchState(FighterState.Attack);
