@@ -378,7 +378,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Press + to Begin
+  m_text: 'Press +/- to Begin
 
 '
   m_isRightToLeft: 0

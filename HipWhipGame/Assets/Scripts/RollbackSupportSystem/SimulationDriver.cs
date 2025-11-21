@@ -58,7 +58,7 @@ namespace RollbackSupport
 
                 foreach (var gamepad in Gamepad.all)
                 {
-                    if (gamepad.startButton.wasPressedThisFrame)
+                    if (gamepad.startButton.wasPressedThisFrame || gamepad.selectButton.wasPressedThisFrame)
                     {
                         matchUI.Hide();
                         simulation.Reset();

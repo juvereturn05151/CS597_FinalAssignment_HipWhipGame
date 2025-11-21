@@ -16,7 +16,7 @@ public class StartMenu : MonoBehaviour
         // Detect gamepad join (Start button)
         foreach (var gamepad in Gamepad.all)
         {
-            if (gamepad.startButton.wasPressedThisFrame)
+            if (gamepad.startButton.wasPressedThisFrame || gamepad.selectButton.wasPressedThisFrame)
             {
                 FadingUI.Instance.StartFadeIn();
                 FadingUI.Instance.OnStopFading.AddListener(LoadNextScene);
