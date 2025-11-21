@@ -6,7 +6,7 @@ public class BootSceneLoader : MonoBehaviour
     private async void Start()
     {
         // Preload all characters
-        await CharacterPreloader.Instance.PreloadCharacters();
+        await GamePreloader.Instance.PreloadAll();
 
         // Load game scene
         SceneManager.LoadSceneAsync("ControllerAssignment");
