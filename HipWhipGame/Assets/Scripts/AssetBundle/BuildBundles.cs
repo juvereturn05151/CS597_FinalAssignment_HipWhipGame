@@ -7,7 +7,7 @@ public class BuildBundles
     [MenuItem("Build/Build AssetBundles")]
     static void BuildAllAssetBundles()
     {
-        string path = "Assets/AssetBundles/Windows";
+        string path = "Assets/StreamingAssets/StandaloneWindows64";
         BuildPipeline.BuildAssetBundles(path,
             BuildAssetBundleOptions.ChunkBasedCompression,
             BuildTarget.StandaloneWindows64);
@@ -16,7 +16,7 @@ public class BuildBundles
     [MenuItem("Build/Build AssetBundles Switch")]
     static void BuildAllAssetBundlesSwitch()
     {
-        string path = "Assets/AssetBundles/Switch";
+        string path = "Assets/StreamingAsset/Switch";
         BuildPipeline.BuildAssetBundles(path,
             BuildAssetBundleOptions.ChunkBasedCompression,
             BuildTarget.Switch);
