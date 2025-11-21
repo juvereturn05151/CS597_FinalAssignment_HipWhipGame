@@ -53,11 +53,18 @@ public class TutorialSequence : MonoBehaviour
         // If no more pages -> load scene
         if (currentPage >= pages.Count)
         {
+            FadingUI.Instance.StartFadeIn();
+            FadingUI.Instance.OnStopFading.AddListener(LoadNextScene);
             SceneManager.LoadScene(nextSceneName);
             return;
         }
 
         // Show next page
         pages[currentPage].SetActive(true);
+    }
+
+    private void LoadNextScene()
+    {
+        SceneManager.LoadScene(nextSceneName);
     }
 }

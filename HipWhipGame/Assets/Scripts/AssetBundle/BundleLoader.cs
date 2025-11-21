@@ -9,7 +9,8 @@ public class BundleLoader : MonoBehaviour
     {
 #if UNITY_EDITOR_64 || UNITY_STANDALONE_WIN
         StartCoroutine(LoadAssetBundlePC());
-        SceneManager.LoadScene("ControllerAssignment");
+        FadingUI.Instance.StartFadeIn();
+        FadingUI.Instance.OnStopFading.AddListener(LoadControllerAssignmentScene);
 #elif UNITY_SWITCH
 
 #endif
@@ -23,6 +24,11 @@ public class BundleLoader : MonoBehaviour
         yield return bundleLoadRequest;
 
 
+    }
+
+    private void LoadControllerAssignmentScene()
+    {
+        SceneManager.LoadScene("ControllerAssignment");
     }
 
 
