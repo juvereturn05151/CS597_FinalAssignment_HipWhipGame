@@ -191,4 +191,7 @@ public class PlayerManager : MonoBehaviour
             }
         }
     }
+
+    // Check if ANY player pressed Button Sout
+
 }

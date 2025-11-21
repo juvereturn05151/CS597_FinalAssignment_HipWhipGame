@@ -21,6 +21,8 @@ public class ControllerAssignmentUI : MonoBehaviour
     [SerializeField] private GameObject startGamePrompt;
 
     [SerializeField] private UIAudioComponent UIAudioComponent;
+
+    [SerializeField] private TutorialSequence tutorialUI;
     private void Start()
     {
         // Initialize slots
@@ -69,9 +71,13 @@ public class ControllerAssignmentUI : MonoBehaviour
     {
         if (PlayerManager.Instance.PlayerCount == 2) 
         {
-            UIAudioComponent.PlayConfirm();
-            Debug.Log("Loading game scene...");
-            SceneManager.LoadScene(gameSceneName);
+            if (!tutorialUI.gameObject.activeSelf) 
+            {
+                UIAudioComponent.PlayConfirm();
+                tutorialUI.gameObject.SetActive(true);
+                tutorialUI.StartTutorial();
+            }
+
         }
     }
 

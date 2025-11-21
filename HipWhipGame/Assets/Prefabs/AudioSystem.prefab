@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb5f821c6c010264895eca6b71d0e373, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _poolSize: 32
+  _poolSize: 16
   _dontDestroyOnLoad: 1
   sfxMixer: {fileID: 24300002, guid: 52791071921de0649be1a5a38a52a390, type: 2}
   voiceMixer: {fileID: 24300002, guid: 8c19570ef0ca5dc4496686b065806ad8, type: 2}
