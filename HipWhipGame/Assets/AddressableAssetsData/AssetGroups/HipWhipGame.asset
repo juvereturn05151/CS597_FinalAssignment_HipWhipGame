@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: HipWhipGame
+  m_EditorClassIdentifier: 
+  m_GroupName: HipWhipGame
+  m_GUID: bab45943b83add6419d0e12c95729578
+  m_SerializeEntries:
+  - m_GUID: 1a99676e35a99a642b92d3d5e0856712
+    m_Address: Assets/Prefabs/AudioSystem.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - audio
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: daa6efcd87c1dfa419d3c4f113babfba
+    m_Address: Assets/Prefabs/Managers/JuiceController.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - sfx
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ed9f960124b2fdc46a825ef5981d2a04
+    m_Address: Assets/Prefabs/UI/MatchUI.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ff6dd0ac7da09494bb01f5ee0c1f9670
+    m_Address: Assets/Prefabs/Character/MightyMouse.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - characters
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 3d011f1bc8119754094380132c429b82, type: 2}
+  m_SchemaSet:
+    m_Schemas: []
