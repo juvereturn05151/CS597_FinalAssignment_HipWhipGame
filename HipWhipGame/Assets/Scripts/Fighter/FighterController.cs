@@ -5,6 +5,7 @@ Copyright:    (c) 2025 DigiPen Institute of Technology. All rights reserved.
 */
 
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 namespace RollbackSupport
 {
@@ -100,6 +101,7 @@ namespace RollbackSupport
             damagePercent = 0.0f;
             fighterComponentManager.MoveExecutor.ForceStop();
             superMeter = 0.0f;
+            SetMeter(superMeter);
             fighterComponentManager.FighterUI.UpdatePercentage(damagePercent);
         }
 
@@ -342,7 +344,7 @@ namespace RollbackSupport
             damagePercent = Mathf.Clamp(DamagePercent, 0, 999);
             fighterComponentManager.FighterUI.UpdatePercentage(damagePercent);
 
-            float knockbackGrowth = 1.0f;
+            float knockbackGrowth = 2.0f;
 
             // calculate knockback using percentage
             Vector3 scaledKnock;
@@ -383,7 +385,7 @@ namespace RollbackSupport
 
         public void AddMeter(float amount)
         {
-            SuperMeter += amount;
+            superMeter += amount;
             fighterComponentManager.FighterUI.UpdateMeter(superMeter);
         }
 

@@ -17,7 +17,7 @@ namespace RollbackSupport
             fighterComponentManager.FighterStateMachine.SetMaxDurationTimer(duration);
             fighterComponentManager.FighterStateMachine.SetDurationTimer(duration);
             fighterComponentManager.FighterGrabManager.Grab(duration);
-            fighterComponentManager.FighterController.AddMeter(1); 
+            fighterComponentManager.FighterController.AddMeter(0.5f); 
         }
 
         public override void OnUpdate()

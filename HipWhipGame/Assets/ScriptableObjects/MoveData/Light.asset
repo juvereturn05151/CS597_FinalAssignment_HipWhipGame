@@ -49,9 +49,9 @@ MonoBehaviour:
   animateDuringFreeze: 0
   preSuperFreezeFrames: 20
   meterConsumption: 0
-  meterGainOnHit: 0
-  meterGainOnBlock: 0
-  meterGainWhenBlocked: 0.1
+  meterGainOnHit: 0.1
+  meterGainOnBlock: 0.05
+  meterGainWhenBlocked: 0.2
   startupSFX: {fileID: 8300000, guid: 90fb91c5d9f18df4183363d36d921429, type: 3}
   activeSFX: {fileID: 0}
   hitSFX: {fileID: 8300000, guid: 0147661c12ea814488259f82d4a4aed8, type: 3}

@@ -92,6 +92,7 @@ namespace RollbackSupport
                             }
 
                             attacker.FighterController.AddMeter(move.meterGainOnHit);
+                            Debug.Log("move.meterGainOnHit:" + move.meterGainOnHit);
                             defender.FighterController.TakeHit(move, -worldKnock);
                         }
                             
