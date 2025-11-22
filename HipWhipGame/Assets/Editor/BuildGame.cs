@@ -33,7 +33,7 @@ public static class BuildGame
     [MenuItem("Build/Build Game on Switch")]
     public static void BuildSwitch()
     {
-        string buildPath = "Builds/Switch/HipWhipGame.exe";
+        string buildPath = "Builds/Switch/HipWhipGame.nsp";
 
         BuildPlayerOptions options = new BuildPlayerOptions()
         {
