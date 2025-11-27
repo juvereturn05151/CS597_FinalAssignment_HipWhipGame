@@ -13,6 +13,7 @@ namespace RollbackSupport
     public class FighterStateMachine : MonoBehaviour, IFighterComponentInjectable
     {
         private FighterBaseState currentState;
+        public FighterBaseState CurrentState => currentState;
         private FighterBaseState previousState;
         public FighterBaseState PreviousState => previousState;
         private Dictionary<FighterState, FighterBaseState> stateMap;
