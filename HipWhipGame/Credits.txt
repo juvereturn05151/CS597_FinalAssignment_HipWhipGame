@@ -1,0 +1,31 @@
+Credits:
+
+Solo Developer: Ju-ve Chankasemporn
+
+Model:
+- Mixamo
+- FREE_CartoonPack_Buildings
+- Hand Painted Stone Texture
+- JMO Assets
+
+Water Shader: 
+- AureDevGames
+
+Character Shader:
+- GritlineToonShader
+
+Skybox:
+- Free Stylized Skybox
+
+UI:
+- ComicArtUI
+
+Sounds:
+SFX:
+- Casual Game Sounds
+- Deadly Kombat Free version
+
+BGM:
+- Tom and Jerry War of Whiskers
+
+All right reserved by DigiPen Institute of Technology
